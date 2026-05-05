@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: tazara-db
+    environment:
+      - POSTGRES_DB=tazara_multi_route
+      - POSTGRES_USER=tazara
+      - POSTGRES_PASSWORD=tazara123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - tazara-network
+    restart: unless-stopped
+
+  # Main API service
+  api:
+    build: .
+    container_name: tazara-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://tazara:tazara123@db:5432/tazara_multi_route
+      - SECRET_KEY=tazara-ai-secret-key
+      - ENVIRONMENT=production
+    depends_on:
+      - db
+    volumes:
+      - ./logs:/app/logs
+      - ./reinforcement_rl:/app/reinforcement_rl
+    restart: unless-stopped
+    networks:
+      - tazara-network
+
+  # Nginx for frontend
+  nginx:
+    image: nginx:alpine
+    container_name: tazara-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./dashboard/static:/usr/share/nginx/html
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - tazara-network
+
+volumes:
+  postgres_data:
+
+networks:
+  tazara-network:
+    driver: bridge

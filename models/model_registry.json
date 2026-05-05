@@ -1,0 +1,84 @@
+{
+  "models": {
+    "lstm": {
+      "versions": [
+        {
+          "version": 1,
+          "timestamp": "2026-02-11T10:41:23.155608",
+          "type": "LSTM",
+          "path": "models\\lstm_model.keras",
+          "metrics": {
+            "rmse": 0.15634765581844376,
+            "mae": 0.12810202995133355,
+            "r2": 0.29268698993918807
+          },
+          "status": "active"
+        },
+        {
+          "version": 2,
+          "timestamp": "2026-02-11T10:45:24.099233",
+          "type": "LSTM",
+          "path": "models\\lstm_model.keras",
+          "metrics": {
+            "rmse": 0.15634765581844376,
+            "mae": 0.12810202995133355,
+            "r2": 0.29268698993918807
+          },
+          "status": "active"
+        },
+        {
+          "version": 3,
+          "timestamp": "2026-03-03T18:22:40.948255",
+          "type": "LSTM",
+          "path": "models\\lstm_model.keras",
+          "metrics": {
+            "rmse": 0.15634765581844376,
+            "mae": 0.12810202995133355,
+            "r2": 0.29268698993918807
+          },
+          "status": "active"
+        },
+        {
+          "version": 4,
+          "timestamp": "2026-03-03T18:23:35.868426",
+          "type": "LSTM",
+          "path": "models\\lstm_model.keras",
+          "metrics": {
+            "rmse": 0.15634765581844376,
+            "mae": 0.12810202995133355,
+            "r2": 0.29268698993918807
+          },
+          "status": "active"
+        },
+        {
+          "version": 5,
+          "timestamp": "2026-03-03T18:28:59.969420",
+          "type": "LSTM",
+          "path": "models\\lstm_model.keras",
+          "metrics": {
+            "rmse": 0.15634765581844376,
+            "mae": 0.12810202995133355,
+            "r2": 0.29268698993918807
+          },
+          "status": "active"
+        }
+      ]
+    },
+    "gbm": {
+      "versions": [
+        {
+          "version": 1,
+          "timestamp": "2026-03-03T18:31:29.069268",
+          "type": "GBM",
+          "path": "models/cargo_forecast_gbm.pkl",
+          "metrics": {
+            "mae": 17.519258653022508,
+            "rmse": 22.53815560677855
+          },
+          "status": "active"
+        }
+      ]
+    }
+  },
+  "selected": "lstm"
+}

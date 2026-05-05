@@ -1,0 +1,43 @@
+# Enterprise Features for TAZARA AI System - Essential Dependencies Only
+
+# Security & Authentication
+fastapi-users[sqlalchemy]==12.1.2
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+python-decouple==3.8
+
+# Integration & Communication
+aiohttp==3.8.5
+celery[redis]==5.3.1
+redis==4.6.0
+websockets==11.0.3
+
+# Monitoring & Observability
+prometheus-client==0.17.1
+structlog==23.1.0
+sentry-sdk[fastapi]==1.29.2
+psutil==5.9.5
+pydantic-settings==2.0.3
+
+# Production & Scalability
+gunicorn==21.2.0
+uvicorn[standard]==0.23.2
+
+# Database & Caching
+redis-py-cluster==2.1.3
+
+# Data Validation
+email-validator==2.0.0
+
+# File Processing
+openpyxl==3.1.2
+pandas==2.1.1
+
+# Configuration
+python-dotenv==1.0.0
+pydantic==2.3.0
+
+# Logging
+colorlog==6.7.0
+rich==13.5.2

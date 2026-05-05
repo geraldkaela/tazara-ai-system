@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - TAZARA AI Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1d2e;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .debug-container {
+            background: rgba(26, 29, 46, 0.85);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #2a2f4a;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .logout-btn {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            background: #e53e3e;
+        }
+        
+        .user-role.admin {
+            color: #f56565;
+            font-weight: 600;
+        }
+        
+        .debug-info {
+            background: #333;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔍 TAZARA AI - Authentication Debug</h1>
+        
+        <div class="debug-info" id="debugInfo">
+            Checking authentication...
+        </div>
+        
+        <div class="user-info" id="userInfo">
+            <div class="user-avatar">👤</div>
+            <div class="user-details">
+                <div class="user-name" id="userName">Loading...</div>
+                <div class="user-role" id="userRole">Loading...</div>
+            </div>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+        </div>
+        
+        <div class="debug-info" id="tokenInfo">
+            Token info will appear here...
+        </div>
+        
+        <div class="debug-info" id="permissionsInfo">
+            Permissions will appear here...
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000';
+        
+        function updateDebug(message) {
+            document.getElementById('debugInfo').innerHTML = `🔍 ${message}`;
+        }
+        
+        function updateTokenInfo(token) {
+            const tokenInfo = document.getElementById('tokenInfo');
+            if (token) {
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    tokenInfo.innerHTML = `🔑 Token Payload: ${JSON.stringify(payload, null, 2)}`;
+                } catch (e) {
+                    tokenInfo.innerHTML = `🔑 Token: ${token.substring(0, 50)}...`;
+                }
+            } else {
+                tokenInfo.innerHTML = `🔑 No token found in localStorage`;
+            }
+        }
+        
+        async function loadUserInfo() {
+            try {
+                updateDebug('Checking for token in localStorage...');
+                
+                const token = localStorage.getItem('access_token');
+                updateTokenInfo(token);
+                
+                if (!token) {
+                    updateDebug('❌ No token found, redirecting to login...');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard/login.html';
+                    }, 2000);
+                    return;
+                }
+                
+                updateDebug('✅ Token found, fetching user info...');
+                
+                const response = await fetch(`${API_BASE}/auth/me`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                updateDebug(`📡 API Response: ${response.status} ${response.statusText}`);
+                
+                if (!response.ok) {
+                    updateDebug('❌ Invalid token, clearing and redirecting...');
+                    localStorage.removeItem('access_token');
+                    localStorage.removeItem('token_type');
+                    localStorage.removeItem('expires_in');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard/login.html';
+                    }, 2000);
+                    return;
+                }
+                
+                const user = await response.json();
+                updateDebug(`✅ User data loaded: ${JSON.stringify(user, null, 2)}`);
+                
+                // Update UI
+                document.getElementById('userName').textContent = user.username;
+                document.getElementById('userRole').textContent = user.role;
+                
+                // Add role styling
+                const roleElement = document.getElementById('userRole');
+                roleElement.className = `user-role ${user.role}`;
+                
+                // Show permissions
+                const permInfo = document.getElementById('permissionsInfo');
+                permInfo.innerHTML = `🔐 Permissions: ${JSON.stringify(user.permissions, null, 2)}`;
+                
+                updateDebug('🎉 Authentication successful!');
+                
+            } catch (error) {
+                updateDebug(`❌ Error: ${error.message}`);
+                console.error('Error loading user info:', error);
+            }
+        }
+        
+        function logout() {
+            updateDebug('🚪 Logging out...');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('token_type');
+            localStorage.removeItem('expires_in');
+            setTimeout(() => {
+                window.location.href = '/dashboard/login.html';
+            }, 1000);
+        }
+        
+        // Load on page load
+        document.addEventListener('DOMContentLoaded', loadUserInfo);
+    </script>
+</body>
+</html>

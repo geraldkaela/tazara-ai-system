@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARA AI System — Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo"></span>
+            <h1>TAZARA AI<span>Railway Operations</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboards</div>
+                <a href="index.html" class="nav-link"><span class="icon"></span> Overview</a>
+                <a href="multi_route.html" class="nav-link"><span class="icon"></span> Multi-Route Ops</a>
+                <a href="alerts.html" class="nav-link"><span class="icon"></span> Alerts</a>
+                <a href="comparison.html" class="nav-link"><span class="icon"></span> Comparison</a>
+                <!--<a href="rl.html" class="nav-link"><span class="icon">🤖</span> RL Dashboard</a>-->
+            </div>
+            <div class="nav-section" id="adminSection" style="display: none;">
+                <div class="nav-section-title">Administration</div>
+                <a href="users.html" class="nav-link"><span class="icon"></span> User Management</a>
+            </div>
+        </nav>
+        <div class="sidebar-status">
+            <div class="status-badge offline" id="systemStatus">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Checking...</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h2> System Overview</h2>
+                    <p>TAZARA AI Railway Scheduling &amp; Decision Support System</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info" id="userInfo">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-details">
+                            <div class="user-name" id="userName">Loading...</div>
+                            <div class="user-role" id="userRole">Loading...</div>
+                        </div>
+                        <button class="logout-btn" id="logoutBtn" onclick="logout()"> Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <!-- Quick Stats -->
+            <div class="metrics-grid" id="metricsGrid">
+                <div class="metric-card" style="--metric-accent: var(--primary);">
+                    <div class="metric-icon"></div>
+                    <div class="metric-value" id="totalTrains">—</div>
+                    <div class="metric-label">Active Trains</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--success);">
+                    <div class="metric-icon"></div>
+                    <div class="metric-value" id="totalCargo">—</div>
+                    <div class="metric-label">Cargo Delivered (tons)</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--accent);">
+                    <div class="metric-icon"></div>
+                    <div class="metric-value" id="efficiency">—</div>
+                    <div class="metric-label">Avg Efficiency</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--warning);">
+                    <div class="metric-icon"></div>
+                    <div class="metric-value" id="netProfit">—</div>
+                    <div class="metric-label">Avg Net Profit (ZMW)</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <!-- System Status Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"> System Modules</div>
+                </div>
+                <div id="modulesContent">
+                    <div class="loading-overlay"><div class="spinner"></div><p>Loading...</p></div>
+                </div>
+            </div>
+
+            <!-- Routes Overview -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <div class="card-title"> TAZARA Route Network</div>
+                </div>
+                <div style="padding: 15px;">
+                    <!-- Main Through Traffic Routes -->
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="font-size: 0.9rem; color: var(--primary); margin-bottom: 10px;"> Through Traffic Routes</h4>
+                        <div class="grid-3" style="gap: 10px;">
+                            <div class="metric-card" style="--metric-accent: #48bb78;">
+                                <div class="metric-icon">🇹🇿→🇿🇲</div>
+                                <div class="metric-value" style="font-size:1.0rem;">DAR–KAPIRI</div>
+                                <div class="metric-label">Dar es Salaam to Kapiri Mposhi</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #4299e1;">
+                                <div class="metric-icon">🇹🇿</div>
+                                <div class="metric-value" style="font-size:1.0rem;">DAR–MBEYA</div>
+                                <div class="metric-label">Dar es Salaam to Mbeya</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #ed8936;">
+                                <div class="metric-icon">��🇿→��🇲</div>
+                                <div class="metric-value" style="font-size:1.0rem;">MBEYA–KASAMA</div>
+                                <div class="metric-label">Mbeya to Kasama</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tanzania Local Routes -->
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="font-size: 0.9rem; color: var(--success); margin-bottom: 10px;">🇹🇿 Tanzania Local Routes</h4>
+                        <div class="grid-2" style="gap: 10px;">
+                            <div class="metric-card" style="--metric-accent: #38a169;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">DAR–KIDATU</div>
+                                <div class="metric-label">Dar es Salaam to Kidatu</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #38a169;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">KIDATU–MAKAMBAKO</div>
+                                <div class="metric-label">Kidatu to Makambako</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #38a169;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">MAKAMBAKO–MBEYA</div>
+                                <div class="metric-label">Makambako to Mbeya</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #38a169;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">KIDATU TRANS</div>
+                                <div class="metric-label">Kidatu Trans-shipment</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Zambia Local Routes -->
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="font-size: 0.9rem; color: var(--warning); margin-bottom: 10px;">🇿🇲 Zambia Local Routes</h4>
+                        <div class="grid-2" style="gap: 10px;">
+                            <div class="metric-card" style="--metric-accent: #d69e2e;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">KASAMA–MPIKA</div>
+                                <div class="metric-label">Kasama to Mpika</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #d69e2e;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">MPIKA–SERENJE</div>
+                                <div class="metric-label">Mpika to Serenje</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #d69e2e;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">SERENJE–KAPIRI</div>
+                                <div class="metric-label">Serenje to Kapiri Mposhi</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #d69e2e;">
+                                <div class="metric-icon">🇿🇲</div>
+                                <div class="metric-value" style="font-size:0.9rem;">KAPIRI–NDOLA</div>
+                                <div class="metric-label">Kapiri Mposhi to Ndola</div>
+                            </div>
+                            <div class="metric-card" style="--metric-accent: #d69e2e;">
+                                <div class="metric-icon"></div>
+                                <div class="metric-value" style="font-size:0.9rem;">KAPIRI DIST</div>
+                                <div class="metric-label">Central Province Distribution</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Network Summary -->
+                    <div style="text-align: center; padding: 10px; background: rgba(102, 126, 234, 0.1); border-radius: 8px;">
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">
+                            <strong> Complete TAZARA Network:</strong> 12 Routes | 8 Major Stations | 1,860km | 🇹🇿 Tanzania & 🇿🇲 Zambia
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Capabilities -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <div class="card-title"> AI Capabilities</div>
+                </div>
+                <div class="grid-2" style="gap: 12px;">
+                    <div class="alert alert-info" style="margin:0;"> Baseline Scheduling</div>
+                    <div class="alert alert-info" style="margin:0;">Reinforcement Learning Scheduling</div>
+                    <div class="alert alert-info" style="margin:0;"> Multi-Route Operations</div>
+                    <div class="alert alert-info" style="margin:0;"> Real-time Alerts</div>
+                    <div class="alert alert-info" style="margin:0;"> ZMW Cost Analysis</div>
+                    <div class="alert alert-info" style="margin:0;"> Performance Comparison</div>
+                  <!--  <div class="alert alert-info" style="margin:0;"> Audit Logging</div> -->
+                    <div class="alert alert-info" style="margin:0;"> External Data Upload (CSV/Excel)</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    async function loadOverview() {
+        try {
+            // Load dashboard stats (Postgres)
+            const stats = await fetchAPI('/multi-route/dashboard/stats');
+            if (stats) {
+                document.getElementById('totalCargo').textContent = formatNumber(stats.total_cargo_delivered);
+                document.getElementById('efficiency').textContent = formatPercent(stats.average_efficiency);
+                document.getElementById('netProfit').textContent = formatNumber(stats.average_profit);
+                // Highlight if these are non-zero (proving data exists)
+                if (stats.total_cargo_delivered > 0) {
+                    document.getElementById('totalCargo').style.color = '#48bb78';
+                }
+            }
+        } catch (err) {
+            console.warn('Postgres stats not available:', err);
+        }
+
+        try {
+            // Load operational metrics
+            const health = await fetchAPI('/api/dashboard/health');
+            const modulesEl = document.getElementById('modulesContent');
+            if (health && health.metrics) {
+                modulesEl.innerHTML = Object.entries(health.metrics)
+                    .map(([key, val]) => `
+                        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border);">
+                            <span style="font-size:0.88rem;">${key}</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span class="badge badge-low" style="background:rgba(255,255,255,0.05); border:1px solid var(--border);">${val.value.toLocaleString()} ${val.unit}</span>
+                                <span class="badge ${val.status === 'ok' ? 'badge-success' : 'badge-critical'}">${val.status === 'ok' ? '✅' : '❌'}</span>
+                            </div>
+                        </div>
+                    `).join('');
+            }
+
+                    } catch (err) {
+            showError('modulesContent', err);
+        }
+
+        try {
+            // Try to load multi-route status for train count
+            const status = await fetchAPI('/multi-route/status');
+            if (status) {
+                document.getElementById('totalTrains').textContent = (status.supported_trains || []).length || '12';
+            }
+        } catch {
+            document.getElementById('totalTrains').textContent = '12';
+        }
+    }
+
+    // Authentication functions
+    async function loadUserInfo() {
+        try {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                // Redirect to login if no token
+                window.location.href = '/dashboard/login.html';
+                return;
+            }
+
+            const response = await fetch('/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                // Token invalid, redirect to login
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('token_type');
+                localStorage.removeItem('expires_in');
+                window.location.href = '/dashboard/login.html';
+                return;
+            }
+
+            const user = await response.json();
+            
+            // Update user info display
+            document.getElementById('userName').textContent = user.username;
+            document.getElementById('userRole').textContent = user.role;
+            
+            // Add role-specific styling
+            const roleElement = document.getElementById('userRole');
+            roleElement.className = `user-role ${user.role}`;
+            
+            // Apply role-based UI restrictions
+            applyRoleBasedUI(user.role, user.permissions);
+            
+        } catch (error) {
+            console.error('Error loading user info:', error);
+            // Redirect to login on error
+            window.location.href = '/dashboard/login.html';
+        }
+    }
+
+    function applyRoleBasedUI(role, permissions) {
+        // Hide/show navigation items based on permissions
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Show/hide admin section based on role
+        const adminSection = document.getElementById('adminSection');
+        if (adminSection) {
+            if (role === 'admin') {
+                adminSection.style.display = 'block';
+            } else {
+                adminSection.style.display = 'none';
+            }
+        }
+        
+        console.log(`Applied ${role} role restrictions`);
+        
+        // Disable certain buttons based on permissions
+        if (permissions && permissions.schedules) {
+            if (!permissions.schedules.includes('create')) {
+                // Hide create schedule buttons
+                const createButtons = document.querySelectorAll('[data-action="create-schedule"]');
+                createButtons.forEach(btn => btn.style.display = 'none');
+            }
+        }
+    }
+
+    function logout() {
+        // Clear local storage
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_type');
+        localStorage.removeItem('expires_in');
+        
+        // Redirect to login
+        window.location.href = '/dashboard/login.html';
+    }
+
+    // Formatting functions
+    function formatNumber(num) {
+        if (num === null || num === undefined) return '0';
+        return new Intl.NumberFormat('en-US').format(num);
+    }
+
+    function formatPercent(num) {
+        if (num === null || num === undefined) return '0%';
+        return (num * 100).toFixed(1) + '%';
+    }
+
+    // Check authentication on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadUserInfo();
+        loadOverview();
+    });
+</script>
+</body>
+</html>

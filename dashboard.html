@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARA AI System - Phase 2 Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .status {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4CAF50;
+        }
+        
+        .status-dot.loading {
+            background: #FFC107;
+        }
+        
+        .status-dot.error {
+            background: #F44336;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .card-chart {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .card-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .scenario-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .scenario-surge {
+            background: #F44336;
+        }
+        
+        .scenario-drop {
+            background: #2196F3;
+        }
+        
+        .scenario-volatility {
+            background: #FF9800;
+        }
+        
+        .risk-level {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .risk-low {
+            background: #4CAF50;
+        }
+        
+        .risk-medium {
+            background: #FFC107;
+            color: #333;
+        }
+        
+        .risk-high {
+            background: #FF9800;
+        }
+        
+        .risk-critical {
+            background: #F44336;
+        }
+        
+        .error-message {
+            background: #F44336;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚂 TAZARA AI System - Phase 2 Dashboard</h1>
+            <p class="subtitle">Real-time forecasting, risk analysis, and schedule fragility monitoring</p>
+            <div class="status">
+                <div class="status-item">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Connecting...</span>
+                </div>
+                <div class="status-item">
+                    <span id="lastUpdate">Last update: --:--</span>
+                </div>
+            </div>
+        </header>
+        
+        <div id="content">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading dashboard data...</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>TAZARA AI System Phase 2 | Database: database/tazara.db</p>
+        </footer>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+        let charts = {};
+        
+        async function initDashboard() {
+            try {
+                // Check health first
+                await checkHealth();
+                
+                // Load all dashboard data
+                const overviewData = await fetch(`${API_BASE}/dashboard/overview`).then(r => r.json());
+                const riskData = await fetch(`${API_BASE}/dashboard/risk?days=180`).then(r => r.json());
+                const fragilityData = await fetch(`${API_BASE}/dashboard/fragility?days=180`).then(r => r.json());
+                const bottleneckData = await fetch(`${API_BASE}/dashboard/bottlenecks`).then(r => r.json());
+                const scenarioData = await fetch(`${API_BASE}/dashboard/scenarios`).then(r => r.json());
+                const modelData = await fetch(`${API_BASE}/dashboard/models`).then(r => r.json());
+                
+                renderDashboard(overviewData, riskData, fragilityData, bottleneckData, scenarioData, modelData);
+                updateStatus('healthy');
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                updateStatus('error', error.message);
+                document.getElementById('content').innerHTML = `
+                    <div class="error-message">
+                        <strong>Error:</strong> Could not load dashboard data.<br>
+                        Make sure the API server is running: <code>python -m uvicorn api.main:app --reload</code>
+                    </div>
+                `;
+            }
+        }
+        
+        async function checkHealth() {
+            const response = await fetch(`${API_BASE}/dashboard/health`);
+            if (!response.ok) throw new Error('Health check failed');
+            return response.json();
+        }
+        
+        function updateStatus(status, message = '') {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            const lastUpdate = document.getElementById('lastUpdate');
+            
+            dot.className = 'status-dot ' + (status === 'healthy' ? '' : status);
+            text.textContent = status === 'healthy' ? '✅ Connected' : '❌ ' + message;
+            lastUpdate.textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+        }
+        
+        function renderDashboard(overview, risk, fragility, bottlenecks, scenarios, models) {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="dashboard-grid">
+                    ${renderRiskCard(risk)}
+                    ${renderFragilityCard(fragility)}
+                    ${renderModelCard(models)}
+                    ${renderBottlenecksCard(bottlenecks)}
+                    ${renderScenariosCard(scenarios)}
+                </div>
+            `;
+            
+            // Initialize charts after DOM is ready
+            setTimeout(() => {
+                createRiskChart(risk);
+                createFragilityChart(fragility);
+                createScenarioChart(scenarios);
+            }, 100);
+        }
+        
+        function renderRiskCard(data) {
+            const riskDist = data.risk_distribution || {};
+            return `
+                <div class="card">
+                    <h2>📊 Risk Analysis</h2>
+                    <div class="card-chart">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                    <div class="card-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${data.avg_risk_score?.toFixed(1) || 0}</div>
+                            <div class="stat-label">Avg Risk Score</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.anomalies_detected || 0}</div>
+                            <div class="stat-label">Anomalies</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.total_days || 0}</div>
+                            <div class="stat-label">Days Analyzed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.max_risk_score?.toFixed(1) || 0}</div>
+                            <div class="stat-label">Max Risk</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderFragilityCard(data) {
+            return `
+                <div class="card">
+                    <h2>⚠️ Schedule Fragility</h2>
+                    <div class="card-chart">
+                        <canvas id="fragilityChart"></canvas>
+                    </div>
+                    <div class="card-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${data.avg_fragility_score?.toFixed(1) || 0}</div>
+                            <div class="stat-label">Avg Fragility</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.critical_or_fragile_days || 0}</div>
+                            <div class="stat-label">Critical Days</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.avg_capacity_util?.toFixed(1) || 0}%</div>
+                            <div class="stat-label">Avg Capacity</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.over_capacity_days || 0}</div>
+                            <div class="stat-label">Over Capacity</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderModelCard(data) {
+            const models = data.models || [];
+            const backtests = data.backtest_results || [];
+            return `
+                <div class="card full-width">
+                    <h2>🤖 Model Performance</h2>
+                    <div class="card-stats">
+                        ${models.map(m => `
+                            <div class="stat-item">
+                                <div class="stat-value">${m.name.toUpperCase()}</div>
+                                <div class="stat-label">RMSE: ${m.rmse?.toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                        <div class="stat-item">
+                            <div class="stat-value">${backtests.length}</div>
+                            <div class="stat-label">Backtest Windows</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.avg_backtest_mape?.toFixed(1) || 0}%</div>
+                            <div class="stat-label">Avg MAPE</div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Window</th>
+                                <th>RMSE</th>
+                                <th>MAE</th>
+                                <th>MAPE</th>
+                            </tr>
+                            ${backtests.slice(0, 6).map(b => `
+                                <tr>
+                                    <td>#${b.window}</td>
+                                    <td>${b.rmse?.toFixed(2)}</td>
+                                    <td>${b.mae?.toFixed(2)}</td>
+                                    <td>${b.mape?.toFixed(2)}%</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderBottlenecksCard(data) {
+            const bottlenecks = data.data || [];
+            return `
+                <div class="card full-width">
+                    <h2>🔴 Bottleneck Periods (${bottlenecks.length})</h2>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Period</th>
+                                <th>Duration</th>
+                                <th>Avg Demand</th>
+                                <th>Max Demand</th>
+                                <th>Volatility</th>
+                            </tr>
+                            ${bottlenecks.slice(0, 10).map(b => `
+                                <tr>
+                                    <td>${b.start_date} to ${b.end_date}</td>
+                                    <td>${b.duration_days} day(s)</td>
+                                    <td>${b.avg_demand?.toFixed(1)}</td>
+                                    <td>${b.max_demand?.toFixed(1)}</td>
+                                    <td>${b.avg_volatility?.toFixed(1)}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderScenariosCard(data) {
+            const allScenarios = [];
+            Object.values(data.scenarios_by_type || {}).forEach(scenarios => {
+                allScenarios.push(...scenarios);
+            });
+            return `
+                <div class="card full-width">
+                    <h2>🎯 What-If Scenarios (${allScenarios.length})</h2>
+                    <div class="card-chart">
+                        <canvas id="scenarioChart"></canvas>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Type</th>
+                                <th>Magnitude</th>
+                                <th>Fragility</th>
+                                <th>Avg Demand</th>
+                            </tr>
+                            ${allScenarios.map(s => `
+                                <tr>
+                                    <td>${s.name}</td>
+                                    <td><span class="scenario-badge scenario-${s.scenario_type}">${s.scenario_type}</span></td>
+                                    <td>${(s.magnitude_pct).toFixed(1)}%</td>
+                                    <td>${s.fragility_score?.toFixed(1)}</td>
+                                    <td>${s.avg_demand?.toFixed(1)}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createRiskChart(data) {
+            const ctx = document.getElementById('riskChart');
+            if (!ctx) return;
+            
+            const riskData = data.data || [];
+            const dates = riskData.map(r => r.date);
+            const scores = riskData.map(r => r.risk_score);
+            
+            charts.risk = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Risk Score',
+                        data: scores,
+                        borderColor: '#F44336',
+                        backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                        tension: 0.3,
+                        fill: true,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { max: 100, min: 0 }
+                    }
+                }
+            });
+        }
+        
+        function createFragilityChart(data) {
+            const ctx = document.getElementById('fragilityChart');
+            if (!ctx) return;
+            
+            const fragData = data.data || [];
+            const dates = fragData.map(f => f.date);
+            const scores = fragData.map(f => f.fragility_score);
+            
+            charts.fragility = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Fragility Score',
+                        data: scores,
+                        borderColor: '#FF9800',
+                        backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                        tension: 0.3,
+                        fill: true,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { max: 100, min: 0 }
+                    }
+                }
+            });
+        }
+        
+        function createScenarioChart(data) {
+            const ctx = document.getElementById('scenarioChart');
+            if (!ctx) return;
+            
+            const allScenarios = [];
+            Object.values(data.scenarios_by_type || {}).forEach(scenarios => {
+                allScenarios.push(...scenarios);
+            });
+            
+            charts.scenario = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: allScenarios.map(s => s.name),
+                    datasets: [{
+                        label: 'Fragility Impact',
+                        data: allScenarios.map(s => s.fragility_score),
+                        backgroundColor: allScenarios.map(s => {
+                            if (s.scenario_type === 'surge') return '#F44336';
+                            if (s.scenario_type === 'drop') return '#2196F3';
+                            return '#FF9800';
+                        })
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        y: { max: 100, min: 0 }
+                    }
+                }
+            });
+        }
+        
+        // Load dashboard when page is ready
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

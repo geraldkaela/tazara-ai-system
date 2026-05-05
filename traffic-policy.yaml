@@ -1,0 +1,20 @@
+﻿on_http_request:
+  - actions:
+      - type: url-rewrite
+        config:
+          from: "localhost:8000"
+          to: "https://lesser-obsession-savior.ngrok-free.dev"
+
+on_http_response:
+  - actions:
+      - type: response-body-find-replace
+        config:
+          replacements:
+            - from: "http://localhost:8000"
+              to: "https://lesser-obsession-savior.ngrok-free.dev"
+            - from: "http://127.0.0.1:8000"
+              to: "https://lesser-obsession-savior.ngrok-free.dev"
+            - from: "'localhost:8000"
+              to: "'lesser-obsession-savior.ngrok-free.dev"
+            - from: '"localhost:8000'
+              to: '"lesser-obsession-savior.ngrok-free.dev'

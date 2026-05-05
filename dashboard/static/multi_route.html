@@ -1,0 +1,3462 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARA AI Multi-Route Operations</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo"></span>
+            <h1>TAZARA AI<span>Railway Operations</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboards</div>
+                <a href="index.html" class="nav-link"><span class="icon"></span> Overview</a>
+                <a href="multi_route.html" class="nav-link"><span class="icon"></span> Multi-Route Ops</a>
+                <a href="alerts.html" class="nav-link"><span class="icon"></span> Alerts <span id="alertBadge" class="badge badge-danger" style="display:none; font-size:0.7rem; padding:2px 6px;">0</span></a>
+                <a href="comparison.html" class="nav-link"><span class="icon"></span> Comparison</a>
+               <!-- <a href="rl.html" class="nav-link"><span class="icon"></span> RL Dashboard</a>-->
+            </div>
+        </nav>
+        <div class="sidebar-status">
+            <div class="status-badge offline" id="systemStatus">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Checking...</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Sidebar Toggle Button -->
+<button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">◀</button>
+        <!-- Mobile Backdrop -->
+        <div class="mobile-backdrop" onclick="toggleSidebar()"></div>
+        
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h2>Multi-Route Operations</h2>
+                    <p>Create and manage multi-train schedules with real-time optimization</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info" id="userInfo">
+                        <div class="user-avatar"></div>
+                        <div class="user-details">
+                            <div class="user-name" id="userName">Loading...</div>
+                            <div class="user-role" id="userRole">Loading...</div>
+                        </div>
+                        <button class="logout-btn" id="logoutBtn" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="tabOverview"> Overview</button>
+                <button class="tab-btn" data-tab="tabSchedule"> Create Schedule</button>
+               <!-- <button class="tab-btn" data-tab="tabWorkflow"> Workflow</button>-->
+                <button class="tab-btn" data-tab="tabOrders">Orders</button>
+               <!-- <button class="tab-btn" data-tab="tabTactical">Tactical View</button> -->
+               <!-- <button class="tab-btn" data-tab="tabRisk"> Risk & Resilience</button> -->
+                <button class="tab-btn" data-tab="tabForecast"> Forecasting</button>
+                <button class="tab-btn" data-tab="tabPerformance"> Performance</button>
+                <button class="tab-btn" data-tab="tabConfig"> System Information</button>
+            </div>
+
+            <!-- Tab: Overview -->
+            <div class="tab-panel active" id="tabOverview">
+                <div class="metrics-grid">
+                    <div class="metric-card" style="--metric-accent: var(--primary);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="ovTrains"></div>
+                        <div class="metric-label">Total Trains</div>
+                    </div>
+                    <div class="metric-card" style="--metric-accent: var(--success);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="ovRoutes"></div>
+                        <div class="metric-label">Active Routes</div>
+                    </div>
+                    <div class="metric-card" style="--metric-accent: var(--accent);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="ovCapabilities"></div>
+                        <div class="metric-label">Capabilities</div>
+                    </div>
+                    <div class="metric-card" style="--metric-accent: var(--info);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="ovVersion">v2.0</div>
+                        <div class="metric-label">System Version</div>
+                    </div>
+                </div>
+
+                <!-- System Info -->
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        <div class="card-title">System Capabilities</div>
+                    </div>
+                    <div class="grid-2" style="gap:10px;">
+                        <div class="alert alert-info" style="margin:0"> Multi-Train Coordination</div>
+                        <div class="alert alert-info" style="margin:0">ZMW Cost Analysis</div>
+                        <div class="alert alert-info" style="margin:0"> Performance Tracking</div>
+                        <div class="alert alert-info" style="margin:0"> Efficiency Monitoring</div>
+                        <div class="alert alert-info" style="margin:0">Dynamic Rebalancing</div>
+                        <div class="alert alert-info" style="margin:0">Real-time Scheduling</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Create Schedule -->
+            <div class="tab-panel" id="tabSchedule">
+                <div class="grid-2">
+                    <!-- Manual Creation -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Create Schedule</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div class="card" style="border: 1px solid var(--info);">
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Schedule Duration (days):</label>
+                                <input type="number" id="planDays" value="7" min="1" max="30" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;">
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Maximum Orders to Schedule:</label>
+                                <input type="number" id="maxOrders" value="10" min="1" max="50" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;">
+                                <small style="color: var(--text-muted);">Leave empty to schedule all pending orders</small>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-sm btn-success" onclick="createAutoSchedule()" style="flex: 1;">
+                                    🤖 Auto-Schedule by Priority
+                                </button>
+                                <button class="btn btn-sm btn-outline-info" onclick="checkAutoScheduleStatus()" style="flex: 1;">
+                                    📊 Check Status
+                                </button>
+                            </div>
+                            <div id="autoScheduleResult" style="margin-top: 16px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Priority Queue Status -->
+                    <div class="card" style="margin-top:20px;">
+                        <div class="card-header">
+                            <div class="card-title"> Priority Queue Status</div>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">High-priority orders awaiting auto-scheduling</p>
+                        </div>
+                        <div id="priorityQueueStatus">
+                            <div class="alert alert-info">Loading priority queue status...</div>
+                        </div>
+                    </div>
+
+                    <!-- Existing Schedules -->
+                    <div id="schedulesList" style="margin-top: 20px;">
+                        <div class="alert alert-info">Loading existing schedules...</div>
+                    </div>
+
+                    <!-- Excel Upload -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> Upload Excel File</div>
+                        </div>
+                        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:16px;">Upload an Excel file with columns: Route, Cargo_Tons, Trains, Days</p>
+                        <div class="file-upload" id="dropZone" onclick="document.getElementById('excelFile').click()">
+                            <div class="icon"></div>
+                            <p><strong>Click to upload</strong> or drag & drop</p>
+                            <p style="font-size:0.75rem;margin-top:4px;">.xlsx, .xls files</p>
+                        </div>
+                        <input type="file" id="excelFile" accept=".xlsx,.xls" style="display:none" onchange="handleExcelUpload(event)">
+                        <div id="uploadResult" style="margin-top:16px;"></div>
+                    </div>
+                </div>
+
+                <!-- Schedule Results -->
+                <div class="card" style="margin-top:20px;display:none;" id="scheduleDetailsCard">
+                    <div class="card-header">
+                        <div class="card-title">Schedule Details</div>
+                    </div>
+                    <div id="scheduleDetails"></div>
+                </div>
+            </div>
+          <!-- Tab: Tactical View 
+            <div class="tab-panel" id="tabTactical">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"> Tactical Timeline (Gantt Chart)</div>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Visualize train deployment across routes with AI-driven rationales</p>
+                    </div>
+                    <div id="ganttContainer" class="gantt-container" style="min-height:400px; overflow-x:auto;">
+                        <div class="alert alert-info">Please create a schedule in the "Create Schedule" tab first to visualize the tactical timeline.</div>
+                    </div>
+                    <div id="rationaleBox" class="card" style="margin-top:20px; border:1px solid var(--primary); display:none;">
+                        <div class="card-header" style="background:rgba(102,126,234,0.1)">
+                            <div class="card-title" style="color:var(--primary)"> AI Rationale</div>
+                        </div>
+                        <div class="card-body" id="rationaleContent" style="padding:15px; font-style:italic;"></div>
+                    </div>
+                </div>
+            </div>
+-->
+                                      
+            <!-- Tab: Risk & Resilience -->
+            <div class="tab-panel" id="tabRisk">
+                <!-- DEBUG: Visual test -->
+                
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> Schedule Risk Score</div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:240px; position:relative;">
+                            <canvas id="riskGaugeChart" style="max-width:300px; max-height:150px;"></canvas>
+                            <div id="riskScoreValue" style="font-size:3rem; font-weight:800; margin-top:-40px; color:var(--text-heading);"></div>
+                            <div id="riskLevelBadge" class="badge" style="margin-top:10px; font-size:1rem; padding:5px 15px;">WAITING...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> Identified Bottlenecks</div>
+                        </div>
+                        <div id="bottleneckGrid" class="grid-2" style="gap:10px; padding: 5px;">
+                            <div class="alert alert-info">Generate a schedule to analyze specific route risks.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top:20px; gap:20px;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> What-If Simulation (Sandbox)</div>
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">Manually modify the AI-generated schedule to test disruption scenarios.</p>
+                            <div class="grid-2" style="gap:10px;">
+                                <div class="form-group">
+                                    <label class="form-label">Select Train</label>
+                                    <select id="simTrainId" class="form-input">
+                                        <option value="0">Train 1</option>
+                                        <option value="1">Train 2</option>
+                                        <option value="2">Train 3</option>
+                                        <option value="3">Train 4</option>
+                                        <option value="4">Train 5</option>
+                                        <option value="5">Train 6</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Select Day</label>
+                                    <input type="number" id="simDay" class="form-input" value="1" min="1" max="14">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">New Action</label>
+                                <select id="simAction" class="form-input">
+                                    <option value="0">IDLE (Stop/Wait)</option>
+                                    <option value="1">Route: DAR_KAPIRI</option>
+                                    <option value="2">Route: DAR_MBEYA</option>
+                                    <option value="3">Route: KAPIRI_NDOLA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Reason for Override</label>
+                                <input type="text" id="simReason" class="form-input" placeholder="e.g., Track maintenance, locomotive failure">
+                            </div>
+                            <button class="btn btn-accent" onclick="runSimulation()" style="width:100%; justify-content:center; margin-top:10px;">
+                                 Evaluate Impact
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card" id="simResultCard" style="display:none; border:2px dashed var(--accent);">
+                        <div class="card-header">
+                            <div class="card-title"> Simulation Impact Analysis</div>
+                        </div>
+                        <div id="simResultDetails"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"> AI Mitigation Recommendations</div>
+                    </div>
+                    <div id="riskRecommendations" class="grid-2" style="gap:15px; padding: 5px;">
+                        <div class="alert alert-info">Waiting for risk analysis data...</div>
+                    </div>
+                </div>
+
+                    <!-- Phase 3: Disruption Simulation -->
+                    <!--
+                    <div class="card" style="border:1px solid var(--danger);">
+                        <div class="card-header" style="background:rgba(229,62,62,0.1)">
+                            <div class="card-title">ðŸš¨ Disruption Simulation (Phase 3)</div>
+                        </div>
+                        <div style="padding:15px;" id="disruptionUI">
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">
+                                Test resilience by simulating a delay. The AI will calculate the cascade effect and propose a resolution.
+                            </p>
+                            <div class="grid-2" style="gap:15px; margin-bottom:15px;">
+                                <div>
+                                    <label style="display:block; font-size:0.8rem; margin-bottom:4px;">Target Train</label>
+                                    <select id="disrupt-train" class="form-input" style="width:100%;">
+                                        <option value="0">Train 1</option>
+                                        <option value="1">Train 2</option>
+                                        <option value="2">Train 3</option>
+                                        <option value="3">Train 4</option>
+                                        <option value="4">Train 5</option>
+                                        <option value="5">Train 6</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display:block; font-size:0.8rem; margin-bottom:4px;">Delay Days</label>
+                                    <input type="number" id="disrupt-delay" class="form-input" value="1" min="1" max="5" style="width:100%;">
+                                </div>
+                            </div>
+                            <button class="btn btn-danger" style="width:100%; justify-content:center;" onclick="simulateDisruption()">
+                                ðŸ’¥ Simulate Disruption
+                            </button>
+                            <div id="disruptionResult" style="margin-top:15px;"></div>
+                        </div>
+                    </div>
+                    -->
+                </div>  <!-- This closes the grid-2 container for the Risk tab -->
+            </div>  <!-- This closes the tabRisk panel -->
+
+            <!-- Tab: Forecasting -->
+            <div class="tab-panel" id="tabForecast">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title"> Advanced Demand Forecasting</div>
+                            <p class="card-subtitle">AI-powered predictions for operational planning</p>
+                        </div>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <select id="forecastModel" class="form-select" style="width:120px;" onchange="loadForecast()">
+                                <option value="lstm">LSTM Model</option>
+                                <option value="arima">ARIMA Model</option>
+                            </select>
+                            <select id="forecastDays" class="form-select" style="width:100px;" onchange="loadForecast()">
+                                <option value="7">7 Days</option>
+                                <option value="14">14 Days</option>
+                                <option value="30" selected>30 Days</option>
+                            </select>
+                            <button class="btn btn-sm btn-primary" onclick="loadForecast()"> Refresh</button>
+                        </div>
+                    </div>
+                    <div class="chart-container tall" style="height: 400px; padding: 5px;">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                    <div id="forecastSummary" class="metrics-grid" style="margin-top:20px; padding: 5px;"></div>
+                </div>
+            </div>
+
+            <!-- Tab: Performance -->
+            <div class="tab-panel" id="tabPerformance">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> Cargo Delivery Trend</div>
+                            <button class="btn btn-sm btn-primary" onclick="loadPerformanceCharts()" style="float:right; margin-top:5px;">
+                                🔄 Refresh Charts
+                            </button>
+                        </div>
+                        <div class="chart-container" style="height: 300px; position: relative;">
+                            <canvas id="cargoChart" style="width: 100%; height: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Profit Trend (ZMW)</div>
+                        </div>
+                        <div class="chart-container" style="height: 300px; position: relative;">
+                            <canvas id="profitChart" style="width: 100%; height: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        <div class="card-title"> Route Efficiency Comparison</div>
+                    </div>
+                    <div class="chart-container tall">
+                        <canvas id="routeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Configuration -->
+            <div class="tab-panel" id="tabConfig">
+               <!-- <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> AI Model Parameters</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Learning Rate</label>
+                            <input type="range" class="form-input" id="cfgLearningRate" min="0.01" max="0.5" step="0.01" value="0.1" oninput="this.nextElementSibling.value = this.value">
+                            <output>0.1</output>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Exploration Rate (Epsilon)</label>
+                            <input type="range" class="form-input" id="cfgExplorationRate" min="0" max="1" step="0.05" value="0.1" oninput="this.nextElementSibling.value = this.value">
+                            <output>0.1</output>
+                        </div>
+                        <div class="form-group" style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+                            <input type="checkbox" id="cfgCoordinationBonus" checked>
+                            <label class="form-label" style="margin:0">Enable Coordination Bonus</label>
+                        </div>
+                    </div>
+                </div> -->
+                                
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        <div class="card-title"> System Info</div>
+                    </div>
+                    <div class="grid-2" style="gap:12px;">
+                        <div class="alert alert-info" style="margin:0"> Cost Model: Zambian Kwacha (ZMW)</div>
+                        <div class="alert alert-info" style="margin:0"> Routes: 12 TAZARA Network Routes</div>
+                        <div class="alert alert-info" style="margin:0"> Backend: PyTorch Deep RL Engine</div>
+                        <div class="alert alert-info" style="margin:0"> Database: PostgreSQL Persistent Storage</div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        <div class="card-title">TAZARA Route Network</div>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Complete railway network from Dar es Salaam to New Kapiri Mposhi</p>
+                    </div>
+                    <div id="tazaraNetwork" style="padding: 15px;">
+                        <div class="grid-2" style="gap: 15px;">
+                            <!-- Main Through Traffic Routes -->
+                            <div class="card" style="margin: 0; border: 1px solid var(--primary);">
+                                <div class="card-header" style="background: rgba(102, 126, 234, 0.1);">
+                                    <div class="card-title" style="font-size: 0.9rem;"> Through Traffic Routes</div>
+                                </div>
+                                <div style="padding: 10px;">
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>DAR to KAPIRI</strong><br>Dar es Salaam to Kapiri Mposhi</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"> <strong>DAR to MBEYA</strong><br>Dar es Salaam to Mbeya</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>MBEYA to KASAMA</strong><br>Mbeya to Kasama</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tanzania Local Routes -->
+                            <div class="card" style="margin: 0; border: 1px solid var(--success);">
+                                <div class="card-header" style="background: rgba(72, 187, 120, 0.1);">
+                                    <div class="card-title" style="font-size: 0.9rem;"> Tanzania Local Routes</div>
+                                </div>
+                                <div style="padding: 10px;">
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>DAR to KIDATU</strong><br>Dar es Salaam to Kidatu</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KIDATU to MAKAMBAKO</strong><br>Kidatu to Makambako</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>MAKAMBAKO to MBEYA</strong><br>Makambako to Mbeya</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KIDATU TRANS-SHIPMENT</strong><br>Kidatu Hub</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Zambia Local Routes -->
+                            <div class="card" style="margin: 0; border: 1px solid var(--warning);">
+                                <div class="card-header" style="background: rgba(245, 158, 11, 0.1);">
+                                    <div class="card-title" style="font-size: 0.9rem;"> Zambia Local Routes</div>
+                                </div>
+                                <div style="padding: 10px;">
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KASAMAâ€“MPIKA</strong><br>Kasama to Mpika</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>MPIKAâ€“SERENJE</strong><br>Mpika to Serenje</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>SERENJEâ€“KAPIRI</strong><br>Serenje to Kapiri Mposhi</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KAPIRIâ€“NDOLA</strong><br>Kapiri Mposhi to Ndola</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"> <strong>KAPIRI DISTRIBUTION</strong><br>Central Province Hubs</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Network Statistics -->
+                            <div class="card" style="margin: 0; border: 1px solid var(--info);">
+                                <div class="card-header" style="background: rgba(23, 201, 117, 0.1);">
+                                    <div class="card-title" style="font-size: 0.9rem;"> Network Statistics</div>
+                                </div>
+                                <div style="padding: 10px;">
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Total Routes:</strong> 12</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Major Stations:</strong> 8</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Countries:</strong> Tanzania to Zambia & Zambia to Tanzania</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Total Distance:</strong> 1,860 km</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Gauge:</strong> 1,067mm (Cape Gauge)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Workflow Management -->
+            <div class="tab-panel" id="tabWorkflow">
+                <div class="grid-2">
+                    <!-- Schedule Approval -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">âœ… Schedule Approvals</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Schedule</label>
+                            <select class="form-input" id="approvalScheduleSelect">
+                                <option value="">Loading schedules...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Approval Action</label>
+                            <select class="form-input" id="approvalAction">
+                                <option value="approved">âœ… Approve</option>
+                                <option value="rejected">âŒ Reject</option>
+                                <option value="needs_revision">ðŸ“ Needs Revision</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Approver Name</label>
+                            <input type="text" class="form-input" id="approverName" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Reason (if rejected/revised)</label>
+                            <textarea class="form-input" id="approvalReason" rows="3" placeholder="Enter reason for rejection or revision notes"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="submitApproval()" style="width:100%;">
+                            ðŸ”„ Submit Approval
+                        </button>
+                    </div>
+
+                    <!-- Schedule Modifications -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">âœï¸ Schedule Modifications</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Schedule</label>
+                            <select class="form-input" id="modifyScheduleSelect">
+                                <option value="">Loading schedules...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Modification Type</label>
+                            <select class="form-input" id="modificationType">
+                                <option value="train_add">âž• Add Train</option>
+                                <option value="train_remove">âž– Remove Train</option>
+                                <option value="time_adjust">â° Adjust Time</option>
+                                <option value="priority_change">ðŸŽ¯ Change Priority</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Details</label>
+                            <textarea class="form-input" id="modificationDetails" rows="3" placeholder="Enter modification details"></textarea>
+                        </div>
+                        <button class="btn btn-secondary" onclick="submitModification()" style="width:100%;">
+                            ðŸ“ Submit Modification
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modification History -->
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        <div class="card-title">ðŸ“œ Recent Modifications</div>
+                    </div>
+                    <div id="modificationHistory" style="max-height:300px; overflow-y:auto;">
+                        <div class="alert alert-info">Loading modification history...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Customer Orders -->
+            <div class="tab-panel" id="tabOrders">
+                <div class="grid-2">
+                    <!-- Create Order -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> Create Customer Order</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Customer Name</label>
+                            <input type="text" class="form-input" id="customerName" placeholder="Enter customer name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cargo Type</label>
+                            <select class="form-input" id="cargoType">
+                                <option value="Coal">Coal</option>
+                                <option value="Copper">Copper</option>
+                                <option value="Containers">Containers</option>
+                                <option value="Fuel">Fuel</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cargo Weight (tons)</label>
+                            <input type="number" class="form-input" id="cargoWeight" placeholder="Enter weight in tons" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Origin Station</label>
+                            <select class="form-input" id="originStation">
+                                <option value="Dar es Salaam">Dar es Salaam</option>
+                                <option value="Kapiri Mposhi">Kapiri Mposhi</option>
+                                <option value="Mbeya">Mbeya</option>
+                                <option value="Ndola">Ndola</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Destination Station</label>
+                            <select class="form-input" id="destinationStation">
+                                <option value="Dar es Salaam">Dar es Salaam</option>
+                                <option value="Kapiri Mposhi">Kapiri Mposhi</option>
+                                <option value="Mbeya">Mbeya</option>
+                                <option value="Ndola">Ndola</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Priority Level</label>
+                            <select class="form-input" id="priorityLevel">
+                                <option value="1"> High Priority</option>
+                                <option value="2"> Medium Priority</option>
+                                <option value="3"> Low Priority</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Requested Departure Date</label>
+                            <input type="date" class="form-input" id="requestedDate">
+                        </div>
+                        <button class="btn btn-primary" id="createOrderBtn" onclick="createCustomerOrder()" style="width:100%;">
+                             Create Order
+                        </button>
+                    </div>
+
+                    <!-- Orders List -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"> Customer Orders</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Filter by Status</label>
+                            <select class="form-input" id="orderStatusFilter" onchange="loadOrders()">
+                                <option value="">All Orders</option>
+                                <option value="pending"> Pending</option>
+                                <option value="assigned"> Assigned</option>
+                                <option value="cancelled"> Cancelled</option>
+                                <option value="completed"> Completed</option>
+                            </select>
+                        </div>
+                        <div id="ordersList" style="max-height:400px; overflow-y:auto;">
+                            <div class="alert alert-info">Loading orders...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Assignment -->
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        <div class="card-title"> Order Assignment</div>
+                    </div>
+                    <div class="grid-2" style="gap:20px;">
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">Select Order</label>
+                                <select class="form-input" id="assignOrderSelect">
+                                    <option value="">Loading orders...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Assign to Schedule</label>
+                                <select class="form-input" id="assignScheduleSelect">
+                                    <option value="">Loading schedules...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Train ID</label>
+                                <input type="number" class="form-input" id="assignTrainId" placeholder="Enter train ID" min="1">
+                            </div>
+                            <button class="btn btn-success" onclick="assignOrder()" style="width:100%;">
+                                 Assign Order
+                            </button>
+                        </div>
+                        <div id="assignmentResult">
+                            <div class="alert alert-info">Select an order to view assignment options</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    let forecastChartInstance = null;
+    let riskGaugeInstance = null;
+
+    // Train Capacity Configuration
+    const TRAIN_CAPACITIES = {
+        1: { capacity: 500, type: 'heavy', name: 'Heavy Freight Train' },
+        2: { capacity: 350, type: 'medium', name: 'Medium Freight Train' },
+        3: { capacity: 350, type: 'medium', name: 'Medium Freight Train' },
+        4: { capacity: 250, type: 'light', name: 'Light Freight Train' },
+        5: { capacity: 250, type: 'light', name: 'Light Freight Train' },
+        6: { capacity: 600, type: 'super_heavy', name: 'Super Heavy Train' }
+    };
+
+    // Orders Storage
+    let orders = [];
+    let selectedOrders = [];
+    let currentScheduleId = null;
+
+    // Test: Display train capacities in console
+    console.log('🚂 Train Capacities Loaded:', TRAIN_CAPACITIES);
+
+    // Test function to verify capacity access
+    function testTrainCapacities() {
+        console.log('🧪 Testing Train Capacity Access:');
+        for (let i = 1; i <= 6; i++) {
+            const train = TRAIN_CAPACITIES[i];
+            console.log(`Train ${i}: ${train.name} - Capacity: ${train.capacity} tons - Type: ${train.type}`);
+        }
+        
+        // Test capacity calculation
+        const totalCapacity = Object.values(TRAIN_CAPACITIES).reduce((sum, train) => sum + train.capacity, 0);
+        console.log(` Total Fleet Capacity: ${totalCapacity} tons`);
+        
+        return totalCapacity;
+    }
+
+    // Step 2: Sequential Loading Algorithm
+    function getCargoRequirementsFromOrders(selectedOrders) {
+        const cargoByRoute = {};
+        
+        // Valid TAZARA routes that the backend recognizes
+        const VALID_TAZARA_ROUTES = [
+            'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA', 
+            'KAPIRI_NDOLA', 'DAR_KIDATU', 'KIDATU_TRANS_SHIPMENT'
+        ];
+        
+        selectedOrders.forEach(order => {
+            console.log(' Processing order:', order);
+            
+            let route = order.route;
+            let cargoAmount = order.cargo_tons;
+            
+            console.log(`Order details - Route: ${route}, Cargo: ${cargoAmount}, Type: ${typeof cargoAmount}`);
+            
+            // Validate route
+            if (!route || route === undefined) {
+                console.warn(` Invalid route ${route}, mapping to DAR_KAPIRI`);
+                route = 'DAR_KAPIRI';
+            }
+            
+            // Validate cargo amount
+            if (!cargoAmount || cargoAmount === undefined || isNaN(cargoAmount) || cargoAmount <= 0) {
+                console.warn(` Invalid cargo amount ${cargoAmount} for order, skipping`);
+                return; // Skip this order
+            }
+            
+            // Map route to valid TAZARA route if needed
+            if (!VALID_TAZARA_ROUTES.includes(route)) {
+                console.warn(` Invalid route ${route}, mapping to DAR_KAPIRI`);
+                route = 'DAR_KAPIRI';
+            }
+            
+            if (!cargoByRoute[route]) {
+                cargoByRoute[route] = 0;
+            }
+            cargoByRoute[route] += parseFloat(cargoAmount);
+        });
+        
+        console.log(' Cargo Requirements from Orders (mapped to TAZARA routes):', cargoByRoute);
+        return cargoByRoute;
+    }
+
+    function allocateTrainsSequentially(cargoRequirements) {
+        const allocations = [];
+        
+        // Sort routes by total cargo (highest first)
+        const sortedRoutes = Object.entries(cargoRequirements)
+            .sort(([, a], [, b]) => b - a);
+        
+        console.log('🔄 Sorted Routes by Cargo:', sortedRoutes);
+        
+        sortedRoutes.forEach(([route, totalCargo], routeIndex) => {
+            let remainingCargo = totalCargo;
+            let dayOffset = routeIndex; // Different routes on different days
+            
+            // Sort trains by capacity (largest first) for optimal efficiency
+            const sortedTrains = Object.entries(TRAIN_CAPACITIES)
+                .sort(([,a], [,b]) => b.capacity - a.capacity)
+                .map(([id, train]) => ({ id: parseInt(id), ...train }));
+            
+            console.log(`🚂 Optimized train allocation for ${totalCargo} tons of ${route} cargo`);
+            console.log(` Available trains (sorted by capacity):`, sortedTrains.map(t => `Train ${t.id}: ${t.capacity} tons (${t.type})`));
+            
+            for (const train of sortedTrains) {
+                if (remainingCargo <= 0) break; // Stop when cargo is fully allocated
+                
+                const trainCapacity = train.capacity;
+                const loadAmount = Math.min(remainingCargo, trainCapacity);
+                
+                if (loadAmount > 0) {
+                    // Calculate realistic fuel cost based on train type and cargo
+                    const fuelRates = {
+                        'heavy': 75,      // ZMW per ton for heavy freight
+                        'medium': 60,     // ZMW per ton for medium freight
+                        'light': 45,      // ZMW per ton for light freight
+                        'super_heavy': 85 // ZMW per ton for super heavy trains
+                    };
+                    const trainType = train.type;
+                    const fuelRate = fuelRates[trainType] || 60;
+                    const fuelCost = Math.round(loadAmount * fuelRate);
+                    
+                    console.log(`✅ Loading ${loadAmount} tons onto Train ${train.id} (${trainCapacity} ton capacity, ${trainType} type)`);
+                    console.log(`   Fuel cost: ${loadAmount} tons × ${fuelRate} ZMW/ton = ${fuelCost} ZMW`);
+                    
+                    allocations.push({
+                        day: dayOffset + 1, // Days start from 1
+                        train_id: train.id - 1, // 0-based indexing
+                        route: route,
+                        route_name: getRouteDisplayName(route),
+                        cargo_carried: loadAmount,
+                        remaining_capacity: trainCapacity - loadAmount,
+                        rationale: `Optimized loading: ${loadAmount} tons for ${route} route (Train ${train.id}: ${trainCapacity} ton capacity, ${trainType})`,
+                        driver_id: `DRV${String(train.id).padStart(3, '0')}`,
+                        skill_level: train.type === 'heavy' || train.type === 'super_heavy' ? 'Expert' : 'Senior',
+                        fuel_cost: fuelCost
+                    });
+                    
+                    remainingCargo -= loadAmount;
+                    console.log(`   Cargo remaining: ${remainingCargo} tons`);
+                }
+            }
+            
+            if (remainingCargo > 0) {
+                console.warn(` Insufficient capacity for ${route}: ${remainingCargo} tons remaining`);
+            }
+        });
+        
+        console.log('📋 Final Train Allocations:', allocations);
+        return allocations;
+    }
+
+    function getRouteDisplayName(route) {
+        const routeNames = {
+            'DAR_KAPIRI': 'Dar → Kapiri',
+            'DAR_MBEYA': 'Dar → Mbeya', 
+            'MBEYA_KASAMA': 'Mbeya → Kasama',
+            'KAPIRI_NDOLA': 'Kapiri → Ndola',
+            'DAR_KIDATU': 'Dar → Kidatu',
+            'KIDATU_TRANS_SHIPMENT': 'Kidatu → Transshipment'
+        };
+        return routeNames[route] || route;
+    }
+
+    // â”€â”€ Load Overview Data â”€â”€
+    async function loadOverview() {
+        try {
+            // Get system status
+            const status = await fetchAPI('/multi-route/status');
+            document.getElementById('ovTrains').textContent = (status.supported_trains || []).length || '6';
+            document.getElementById('ovRoutes').textContent = (status.routes || []).length || '3';
+            document.getElementById('ovCapabilities').textContent = (status.capabilities || []).length || '6';
+            
+            // Get recent auto-schedules for overview metrics
+            const schedulesResponse = await fetchAPI('/priority/auto-schedule/list?limit=10');
+            const schedules = schedulesResponse.schedules || [];
+            
+            console.log('🔍 DEBUG: Overview - schedules loaded:', schedules.length);
+            console.log('🔍 DEBUG: Overview - sample schedules:', schedules.slice(0, 3));
+            
+            if (schedules.length > 0) {
+                // Calculate overview metrics from recent schedules
+                const totalCargo = schedules.reduce((sum, s) => sum + (s.total_cargo_delivered || 0), 0);
+                const avgEfficiency = schedules.reduce((sum, s) => sum + (s.efficiency_score || 0), 0) / schedules.length;
+                const totalProfit = schedules.reduce((sum, s) => sum + (s.total_reward || 0), 0);
+                const totalTrains = Math.max(...schedules.map(s => s.num_trains || 0));
+                
+                console.log('🔍 DEBUG: Overview calculated metrics:', {
+                    totalCargo,
+                    avgEfficiency,
+                    totalProfit,
+                    totalTrains,
+                    scheduleCount: schedules.length
+                });
+                
+                // Update metrics - check element existence
+                const ovCargoEl = document.getElementById('ovCargo');
+                const ovEfficiencyEl = document.getElementById('ovEfficiency');
+                const ovProfitEl = document.getElementById('ovProfit');
+                
+                console.log('🔍 DEBUG: Overview elements found:', {
+                    ovCargo: !!ovCargoEl,
+                    ovEfficiency: !!ovEfficiencyEl,
+                    ovProfit: !!ovProfitEl
+                });
+                
+                if (ovCargoEl) {
+                    ovCargoEl.textContent = formatNumber(totalCargo);
+                    console.log('✅ DEBUG: Updated cargo to:', formatNumber(totalCargo));
+                } else {
+                    console.error('❌ DEBUG: ovCargo element not found');
+                }
+                
+                if (ovEfficiencyEl) {
+                    ovEfficiencyEl.textContent = formatNumber(avgEfficiency * 100, 1) + '%';
+                    console.log('✅ DEBUG: Updated efficiency to:', formatNumber(avgEfficiency * 100, 1) + '%');
+                } else {
+                    console.error('❌ DEBUG: ovEfficiency element not found');
+                }
+                
+                if (ovProfitEl) {
+                    ovProfitEl.textContent = formatNumber(totalProfit);
+                    console.log('✅ DEBUG: Updated profit to:', formatNumber(totalProfit));
+                } else {
+                    console.error('❌ DEBUG: ovProfit element not found');
+                }
+            } else {
+                console.log('🔍 DEBUG: No schedules found for overview');
+            }
+        } catch {
+            document.getElementById('ovTrains').textContent = '6';
+            document.getElementById('ovRoutes').textContent = '3';
+            document.getElementById('ovCapabilities').textContent = '6';
+        }
+    }
+
+    function updateOverviewMetrics(data) {
+        // Update overview metrics with actual schedule data
+        if (data.daily_assignments && data.daily_assignments.length > 0) {
+            const firstDay = data.daily_assignments[0];
+            const activeTrains = firstDay.train_assignments ? firstDay.train_assignments.length : 0;
+            
+            // Update metrics if elements exist
+            const ovTrainsEl = document.getElementById('ovTrains');
+            const ovCargoEl = document.getElementById('ovCargo');
+            const ovEfficiencyEl = document.getElementById('ovEfficiency');
+            const ovProfitEl = document.getElementById('ovProfit');
+            
+            if (ovTrainsEl) ovTrainsEl.textContent = activeTrains;
+            if (ovCargoEl) ovCargoEl.textContent = formatNumber(data.cargo_delivered || 0);
+            if (ovEfficiencyEl) ovEfficiencyEl.textContent = formatNumber((data.cargo_delivered || 0) / (activeTrains || 1), 1);
+            if (ovProfitEl) ovProfitEl.textContent = formatCurrency(data.total_profit || 0);
+        }
+    }
+
+    function displayScheduleDetails(data) {
+        const detailsCard = document.getElementById('scheduleDetailsCard');
+        const detailsDiv = document.getElementById('scheduleDetails');
+        detailsCard.style.display = 'block';
+
+        // Update overview metrics with schedule data
+        updateOverviewMetrics(data);
+
+        // Flatten the daily assignments for display
+        const allAssignments = [];
+        if (data.daily_assignments) {
+            data.daily_assignments.forEach(assignment => {
+                allAssignments.push({
+                    day: assignment.day,
+                    train_id: assignment.train_id,
+                    route: assignment.route,
+                    cargo_tons: assignment.cargo_tons,
+                    action: assignment.action,
+                    departure_date: assignment.departure_date
+                });
+            });
+        }
+
+        const perf = data.performance_metrics || {};
+        const cost = data.cost_breakdown || {};
+        const eff = data.efficiency_analysis || {};
+
+        detailsDiv.innerHTML = `
+            <div class="metrics-grid" style="margin-bottom:16px;">
+                <div class="metric-card" style="--metric-accent:var(--primary);">
+                    <div class="metric-value">${data.schedule?.schedule_id || 'â€”'}</div>
+                    <div class="metric-label">Schedule ID</div>
+                    <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+                        ${data.schedule?.created_at ? formatDate(data.schedule.created_at) : 'No date'}
+                    </div>
+                </div>
+                <div class="metric-card" style="--metric-accent:var(--success);">
+                    <div class="metric-value">${formatNumber(data.schedule?.total_cargo_delivered || 0)}</div>
+                    <div class="metric-label">Cargo Delivered (tons)</div>
+                </div>
+                <div class="metric-card" style="--metric-accent:var(--accent);">
+                    <div class="metric-value">${(() => {
+    const cargo = data.schedule?.total_cargo_delivered || 0;
+    // Count actual trains used (with cargo > 0)
+    let usedTrains = 0;
+    if (data.daily_assignments) {
+        data.daily_assignments.forEach(assignment => {
+            if (assignment.cargo_tons > 0) {
+                usedTrains = Math.max(usedTrains, parseInt(assignment.train_id) + 1);
+            }
+        });
+    }
+    // Fallback to total trains if can't determine used trains
+    const trainCount = usedTrains > 0 ? usedTrains : (data.schedule?.num_trains || 6);
+    return formatNumber(cargo / trainCount, 1);
+})()}</div>
+                    <div class="metric-label">Tons / Train</div>
+                </div>
+                <div class="metric-card" style="--metric-accent:var(--warning);">
+                    <div class="metric-value">${formatCurrency(cost.net_profit_zmw || 0)}</div>
+                    <div class="metric-label">Net Profit</div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top:20px; border:1px solid var(--primary);">
+                <div class="card-header" style="background:rgba(102,126,234,0.1)">
+                    <div class="card-title">Intelligent Resource Allocation (Phase 4)</div>
+                </div>
+                <div style="padding:15px; overflow-x:auto;">
+                    <table class="table" style="width:100%; border-collapse:collapse;">
+                        <thead>
+                            <tr style="border-bottom:2px solid var(--border);">
+                                 <th style="text-align:left; padding:8px;">Day</th>
+                                 <th style="text-align:left; padding:8px;">Train</th>
+                                 <th style="text-align:left; padding:8px;">Route</th>
+                                 <th style="text-align:left; padding:8px;">Departure Date</th>
+                                 <th style="text-align:left; padding:8px;">Action</th>
+                                 <th style="text-align:left; padding:8px;">Cargo (tons)</th>
+                                <th style="text-align:left; padding:8px;">Status</th>
+                                <th style="text-align:left; padding:8px;">Fuel Cost (ZMW)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${allAssignments.slice(0, 10).map(a => {
+                                // Debug: log assignment data
+                                console.log('DEBUG: Assignment data:', a);
+                                console.log('DEBUG: departure_date field:', a.departure_date);
+                                
+                                // Use departure_date from API (from order's requested_departure_date)
+                                const departureDate = a.departure_date ? new Date(a.departure_date) : null;
+                                
+                                return `
+                                <tr style="border-bottom:1px solid var(--border);">
+                                     <td style="padding:8px;">Day ${a.day}</td>
+                                     <td style="padding:8px;">${a.train_id}</td>
+                                     <td style="padding:8px;">${a.route}</td>
+                                     <td style="padding:8px;">${departureDate ? formatDate(departureDate.toISOString()) : 'No departure date'}</td>
+                                     <td style="padding:8px;"><span style="font-size:0.8rem; color:var(--text-muted); font-style:italic;">${a.action || 'N/A'}</span></td>
+                                     <td style="padding:8px;"><strong>${a.cargo_tons || 0} tons</strong></td>
+                                    <td style="padding:8px;"><span class="badge badge-${a.action === 'assigned' ? 'success' : 'warning'}">${a.action || 'N/A'}</span></td>
+                                    <td style="padding:8px;">${formatCurrency(0)}</td>
+                                </tr>
+                                `;
+                            }).join('')}
+                            ${allAssignments.length > 10 ? `<tr><td colspan="8" style="text-align:center; padding:8px; color:var(--text-muted);">... and ${allAssignments.length - 10} more assignments</td></tr>` : ''}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top:20px; gap:20px;">
+                <div class="card" style="margin:0; border:1px solid var(--info);">
+                    <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Labor Efficiency</div></div>
+                    <div style="padding:15px;">
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--info);">${(() => {
+    const cargo = data.schedule?.total_cargo_delivered || 0;
+    // Count actual trains used (with cargo > 0)
+    let usedTrains = 0;
+    if (data.daily_assignments) {
+        data.daily_assignments.forEach(assignment => {
+            if (assignment.cargo_tons > 0) {
+                usedTrains = Math.max(usedTrains, parseInt(assignment.train_id) + 1);
+            }
+        });
+    }
+    // Fallback to total trains if can't determine used trains
+    const trainCount = usedTrains > 0 ? usedTrains : (data.schedule?.num_trains || 6);
+    return formatNumber(cargo / trainCount, 1);
+})()}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Tons per Train</div>
+                    </div>
+                </div>
+                <div class="card" style="margin:0; border:1px solid var(--success);">
+                    <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Potential Savings</div></div>
+                    <div style="padding:15px;">
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--success);">${formatCurrency(data.schedule?.total_reward || 0)}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Total Reward</div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin:0; border:1px solid var(--warning);">
+                    <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Overall Efficiency</div></div>
+                    <div style="padding:15px;">
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--warning);">${data.schedule ? ((data.schedule.efficiency_score || 0) * 100).toFixed(1) + '%' : 'â€”'}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Efficiency Score</div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin:0; border:1px solid var(--primary);">
+                    <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Order Fulfillment</div></div>
+                    <div style="padding:15px;">
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--primary);">${data.summary ? data.summary.total_orders : 'â€”'}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Orders Fulfilled</div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin:0; border:1px solid var(--secondary);">
+                    <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Performance Impact</div></div>
+                    <div style="padding:15px;">
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--secondary);">${data.metadata && data.metadata.based_on_orders ? 'HIGH' : 'STANDARD'}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Impact Level</div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        renderGanttChart(data);
+        analyzeRisk(data);
+        currentScheduleId = data.schedule_id;
+    }
+
+    // â”€â”€ Create Schedule â”€â”€
+    async function createSchedule() {
+        const btn = document.getElementById('createScheduleBtn');
+        const resultDiv = document.getElementById('scheduleResult');
+        btn.disabled = true;
+        btn.innerHTML = '<div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0;"></div> Creating...';
+        resultDiv.innerHTML = '';
+
+        try {
+            const strategy = 'traditional'; // Fixed to traditional since we removed the selector
+            
+            // Check if orders were loaded
+            const ordersSelect = document.getElementById('ordersSelect');
+            const selectedOrders = Array.from(ordersSelect.selectedOptions);
+            
+            console.log('🔍 DEBUGGING 422 ERROR:');
+            console.log('1. Orders Select Element:', ordersSelect);
+            console.log('2. Selected Options Count:', selectedOrders.length);
+            console.log('3. Selected Options:', selectedOrders);
+            console.log('4. Global Cargo Requirements:', window.loadedCargoRequirements);
+            
+            // Force a test cargo requirement if nothing else works
+            let cargoRequirements = {};
+            
+            if (selectedOrders.length > 0) {
+                console.log('5. Has selected orders, trying to parse...');
+                // Parse order data properly
+                const parsedOrders = selectedOrders.map(opt => {
+                    try {
+                        console.log('🔍 Selected option details:', {
+                            value: opt.value,
+                            text: opt.textContent,
+                            dataset: opt.dataset,
+                            datasetOrder: opt.dataset.order
+                        });
+                        
+                        const orderData = JSON.parse(opt.dataset.order || '{}');
+                        console.log('✅ Parsed order data:', orderData);
+                        return orderData;
+                    } catch (e) {
+                        console.warn('❌ Failed to parse order data:', opt.dataset.order, e);
+                        return null;
+                    }
+                }).filter(order => order !== null);
+                
+                console.log('6. Parsed Orders:', parsedOrders);
+                
+                if (parsedOrders.length > 0) {
+                    cargoRequirements = getCargoRequirementsFromOrders(parsedOrders);
+                } else {
+                    console.log('7. No valid parsed orders, checking global...');
+                }
+            }
+            
+            // If no parsed orders, try to use globally stored cargo from loadSelectedOrders
+            if (Object.keys(cargoRequirements).length === 0 && window.loadedCargoRequirements) {
+                console.log('🔄 Using globally stored cargo requirements:', window.loadedCargoRequirements);
+                
+                // Map global cargo to valid TAZARA routes
+                const mappedCargoRequirements = {};
+                const VALID_TAZARA_ROUTES = [
+                    'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA', 
+                    'KAPIRI_NDOLA', 'DAR_KIDATU', 'KIDATU_TRANS_SHIPMENT'
+                ];
+                
+                Object.entries(window.loadedCargoRequirements).forEach(([route, cargo]) => {
+                    if (VALID_TAZARA_ROUTES.includes(route)) {
+                        mappedCargoRequirements[route] = cargo;
+                    } else {
+                        console.warn(`⚠️ Invalid global route ${route}, mapping to DAR_KAPIRI`);
+                        mappedCargoRequirements['DAR_KAPIRI'] = (mappedCargoRequirements['DAR_KAPIRI'] || 0) + cargo;
+                    }
+                });
+                
+                cargoRequirements = mappedCargoRequirements;
+                console.log('✅ Mapped global cargo requirements:', cargoRequirements);
+            } else if (Object.keys(cargoRequirements).length === 0) {
+                console.warn('⚠️ No order data available, using TEST cargo');
+                // Force test data for debugging (using valid TAZARA routes)
+                cargoRequirements = {
+                    'DAR_KAPIRI': 500,
+                    'DAR_MBEYA': 300
+                };
+            }
+            
+            const trainAllocations = allocateTrainsSequentially(cargoRequirements);
+            
+            console.log('🚀 Using Sequential Train Allocation:', trainAllocations);
+            
+            // Create daily assignments from train allocations
+            const dailyAssignments = [];
+            const maxDays = Math.max(...trainAllocations.map(a => a.day + 1));
+            
+            for (let day = 1; day <= maxDays; day++) {
+                const dayAssignments = trainAllocations.filter(a => a.day === day);
+                dailyAssignments.push({
+                    day: day,
+                    train_assignments: dayAssignments
+                });
+            }
+            
+            // Add order information to schedule metadata
+            const scheduleMetadata = {
+                based_on_orders: selectedOrders.length > 0,
+                order_count: selectedOrders.length,
+                order_ids: selectedOrders.map(opt => opt.value),
+                total_cargo_from_orders: Object.values(cargoRequirements).reduce((sum, val) => sum + val, 0)
+            };
+            
+            console.log('🔍 API Request Data:', {
+                num_trains: 6,
+                max_days: 14,
+                use_deep_rl: false,
+                train_assignments_count: dailyAssignments.length,
+                cargo_requirements: cargoRequirements,
+                metadata: scheduleMetadata
+            });
+
+            // Calculate actual number of trains used from allocations
+            const actualTrainsUsed = new Set(dailyAssignments.map(assignment => assignment.train_id)).size;
+            const actualDaysUsed = Math.max(...dailyAssignments.map(assignment => assignment.day || 1));
+            
+            console.log(`🚂 Actual train usage calculation:`);
+            console.log(`   Unique trains used: ${actualTrainsUsed}`);
+            console.log(`   Days allocated: ${actualDaysUsed}`);
+            console.log(`   Total assignments: ${dailyAssignments.length}`);
+            
+            // Send ONLY the routes that have cargo (no need to send all 6 routes)
+            const apiRequest = {
+                num_trains: actualTrainsUsed || 1,  // Use actual trains used, minimum 1
+                max_days: actualDaysUsed || 1,      // Use actual days needed, minimum 1
+                use_deep_rl: false,
+                cargo_requirements: cargoRequirements,  // Only send routes with actual cargo
+                train_assignments: dailyAssignments,     // Send our optimized allocations!
+                metadata: scheduleMetadata
+            };
+            
+            console.log('🔍 FINAL API REQUEST DEBUG:');
+            console.log('1. Complete API Request Object:', apiRequest);
+            console.log('2. Cargo Requirements Type:', typeof cargoRequirements);
+            console.log('3. Cargo Requirements Keys:', Object.keys(cargoRequirements));
+            console.log('4. Cargo Requirements Values:', Object.values(cargoRequirements));
+            console.log('5. Cargo Requirements JSON:', JSON.stringify(cargoRequirements));
+            console.log('6. Metadata:', JSON.stringify(scheduleMetadata));
+            
+            // Debug: Show what we're actually sending for train assignments
+            console.log('🚂 TRAIN ASSIGNMENTS DEBUG:');
+            dailyAssignments.forEach((assignment, index) => {
+                console.log(`   Assignment ${index + 1}: Train ${assignment.train_id + 1}, Route: ${assignment.route}, Cargo: ${assignment.cargo_carried} tons`);
+            });
+            
+            // Debug: Check if cargo exceeds train capacities
+            dailyAssignments.forEach((assignment) => {
+                const trainId = assignment.train_id + 1; // Convert to 1-based
+                const trainCapacity = TRAIN_CAPACITIES[trainId]?.capacity || 0;
+                const cargoAmount = assignment.cargo_carried || 0;
+                const isOverloaded = cargoAmount > trainCapacity;
+                console.log(`   Train ${trainId} Check: ${cargoAmount} tons vs ${trainCapacity} capacity ${isOverloaded ? '❌ OVERLOADED' : '✅ OK'}`);
+            });
+            console.log('7. Daily Assignments (Sequential Loading):', dailyAssignments);
+            console.log('8. Train Allocations Detail:', trainAllocations.map(t => 
+                `Train ${t.train_id + 1}: ${t.cargo_carried} tons (${t.route}) - Capacity: ${TRAIN_CAPACITIES[t.train_id + 1].capacity} tons`
+            ));
+            
+            // Validate before sending
+            if (!cargoRequirements || Object.keys(cargoRequirements).length === 0) {
+                console.error('❌ ERROR: Empty cargo requirements detected!');
+                throw new Error('No valid cargo requirements found');
+            }
+            
+            // Check for invalid values
+            Object.entries(cargoRequirements).forEach(([route, cargo]) => {
+                console.log(`7. Route Check: ${route} -> ${cargo} (type: ${typeof cargo})`);
+                if (typeof cargo !== 'number' || cargo <= 0 || isNaN(cargo)) {
+                    console.error(`❌ ERROR: Invalid cargo value for ${route}: ${cargo} (type: ${typeof cargo})`);
+                    throw new Error(`Invalid cargo value for ${route}: ${cargo}`);
+                }
+            });
+            
+            // Final validation
+            const totalCargo = Object.values(cargoRequirements).reduce((sum, val) => sum + val, 0);
+            if (totalCargo <= 0 || isNaN(totalCargo)) {
+                console.error('❌ ERROR: Total cargo is invalid:', totalCargo);
+                throw new Error('No valid cargo requirements found');
+            }
+            
+            console.log('✅ All cargo values validated successfully!');
+            
+            console.log('8. About to send API request...');
+            
+            const data = await postAPI('/multi-route/schedule', apiRequest);
+
+            let successMessage = `âœ… <strong>Schedule Created Successfully!</strong>`;
+            if (selectedOrders.length > 0) {
+                successMessage += `<br><small style="color: var(--text-muted);">ðŸ“¦ Fulfilling ${selectedOrders.length} customer orders</small>`;
+            }
+            
+            resultDiv.innerHTML = `<div class="alert alert-success">${successMessage}</div>`;
+            displayScheduleDetails(data);
+            showToast('Schedule created successfully!', 'success');
+            
+            // Refresh performance charts to include new schedule
+            console.log('🔄 Refreshing performance charts after schedule creation...');
+            setTimeout(() => {
+                loadPerformanceCharts();
+                loadOverview();
+            }, 1000); // Wait 1 second for database to update
+        } catch (err) {
+            console.error('🔍 DETAILED ERROR ANALYSIS:');
+            console.error('1. Error Message:', err.message);
+            console.error('2. Error Type:', typeof err);
+            console.error('3. Error Object:', err);
+            console.error('4. Error Stringified:', JSON.stringify(err, null, 2));
+            
+            // Try to get the raw error response
+            try {
+                console.log('5. Attempting raw API call for debugging...');
+                const rawResponse = await fetch('http://127.0.0.1:8000/multi-route/schedule', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(apiRequest)
+                });
+                
+                console.log('6. Raw Response Status:', rawResponse.status);
+                console.log('7. Raw Response Headers:', [...rawResponse.headers.entries()]);
+                
+                const errorText = await rawResponse.text();
+                console.log('8. Raw Error Response Body:', errorText);
+                
+                // Try to parse as JSON
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    console.log('9. Parsed Error JSON:', errorJson);
+                } catch (e) {
+                    console.log('9. Error response is not JSON');
+                }
+                
+            } catch (rawErr) {
+                console.error('10. Raw fetch error:', rawErr);
+            }
+            
+            // Display the actual error message
+            const errorMessage = err.message === '[object Object]' ? 'Backend validation error - check console for details' : err.message;
+            resultDiv.innerHTML = `<div class="alert alert-danger">❌ ${errorMessage}</div>`;
+            showToast('Failed to create schedule', 'danger');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = 'ðŸš€ Create Schedule';
+        }
+    }
+
+    // â”€â”€ Excel Upload â”€â”€
+    async function handleExcelUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const resultDiv = document.getElementById('uploadResult');
+        resultDiv.innerHTML = '<div class="alert alert-info">â³ Uploading and processing...</div>';
+
+        try {
+            const numTrains = document.getElementById('numTrains').value;
+            const planDays = document.getElementById('planDays').value;
+            const strategy = document.getElementById('aiStrategy').value;
+            const useDeepRL = (strategy === 'deep_rl');
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const data = await postAPI(`/multi-route/upload-and-schedule?num_trains=${numTrains}&max_days=${planDays}&use_deep_rl=${useDeepRL}`, formData, true);
+            
+            resultDiv.innerHTML = `<div class="alert alert-success">âœ… <strong>File Processed & Schedule Created!</strong></div>`;
+            displayScheduleDetails(data);
+            showToast('Excel file processed!', 'success');
+            loadOverview();
+        } catch (err) {
+            resultDiv.innerHTML = `<div class="alert alert-danger">âŒ ${err.message}</div>`;
+        }
+    }
+
+    // â”€â”€ Live Performance Charts â”€â”€
+    async function loadPerformanceCharts() {
+        try {
+            // Get recent auto-schedules for performance data
+            const schedulesResponse = await fetchAPI('/priority/auto-schedule/list?limit=30');
+            const schedules = schedulesResponse.schedules || [];
+            
+            console.log('🔍 DEBUG: Chart data - schedules loaded:', schedules.length);
+            console.log('🔍 DEBUG: Raw schedules:', schedules);
+            
+            if (schedules.length === 0) {
+                console.log('🔍 DEBUG: No schedules found, using mock data');
+                renderMockCharts(); // Fallback if no schedules exist
+                return;
+            }
+            
+            // Aggregate data by date to avoid multiple values per date
+            const dailyData = {};
+            
+            console.log('🔍 DEBUG: Processing all schedules for date aggregation...');
+            schedules.forEach((schedule, index) => {
+                const scheduleDate = new Date(schedule.created_at);
+                const dateKey = scheduleDate.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+                const cargo = schedule.total_cargo_delivered || 0;
+                const profit = schedule.total_reward || 0;
+                
+                console.log(`🔍 DEBUG: Schedule ${index + 1}: ${schedule.schedule_id} - ${dateKey} - ${cargo} tons`);
+                
+                if (!dailyData[dateKey]) {
+                    dailyData[dateKey] = {
+                        date: scheduleDate,
+                        totalCargo: 0,
+                        totalProfit: 0,
+                        count: 0,
+                        scheduleIds: []
+                    };
+                }
+                
+                dailyData[dateKey].totalCargo += cargo;
+                dailyData[dateKey].totalProfit += profit;
+                dailyData[dateKey].count += 1;
+                dailyData[dateKey].scheduleIds.push(schedule.schedule_id);
+            });
+            
+            // Convert to array and sort by date (oldest first for proper chronological order)
+            const aggregatedData = Object.values(dailyData).sort((a, b) => a.date - b.date);
+            
+            // Create trends from aggregated data
+            const labels = aggregatedData.map(d => d.date.toLocaleDateString('en-US', {month:'short', day:'numeric'}));
+            const cargoData = aggregatedData.map(d => d.totalCargo);
+            const profitData = aggregatedData.map(d => d.totalProfit);
+            
+            console.log('🔍 DEBUG: Total unique dates found:', Object.keys(dailyData).length);
+            console.log('🔍 DEBUG: All dates with data:', Object.keys(dailyData));
+            console.log('🔍 DEBUG: Aggregated data details:', aggregatedData.map(d => ({
+                date: d.date.toLocaleDateString(),
+                totalCargo: d.totalCargo,
+                totalProfit: d.totalProfit,
+                count: d.count,
+                scheduleIds: d.scheduleIds
+            })));
+            console.log('🔍 DEBUG: Final labels (chronological):', labels);
+            console.log('🔍 DEBUG: Final cargo data:', cargoData);
+            console.log('🔍 DEBUG: Final profit data:', profitData);
+            
+            console.log('🔍 DEBUG: Chart labels:', labels);
+            console.log('🔍 DEBUG: Cargo data:', cargoData);
+            console.log('🔍 DEBUG: Profit data:', profitData);
+
+            // Cargo chart
+            const cargoCtx = document.getElementById('cargoChart');
+            if (cargoCtx) {
+                // Destroy existing chart instance if it exists
+                const existingChart = Chart.getChart(cargoCtx);
+                if (existingChart) {
+                    existingChart.destroy();
+                }
+                
+                console.log('🔍 DEBUG: Creating cargo chart with data:', {
+                    labels: labels,
+                    cargoData: cargoData,
+                    firstLabel: labels[0],
+                    firstData: cargoData[0]
+                });
+                
+                new Chart(cargoCtx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Cargo (tons)',
+                            data: cargoData,
+                            borderColor: '#48bb78',
+                            backgroundColor: 'rgba(72,187,120,0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Cargo (tons)'
+                                },
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+                        }
+                    }
+                });
+                
+                console.log('✅ DEBUG: Cargo chart created/updated successfully');
+                console.log('🔍 DEBUG: Chart now shows', labels.length, 'data points from', labels[0], 'to', labels[labels.length - 1]);
+            } else {
+                console.error('❌ DEBUG: Cargo chart canvas not found');
+            }
+
+            // Profit chart
+            const profitCtx = document.getElementById('profitChart');
+            if (profitCtx) {
+                // Destroy existing chart instance if it exists
+                const existingChart = Chart.getChart(profitCtx);
+                if (existingChart) {
+                    existingChart.destroy();
+                }
+                
+                console.log('🔍 DEBUG: Creating profit chart with data:', {
+                    labels: labels,
+                    profitData: profitData,
+                    firstLabel: labels[0],
+                    firstData: profitData[0]
+                });
+                
+                new Chart(profitCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Net Profit (ZMW)',
+                            data: profitData,
+                            backgroundColor: 'rgba(102,126,234,0.6)',
+                            borderColor: '#667eea',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Profit (ZMW)'
+                                },
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+                        }
+                    }
+                });
+                
+                console.log('✅ DEBUG: Profit chart created/updated successfully');
+                console.log('🔍 DEBUG: Chart now shows', labels.length, 'data points from', labels[0], 'to', labels[labels.length - 1]);
+            } else {
+                console.error('❌ DEBUG: Profit chart canvas not found');
+            }
+        } catch (err) {
+            console.warn('Postgres trends error:', err);
+            renderMockCharts();
+        }
+
+        try {
+            // Route efficiency chart - use auto-schedule data
+            const schedulesResponse = await fetchAPI('/priority/auto-schedule/list?limit=20');
+            const schedules = schedulesResponse.schedules || [];
+            
+            console.log('🔍 DEBUG: Route chart - schedules loaded:', schedules.length);
+            
+            // Calculate route performance from schedules
+            const routePerformance = {};
+            const assignmentDetails = []; // Track all assignments for verification
+            
+            // Fetch detailed data for each schedule to get assignments
+            for (const schedule of schedules) {
+                console.log('🔍 DEBUG: Processing schedule:', schedule.schedule_id);
+                
+                try {
+                    // Get detailed schedule data including assignments
+                    const detailResponse = await fetchAPI(`/priority/auto-schedule/${schedule.schedule_id}`);
+                    
+                    if (detailResponse.success && detailResponse.daily_assignments) {
+                        const assignments = detailResponse.daily_assignments;
+                        console.log('🔍 DEBUG: Schedule assignments count:', assignments.length);
+                        
+                        if (assignments && assignments.length > 0) {
+                            assignments.forEach((assignment, index) => {
+                                const routeName = assignment.route || assignment.route_name;
+                                const cargo = assignment.cargo_tons || assignment.cargo_carried || 0;
+                                
+                                console.log(`🔍 DEBUG: Assignment ${index + 1}: Route="${routeName}", Cargo=${cargo} tons, Action=${assignment.action || 'N/A'}`);
+                                
+                                if (routeName) {
+                                    if (!routePerformance[routeName]) {
+                                        routePerformance[routeName] = {
+                                            route_name: routeName,
+                                            total_cargo: 0,
+                                            total_trips: 0,
+                                            avg_efficiency: 0,
+                                            avg_cargo: 0,
+                                            assignments: []
+                                        };
+                                    }
+                                    routePerformance[routeName].total_cargo += cargo;
+                                    routePerformance[routeName].total_trips += 1;
+                                    routePerformance[routeName].assignments.push({
+                                        schedule_id: schedule.schedule_id,
+                                        cargo: cargo,
+                                        action: assignment.action || 'N/A'
+                                    });
+                                    
+                                    // Track for verification
+                                    assignmentDetails.push({
+                                        schedule_id: schedule.schedule_id,
+                                        route: routeName,
+                                        cargo: cargo,
+                                        action: assignment.action || 'N/A'
+                                    });
+                                }
+                            });
+                        }
+                    }
+                } catch (detailErr) {
+                    console.warn('🔍 DEBUG: Failed to get details for schedule:', schedule.schedule_id, detailErr);
+                    // Continue with next schedule
+                }
+            }
+            
+            const routes = Object.values(routePerformance);
+            console.log('🔍 DEBUG: All assignment details:', assignmentDetails);
+            console.log('🔍 DEBUG: Final route performance data:', routes.map(r => ({
+                route: r.route_name,
+                total_cargo: r.total_cargo,
+                total_trips: r.total_trips,
+                avg_cargo_per_trip: r.total_trips > 0 ? (r.total_cargo / r.total_trips).toFixed(2) : 0,
+                assignments_count: r.assignments.length,
+                sample_assignments: r.assignments.slice(0, 3)
+            })));
+            
+            if (routes.length === 0) {
+                console.warn('🔍 DEBUG: No route data found, using mock data');
+                renderMockRouteChart();
+                return;
+            }
+
+            const routeCtx = document.getElementById('routeChart');
+            console.log('🔍 DEBUG: Route chart canvas element:', routeCtx);
+            
+            if (routeCtx) {
+                try {
+                    const chartData = {
+                        labels: routes.map(r => r.route_name),
+                        datasets: [
+                            { 
+                                label: 'Total Cargo (tons)', 
+                                data: routes.map(r => r.total_cargo), 
+                                backgroundColor: 'rgba(72,187,120,0.6)', 
+                                borderRadius: 4,
+                                yAxisID: 'y'
+                            },
+                            { 
+                                label: 'Total Trips', 
+                                data: routes.map(r => r.total_trips), 
+                                backgroundColor: 'rgba(102,126,234,0.6)', 
+                                borderRadius: 4,
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    };
+                    
+                    console.log('🔍 DEBUG: Route chart data:', chartData);
+                    
+                    new Chart(routeCtx, {
+                        type: 'bar',
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    position: 'left',
+                                    title: {
+                                        display: true,
+                                        text: 'Cargo (tons)'
+                                    }
+                                },
+                                y1: {
+                                    beginAtZero: true,
+                                    position: 'right',
+                                    title: {
+                                        display: true,
+                                        text: 'Total Trips'
+                                    },
+                                    grid: {
+                                        drawOnChartArea: false
+                                    }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
+                            }
+                        }
+                    });
+                    
+                    console.log('✅ DEBUG: Route chart created successfully');
+                } catch (chartErr) {
+                    console.error('❌ DEBUG: Error creating route chart:', chartErr);
+                    renderMockRouteChart();
+                }
+            } else {
+                console.warn('❌ DEBUG: Route chart canvas not found');
+            }
+        } catch (err) {
+            console.warn('❌ Route performance error:', err);
+            renderMockRouteChart();
+        }
+    }
+
+    function renderMockCharts() {
+        const labels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'];
+        const cargoCtx = document.getElementById('cargoChart');
+        if (cargoCtx) {
+            new Chart(cargoCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{ label: 'Mock Cargo', data: [120, 150, 180, 140, 160], borderColor: '#48bb78', tension: 0.4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+        const profitCtx = document.getElementById('profitChart');
+        if (profitCtx) {
+            new Chart(profitCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{ label: 'Mock Profit', data: [5000, 7000, 6000, 8000, 7500], backgroundColor: '#667eea' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+        
+        // Also render mock route chart
+        renderMockRouteChart();
+    }
+
+    function renderMockRouteChart() {
+        const routeCtx = document.getElementById('routeChart');
+        if (routeCtx) {
+            new Chart(routeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA'],
+                    datasets: [
+                        { 
+                            label: 'Total Cargo (tons)', 
+                            data: [2500, 1800, 1200], 
+                            backgroundColor: 'rgba(72,187,120,0.6)', 
+                            borderRadius: 4,
+                            yAxisID: 'y'
+                        },
+                        { 
+                            label: 'Total Trips', 
+                            data: [15, 12, 8], 
+                            backgroundColor: 'rgba(102,126,234,0.6)', 
+                            borderRadius: 4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Cargo (tons)'
+                            }
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Total Trips'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // â”€â”€ Gantt Chart Rendering (Redesigned) â”€â”€
+    function renderGanttChart(data) {
+        const container = document.getElementById('ganttContainer');
+        const assignments = data.train_assignments || [];
+        const numTrains = data.num_trains || 0;
+        const totalDays = data.total_days || 0;
+        
+        if (assignments.length === 0) return;
+        
+        container.innerHTML = '';
+        container.classList.add('timeline-container');
+        
+        const grid = document.createElement('div');
+        grid.className = 'timeline-grid';
+        grid.style.setProperty('--total-days', totalDays);
+        
+        // Header
+        const corner = document.createElement('div');
+        corner.className = 'timeline-header-cell';
+        corner.textContent = 'Train / Day';
+        grid.appendChild(corner);
+        
+        for (let d = 0; d < totalDays; d++) {
+            const dayHead = document.createElement('div');
+            dayHead.className = 'timeline-header-cell';
+            dayHead.textContent = `Day ${d + 1}`;
+            grid.appendChild(dayHead);
+        }
+        
+        // Body
+        for (let t = 0; t < numTrains; t++) {
+            // Train Label
+            const trainLabel = document.createElement('div');
+            trainLabel.className = 'timeline-train-label';
+            trainLabel.innerHTML = `<span style="margin-right:8px">ðŸš‚</span> T-${t + 1}`;
+            grid.appendChild(trainLabel);
+            
+            for (let d = 0; d < totalDays; d++) {
+                const assignment = assignments.find(a => a.train_id === t && a.day === d);
+                const pill = document.createElement('div');
+                pill.className = 'action-pill';
+                
+                if (assignment) {
+                    const route = assignment.route_name;
+                    const routeClass = route.toLowerCase().replace(/_/g, '-');
+                    pill.classList.add(route === 'IDLE' ? 'idle' : `route-${routeClass}`);
+                    
+                    const routeLabels = {
+                        'DAR_KAPIRI': 'Dar âž¡ Kapiri',
+                        'DAR_MBEYA': 'Dar âž¡ Mbeya',
+                        'KAPIRI_NDOLA': 'Kapiri âž¡ Ndola',
+                        'IDLE': 'âš¡ IDLE'
+                    };
+                    const displayLabel = routeLabels[route] || route;
+                    
+                    pill.innerHTML = `
+                        <div class="action-route-name">${displayLabel}</div>
+                        <div class="action-meta">${assignment.cargo_carried > 0 ? assignment.cargo_carried + ' tons' : 'Ready'}</div>
+                    `;
+                    
+                    pill.onclick = () => showRationale(assignment.rationale, t + 1, d + 1, route);
+                } else {
+                    pill.classList.add('idle');
+                    pill.innerHTML = '<div class="action-route-name">â€”</div>';
+                }
+                grid.appendChild(pill);
+            }
+        }
+        
+        container.appendChild(grid);
+    }
+
+    function showRationale(text, train, day, route) {
+        const box = document.getElementById('rationaleBox');
+        const content = document.getElementById('rationaleContent');
+        if (!box || !content) return;
+        
+        box.style.display = 'block';
+        content.innerHTML = `
+            <div style="margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">
+                <strong style="color:var(--primary-light)">Train ${train}</strong> 
+                <span style="color:var(--text-muted)">â€” Day ${day} Assignment:</span> 
+                <span class="badge ${route === 'IDLE' ? 'badge-low' : 'badge-info'}" style="margin-left:8px">${route}</span>
+            </div>
+            <div style="line-height:1.6; color:var(--text-primary)">
+                ${text || 'The AI agent optimized this movement based on real-time cargo demand and fuel efficiency targets.'}
+            </div>
+        `;
+        box.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    async function analyzeRisk(data) {
+        console.log('ðŸ” analyzeRisk function called with data:', data);
+        
+        const grid = document.getElementById('bottleneckGrid');
+        const recs = document.getElementById('riskRecommendations');
+        const scoreVal = document.getElementById('riskScoreValue');
+        const levelBadge = document.getElementById('riskLevelBadge');
+        
+        console.log('ðŸ” Found elements:', {
+            grid: !!grid,
+            recs: !!recs,
+            scoreVal: !!scoreVal,
+            levelBadge: !!levelBadge
+        });
+        
+        try {
+            console.log('ðŸ” Making API call to /api/risk/analyze...');
+            const risk = await postAPI('/api/risk/analyze', {
+                schedule_id: data ? data.schedule_id : "SIM_LATEST",
+                route: "DAR_KAPIRI",
+                planned_departure: new Date().toISOString(),
+                historical_issues: []
+            });
+            
+            console.log('ðŸ” API response received:', risk);
+            
+            // Update Score & Badge
+            const score = Math.round(risk.risk_score * 100);
+            scoreVal.textContent = score + '%';
+            levelBadge.textContent = risk.risk_level.toUpperCase();
+            levelBadge.className = `badge badge-${risk.risk_level === 'high' ? 'critical' : risk.risk_level === 'medium' ? 'medium' : 'low'}`;
+            
+            console.log('ðŸ” Updated score and badge:', score, risk.risk_level);
+            
+            // Force visibility
+            scoreVal.style.display = 'block';
+            levelBadge.style.display = 'inline-block';
+            grid.style.display = 'grid';
+            recs.style.display = 'grid';
+            
+            renderRiskGauge(risk.risk_score);
+
+            grid.innerHTML = risk.bottlenecks.map(b => `
+                <div class="metric-card" style="--metric-accent: ${b.severity === 'high' ? '#f56565' : '#ecc94b'}">
+                    <div class="metric-value" style="font-size:1.1rem;">${b.location}</div>
+                    <div class="metric-label">${b.type} (${(b.probability * 100).toFixed(0)}%)</div>
+                </div>
+            `).join('');
+            
+            recs.innerHTML = risk.recommendations.map(r => `
+                <div class="alert alert-info" style="border-left:4px solid var(--primary); margin:0;">
+                    <div>
+                        <strong>${r.action}</strong><br>
+                        <span style="font-size:0.8rem; color:var(--text-muted);">${r.impact}</span>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <span class="badge badge-${r.priority}">${r.priority}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            console.log('ðŸ” Risk analysis completed successfully');
+            
+        } catch (err) {
+            console.error('âŒ Risk analysis failed:', err);
+            grid.innerHTML = `<div class="alert alert-danger">Risk analysis failed: ${err.message}</div>`;
+        }
+    }
+
+    function renderRiskGauge(score) {
+        const ctx = document.getElementById('riskGaugeChart');
+        if (!ctx) return;
+
+        if (riskGaugeInstance) riskGaugeInstance.destroy();
+
+        riskGaugeInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [score * 100, 100 - (score * 100)],
+                    backgroundColor: [
+                        score > 0.6 ? '#f56565' : score > 0.3 ? '#ecc94b' : '#48bb78',
+                        'rgba(255,255,255,0.05)'
+                    ],
+                    borderWidth: 0,
+                    circumference: 180,
+                    rotation: 270,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '80%',
+                plugins: { legend: { display: false }, tooltip: { enabled: false } }
+            }
+        });
+    }
+
+    async function loadForecast() {
+        const ctx = document.getElementById('forecastChart');
+        if (!ctx) return;
+
+        const model = document.getElementById('forecastModel').value;
+        const days = parseInt(document.getElementById('forecastDays').value);
+        
+        try {
+            const data = await postAPI('/api/forecast/', { 
+                days_ahead: days,
+                model_type: model,
+                include_confidence: true
+            });
+
+            if (forecastChartInstance) forecastChartInstance.destroy();
+
+            const labels = data.forecasts.map(f => f.date);
+            const values = data.forecasts.map(f => f.forecast_tons);
+            const upper = data.forecasts.map(f => f.upper_bound);
+            const lower = data.forecasts.map(f => f.lower_bound);
+            
+            forecastChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Forecasted Demand',
+                            data: values,
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102,126,234,0.2)',
+                            fill: false,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            zIndex: 10
+                        },
+                        {
+                            label: 'Confidence Interval (Upper)',
+                            data: upper,
+                            borderColor: 'transparent',
+                            backgroundColor: 'rgba(102,126,234,0.1)',
+                            fill: '+1', // Fill down to next dataset
+                            pointRadius: 0,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Confidence Interval (Lower)',
+                            data: lower,
+                            borderColor: 'transparent',
+                            backgroundColor: 'rgba(102,126,234,0.1)',
+                            fill: false,
+                            pointRadius: 0,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: false, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: true, position: 'top' }
+                    }
+                }
+            });
+            
+            const summary = document.getElementById('forecastSummary');
+            summary.innerHTML = `
+                <div class="metric-card" style="--metric-accent: var(--primary)">
+                    <div class="metric-value">${formatNumber(data.summary.mean_forecast)}</div>
+                    <div class="metric-label">Avg Daily Demand (tons)</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--success)">
+                    <div class="metric-value">${formatNumber(data.summary.max_forecast)}</div>
+                    <div class="metric-label">Peak Demand Period</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--warning)">
+                    <div class="metric-value">${formatNumber(data.summary.min_forecast)}</div>
+                    <div class="metric-label">Minimum Expected</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--info)">
+                    <div class="metric-value">${model.toUpperCase()}</div>
+                    <div class="metric-label">Active Engine</div>
+                </div>
+            `;
+            
+            // Display Rationale
+            if (data.rationale) {
+                const rationaleDiv = document.createElement('div');
+                rationaleDiv.className = 'alert alert-info';
+                rationaleDiv.style.marginTop = '20px';
+                rationaleDiv.innerHTML = `<strong> AI Forecast Insight:</strong> ${data.rationale}`;
+                summary.after(rationaleDiv);
+            }
+        } catch (err) {
+            console.error('Forecasting failed:', err);
+            showError('forecastChart', err);
+        }
+    }
+
+    // â”€â”€ Phase 3: Disruption Simulation â”€â”€
+    async function simulateDisruption() {
+        const trainId = document.getElementById('disrupt-train').value;
+        const delay = document.getElementById('disrupt-delay').value;
+        const resultDiv = document.getElementById('disruptionResult');
+        
+        resultDiv.innerHTML = '<div class="alert alert-warning">âš¡ AI calculating cascade effects...</div>';
+        
+        try {
+            const data = await postAPI('/multi-route/simulate-disruption', {
+                schedule_id: currentScheduleId || "DEMO_SYNC",
+                train_id: parseInt(trainId),
+                day: 1,
+                delay_days: parseInt(delay),
+                disruption_type: "equipment_failure"
+            });
+            
+            const cascade = data.cascade_analysis;
+            const res = data.resolution_plan;
+            
+            resultDiv.innerHTML = `
+                <div class="card" style="background:rgba(229,62,62,0.05); border:1px solid var(--danger);">
+                    <div style="font-weight:bold; color:var(--danger); margin-bottom:8px;">ðŸ’¥ Cascade Impact Analysis</div>
+                    <ul style="font-size:0.8rem; padding-left:15px; margin-bottom:12px;">
+                        <li><strong>Ripple Effect:</strong> ${cascade.disruption_summary.total_ripple_days} days</li>
+                        <li><strong>Severity Score:</strong> ${cascade.severity_score}</li>
+                        <li><strong>Affected Drivers:</strong> ${cascade.disruption_summary.affected_drivers_count}</li>
+                    </ul>
+                    <div style="font-weight:bold; color:var(--success); margin-bottom:8px;">âœ… AI Resolution Plan</div>
+                    <div style="font-size:0.8rem;">
+                        ${res.resolution_plan.map(p => `<div>â€¢ <strong>${p.action}</strong>: ${p.target}</div>`).join('')}
+                    </div>
+                </div>
+            `;
+            showToast('Disruption analyzed!', 'warning');
+        } catch (err) {
+            resultDiv.innerHTML = `<div class="alert alert-danger">âŒ ${err.message}</div>`;
+        }
+    }
+
+    // â”€â”€ What-If Manual Simulation â”€â”€
+    async function runSimulation() {
+        if (!currentScheduleId) {
+            showToast('Please create or load a schedule first', 'warning');
+            return;
+        }
+
+        const trainId = parseInt(document.getElementById('simTrainId').value);
+        const day = parseInt(document.getElementById('simDay').value);
+        const action = parseInt(document.getElementById('simAction').value);
+        const reason = document.getElementById('simReason').value || 'Manual adjustment';
+        
+        const resultCard = document.getElementById('simResultCard');
+        const detailsDiv = document.getElementById('simResultDetails');
+        
+        showToast('Running simulation...', 'info');
+        
+        try {
+            const data = await postAPI('/api/simulation/evaluate-manual-change', {
+                original_schedule_id: currentScheduleId,
+                modifications: [{
+                    train_id: trainId,
+                    day: day - 1,
+                    new_action: action,
+                    reason: reason
+                }]
+            });
+            
+            resultCard.style.display = 'block';
+            const impact = data.impact_analysis;
+            const costs = data.updated_costs;
+            
+            detailsDiv.innerHTML = `
+                <div class="alert ${impact.efficiency_impact === 'positive' ? 'alert-success' : 'alert-warning'}" style="margin-bottom:15px;">
+                    <strong>${impact.recommendation}</strong>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card" style="--metric-accent: var(--accent);">
+                        <div class="metric-value">${impact.cargo_delta_tons > 0 ? '+' : ''}${impact.cargo_delta_tons}</div>
+                        <div class="metric-label">Cargo Impact (tons)</div>
+                    </div>
+                    <div class="metric-card" style="--metric-accent: ${impact.profit_delta_zmw >= 0 ? 'var(--success)' : 'var(--danger)'};">
+                        <div class="metric-value">${impact.profit_delta_zmw >= 0 ? '+' : ''}${formatCurrency(impact.profit_delta_zmw)}</div>
+                        <div class="metric-label">Profit Delta</div>
+                    </div>
+                </div>
+                <div style="margin-top:15px; font-size:0.85rem;">
+                    <p><strong>Predicted Net Profit:</strong> ${formatCurrency(costs.net_profit_zmw)}</p>
+                    <p><strong>Operating Costs:</strong> ${formatCurrency(costs.total_cost_zmw)}</p>
+                </div>
+            `;
+            
+            showToast('Simulation complete!', 'success');
+        } catch (err) {
+            showToast('Simulation failed: ' + err.message, 'danger');
+        }
+    }
+
+    // â”€â”€ Configuration Management â”€â”€
+    async function loadConfig() {
+        try {
+            const config = await fetchAPI('/api/config/');
+            document.getElementById('cfgLearningRate').value = config.learning_rate;
+            document.getElementById('cfgLearningRate').nextElementSibling.value = config.learning_rate;
+            document.getElementById('cfgExplorationRate').value = config.exploration_rate;
+            document.getElementById('cfgExplorationRate').nextElementSibling.value = config.exploration_rate;
+            document.getElementById('cfgMaxTrains').value = config.max_trains;
+            document.getElementById('cfgPlanHorizon').value = config.planning_horizon;
+            document.getElementById('cfgCoordinationBonus').checked = config.coordination_bonus;
+
+            // Sync with create schedule form
+            document.getElementById('numTrains').value = config.max_trains;
+            document.getElementById('planDays').value = config.planning_horizon;
+        } catch (err) {
+            console.error('Failed to load config:', err);
+        }
+    }
+
+    async function saveConfig() {
+        showToast('Saving configuration...', 'info');
+        try {
+            await postAPI('/api/config/', {
+                learning_rate: parseFloat(document.getElementById('cfgLearningRate').value),
+                exploration_rate: parseFloat(document.getElementById('cfgExplorationRate').value),
+                max_trains: parseInt(document.getElementById('cfgMaxTrains').value),
+                planning_horizon: parseInt(document.getElementById('cfgPlanHorizon').value),
+                coordination_bonus: document.getElementById('cfgCoordinationBonus').checked
+            });
+            showToast('Configuration saved successfully!', 'success');
+        } catch (err) {
+            showToast('Failed to save configuration: ' + err.message, 'danger');
+        }
+    }
+
+    // â”€â”€ WORKFLOW FUNCTIONS â”€â”€
+    
+    // Load schedules for workflow dropdowns
+    async function loadWorkflowSchedules() {
+        try {
+            const response = await fetchAPI('/multi-route/schedules');
+            const schedules = response.schedules || [];
+            
+            const selects = ['approvalScheduleSelect', 'modifyScheduleSelect', 'assignScheduleSelect'];
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    select.innerHTML = '<option value="">Select a schedule...</option>';
+                    schedules.forEach(schedule => {
+                        const option = document.createElement('option');
+                        option.value = schedule.schedule_id;
+                        option.textContent = `${schedule.schedule_id} (${schedule.num_trains} trains)`;
+                        select.appendChild(option);
+                    });
+                }
+            });
+        } catch (err) {
+            console.error('Failed to load schedules:', err);
+        }
+    }
+    
+    // Submit approval
+    async function submitApproval() {
+        const scheduleId = document.getElementById('approvalScheduleSelect').value;
+        const action = document.getElementById('approvalAction').value;
+        const approverName = document.getElementById('approverName').value;
+        const reason = document.getElementById('approvalReason').value;
+        
+        if (!scheduleId || !approverName) {
+            showToast('Please select a schedule and enter your name', 'warning');
+            return;
+        }
+        
+        try {
+            showToast('Processing approval...', 'info');
+            const response = await postAPI(`/api/workflow/schedules/${scheduleId}/approve`, {
+                approval_status: action,
+                approver_id: approverName.toLowerCase().replace(/\s+/g, '_'),
+                approver_name: approverName,
+                rejection_reason: action === 'rejected' ? reason : null,
+                revision_notes: action === 'needs_revision' ? reason : null
+            });
+            
+            console.log('Approval response:', response); // Debug log
+            showToast(`Schedule ${action} successfully!`, 'success');
+            document.getElementById('approvalReason').value = '';
+        } catch (err) {
+            console.error('Approval error:', err); // Debug log
+            showToast('Failed to submit approval: ' + err.message, 'danger');
+        }
+    }
+    
+    // Submit modification
+    async function submitModification() {
+        const scheduleId = document.getElementById('modifyScheduleSelect').value;
+        const type = document.getElementById('modificationType').value;
+        const details = document.getElementById('modificationDetails').value;
+        
+        if (!scheduleId || !details) {
+            showToast('Please select a schedule and enter modification details', 'warning');
+            return;
+        }
+        
+        try {
+            showToast('Submitting modification...', 'info');
+            const response = await postAPI(`/api/workflow/schedules/${scheduleId}/modify`, {
+                modification_type: type,
+                modification_details: { description: details },
+                modified_by: 'UI User'
+            });
+            
+            showToast('Modification submitted successfully!', 'success');
+            document.getElementById('modificationDetails').value = '';
+            loadModificationHistory(scheduleId);
+        } catch (err) {
+            showToast('Failed to submit modification: ' + err.message, 'danger');
+        }
+    }
+    
+    // Load modification history
+    async function loadModificationHistory(scheduleId) {
+        if (!scheduleId) return;
+        
+        try {
+            const response = await fetchAPI(`/api/workflow/schedules/${scheduleId}/modifications`);
+            const historyDiv = document.getElementById('modificationHistory');
+            
+            if (response.length === 0) {
+                historyDiv.innerHTML = '<div class="alert alert-info">No modifications found for this schedule</div>';
+                return;
+            }
+            
+            let html = '';
+            response.forEach(mod => {
+                const date = new Date(mod.modification_date).toLocaleString();
+                html += `
+                    <div class="alert alert-secondary" style="margin-bottom:10px;">
+                        <strong>${mod.modification_type}</strong> - ${date}<br>
+                        <small>${mod.modification_details.description || 'No details'}</small><br>
+                        <small>By: ${mod.modified_by}</small>
+                    </div>
+                `;
+            });
+            
+            historyDiv.innerHTML = html;
+        } catch (err) {
+            document.getElementById('modificationHistory').innerHTML = 
+                '<div class="alert alert-danger">Failed to load modification history</div>';
+        }
+    }
+    
+    // Create customer order
+    async function createCustomerOrder() {
+        const orderData = {
+            customer_name: document.getElementById('customerName').value,
+            cargo_type: document.getElementById('cargoType').value,
+            cargo_weight: parseFloat(document.getElementById('cargoWeight').value),
+            origin_station: document.getElementById('originStation').value,
+            destination_station: document.getElementById('destinationStation').value,
+            priority_level: parseInt(document.getElementById('priorityLevel').value),
+            requested_departure_date: document.getElementById('requestedDate').value || null,
+            notes: 'Created via UI'
+        };
+        
+        // Validation
+        if (!orderData.customer_name || !orderData.cargo_weight || !orderData.origin_station || !orderData.destination_station) {
+            showToast('Please fill in all required fields', 'warning');
+            return;
+        }
+        
+        try {
+            showToast('Creating order...', 'info');
+            const response = await postAPI('/api/workflow/orders', orderData);
+            
+            showToast(`Order ${response.order_id} created successfully!`, 'success');
+            
+            // Clear form
+            document.getElementById('customerName').value = '';
+            document.getElementById('cargoWeight').value = '';
+            document.getElementById('requestedDate').value = '';
+            
+            // Reload orders list
+            loadOrders();
+            loadWorkflowOrders();
+        } catch (err) {
+            showToast('Failed to create order: ' + err.message, 'danger');
+        }
+    }
+    
+    // Load orders
+    async function loadOrders() {
+        try {
+            const status = document.getElementById('orderStatusFilter').value;
+            const url = status ? `/api/workflow/orders?status=${status}` : '/api/workflow/orders';
+            const response = await fetchAPI(url);
+            const ordersDiv = document.getElementById('ordersList');
+            
+            if (response.length === 0) {
+                ordersDiv.innerHTML = '<div class="alert alert-info">No orders found</div>';
+                return;
+            }
+            
+            // Orders select no longer needed - removed from Create Schedule tab
+            // const ordersSelect = document.getElementById('ordersSelect');
+            // ordersSelect.innerHTML = '<option value="">Select orders to fulfill...</option>';
+            
+            let ordersHtml = '';
+            response.forEach(order => {
+                if (!order.status || order.status === 'pending') {
+                    // Add to orders list
+                    ordersHtml += `
+                        <div class="card" style="margin: 8px 0; padding: 12px; border-left: 4px solid ${getPriorityColor(order.priority_level)};">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div>
+                                    <strong>${order.customer_name}</strong>
+                                    <span style="margin-left: 10px; color: var(--text-muted);">${order.cargo_type}</span>
+                                </div>
+                                <span class="badge" style="background: ${getPriorityColor(order.priority_level)};">${getPriorityText(order.priority_level)}</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                 ${order.cargo_weight} tons | ${order.origin_station}  ${order.destination_station}
+                                ${order.requested_departure_date ? `|  ${formatDate(order.requested_departure_date)}` : ''}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Orders select removed - no longer needed for auto-scheduling
+                }
+            });
+            
+            ordersDiv.innerHTML = ordersHtml;
+        } catch (err) {
+            console.error('Failed to load orders:', err);
+            showToast('Failed to load orders', 'danger');
+        }
+    }
+    
+    // Show detailed schedule information
+    async function showScheduleDetails(scheduleId, scheduleDetails) {
+        try {
+            // Get full schedule details including orders
+            const response = await getAPI(`/priority/auto-schedule/${scheduleId}`);
+            
+            if (response.success) {
+                const schedule = response.schedule;
+                const assignments = response.daily_assignments || response.train_assignments;
+                const orders = response.scheduled_orders;
+                const summary = response.summary;
+                
+                // Create schedule details HTML
+                let detailsHTML = `
+                    <div class="card mt-3">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Schedule Details: ${scheduleId}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Performance Metrics</h6>
+                                    <ul class="list-unstyled">
+                                        <li><strong>Total Cargo Delivered:</strong> ${schedule.total_cargo_delivered.toFixed(1)} tons</li>
+                                        <li><strong>Efficiency Score:</strong> ${(schedule.efficiency_score * 100).toFixed(1)}%</li>
+                                        <li><strong>Total Reward:</strong> ${schedule.total_reward.toFixed(0)}</li>
+                                        <li><strong>Days Completed:</strong> ${schedule.performance_metrics.days_completed}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Cost Breakdown</h6>
+                                    <ul class="list-unstyled">
+                                        <li><strong>Fuel Cost:</strong> ZMW ${schedule.cost_breakdown.fuel_cost.toFixed(0)}</li>
+                                        <li><strong>Crew Cost:</strong> ZMW ${schedule.cost_breakdown.crew_cost.toFixed(0)}</li>
+                                        <li><strong>Maintenance:</strong> ZMW ${schedule.cost_breakdown.maintenance_cost.toFixed(0)}</li>
+                                        <li><strong>Total Cost:</strong> ZMW ${(schedule.cost_breakdown.fuel_cost + schedule.cost_breakdown.crew_cost + schedule.cost_breakdown.maintenance_cost).toFixed(0)}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add daily assignments
+                if (assignments.length > 0) {
+                    detailsHTML += `
+                        <div class="card mt-3">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0">Daily Train Assignments (${summary.total_assignments} assignments)</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Day</th>
+                                                <th>Train</th>
+                                                <th>Route</th>
+                                                <th>Cargo (tons)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                    `;
+                    
+                    assignments.forEach(assignment => {
+                        detailsHTML += `
+                            <tr>
+                                <td>${assignment.day}</td>
+                                <td>${assignment.train_id}</td>
+                                <td>${assignment.route}</td>
+                                <td>${parseFloat(assignment.cargo_tons).toFixed(1)}</td>
+                                <td><span class="badge badge-success">${assignment.action}</span></td>
+                            </tr>
+                        `;
+                    });
+                    
+                    detailsHTML += `
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Add scheduled orders
+                if (orders.length > 0) {
+                    detailsHTML += `
+                        <div class="card mt-3">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0">Scheduled Orders (${summary.total_orders} orders, ${summary.total_cargo_scheduled.toFixed(1)} tons)</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Customer</th>
+                                                <th>Cargo Type</th>
+                                                <th>Weight (tons)</th>
+                                                <th>Route</th>
+                                                <th>Priority</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                    `;
+                    
+                    orders.forEach(order => {
+                        const priorityBadge = getPriorityBadge(order.priority_level);
+                        detailsHTML += `
+                            <tr>
+                                <td><code>${order.order_id}</code></td>
+                                <td>${order.customer_name}</td>
+                                <td>${order.cargo_type}</td>
+                                <td>${parseFloat(order.cargo_weight).toFixed(1)}</td>
+                                <td>${order.origin_station} to ${order.destination_station}</td>
+                                <td>${priorityBadge}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    detailsHTML += `
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Add summary
+                detailsHTML += `
+                    <div class="card mt-3">
+                        <div class="card-header bg-secondary text-white">
+                            <h6 class="mb-0">Schedule Summary</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>Routes Used:</strong><br>
+                                    ${summary.unique_routes.map(route => `<span class="badge badge-info mr-1">${route}</span>`).join('')}
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Active Days:</strong><br>
+                                    ${summary.days_with_assignments.map(day => `<span class="badge badge-warning mr-1">Day ${day}</span>`).join('')}
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Efficiency:</strong><br>
+                                    <span class="badge badge-success">${schedule.efficiency_analysis.total_efficiency}</span>
+                                    <small class="text-muted">(${schedule.efficiency_analysis.utilization_rate.toFixed(1)}% utilization)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to result div
+                const resultDiv = document.getElementById('autoScheduleResult');
+                resultDiv.innerHTML += detailsHTML;
+                
+            } else {
+                console.error('Failed to load schedule details:', response.message);
+            }
+        } catch (error) {
+            console.error('Error loading schedule details:', error);
+        }
+    }
+    
+    // Load priority queue status
+    async function loadPriorityQueueStatus() {
+        console.log('🔍 DEBUG: Loading priority queue status...');
+        try {
+            const response = await fetchAPI('/priority/queue/status');
+            console.log('🔍 DEBUG: Queue status response:', response);
+            const statusDiv = document.getElementById('priorityQueueStatus');
+            
+            if (!response || response.total_orders === 0) {
+                statusDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>Priority Queue Empty</strong><br>
+                        No high-priority orders awaiting auto-scheduling
+                    </div>
+                `;
+                return;
+            }
+            
+            // Get queue list for more details
+            const queueResponse = await fetchAPI('/priority/queue/list');
+            console.log('🔍 DEBUG: Queue list response:', queueResponse);
+            console.log('🔍 DEBUG: Number of orders returned:', queueResponse?.orders?.length || 0);
+            
+            let ordersHtml = '';
+            if (queueResponse && queueResponse.orders) {
+                console.log('🔍 DEBUG: First 3 orders:');
+                queueResponse.orders.slice(0, 3).forEach((order, index) => {
+                    console.log(`🔍 DEBUG: Order ${index + 1}:`, {
+                        customer: order.customer_name,
+                        cargo: order.cargo_type,
+                        weight: order.cargo_weight,
+                        status: order.status,
+                        priority: order.priority_level
+                    });
+                });
+                queueResponse.orders.forEach((order, index) => {
+                    const route = `${order.origin_station} to ${order.destination_station}`;
+                    ordersHtml += `
+                        <div class="card" style="margin: 8px 0; padding: 12px; border-left: 4px solid ${getUrgencyColor(order.urgency_level)};">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="display: flex; align-items: center;">
+                                    <span style="background: ${getUrgencyColor(order.urgency_level)}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; margin-right: 8px; font-weight: bold;">
+                                        #${index + 1}
+                                    </span>
+                                    <strong>${order.order_id}</strong>
+                                    <span style="margin-left: 10px; color: var(--text-muted);">${order.customer_name}</span>
+                                </div>
+                                <span class="badge" style="background: ${getUrgencyColor(order.urgency_level)};">
+                                    ${order.urgency_level} (${order.priority_score})
+                                </span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                <strong>${order.cargo_type}</strong> | ${order.cargo_weight} tons | <strong>${route}</strong>
+                                <br>Priority Level: ${order.priority_level} | Status: ${order.status}
+                                ${order.requested_arrival_date ? `<br>Deadline: ${formatDate(order.requested_arrival_date)}` : ''}
+                                <br>Created: ${formatDate(order.created_at)}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            statusDiv.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 16px;">
+                    <div class="stat-card" style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">${response.total_orders}</div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted);">Total</div>
+                    </div>
+                    <div class="stat-card" style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: bold; color: #ff9800;">${response.pending_orders}</div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted);">Pending</div>
+                    </div>
+                    <div class="stat-card" style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: bold; color: #f44336;">${response.emergency_orders}</div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted);">Emergency</div>
+                    </div>
+                    <div class="stat-card" style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">${response.avg_priority_score.toFixed(1)}</div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted);">Avg Score</div>
+                    </div>
+                </div>
+                <h6 style="margin: 16px 0 8px 0; color: var(--text-muted);">Orders by Priority (Highest First):</h6>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    ${ordersHtml || '<div class="alert alert-info">No orders to display</div>'}
+                </div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-sm btn-outline-primary" onclick="refreshPriorityQueue()">
+                        Refresh Status
+                    </button>
+                    <button class="btn btn-sm btn-outline-info" onclick="window.open('/priority/queue/list', '_blank')">
+                        View Full Queue
+                    </button>
+                    <button class="btn btn-sm btn-outline-warning" onclick="debugPriorityQueue()">
+                        🐛 Debug Console
+                    </button>
+                </div>
+            `;
+            
+        } catch (err) {
+            console.error('🔍 DEBUG: Failed to load priority queue status:', err);
+            console.error('🔍 DEBUG: Error details:', err.message, err.stack);
+            document.getElementById('priorityQueueStatus').innerHTML = `
+                <div class="alert alert-warning">
+                    <strong>Priority Queue Unavailable</strong><br>
+                    Unable to connect to priority system
+                    <br><small>Check browser console for debug info</small>
+                </div>
+            `;
+        }
+    }
+    
+    // Refresh priority queue
+    async function refreshPriorityQueue() {
+        document.getElementById('priorityQueueStatus').innerHTML = '<div class="alert alert-info">Refreshing priority queue...</div>';
+        await loadPriorityQueueStatus();
+    }
+    
+    // Load existing schedules
+    async function loadExistingSchedules() {
+        try {
+            console.log('🔍 DEBUG: Loading existing schedules...');
+            const response = await fetchAPI('/priority/auto-schedule/list');
+            console.log('🔍 DEBUG: Existing schedules response:', response);
+            
+            const schedulesList = document.getElementById('schedulesList');
+            if (!schedulesList) {
+                console.log('🔍 DEBUG: schedulesList element not found');
+                return;
+            }
+            
+            if (!response || !response.success || !response.schedules || response.schedules.length === 0) {
+                schedulesList.innerHTML = `
+                    <div class="alert alert-info">
+                        <strong>No Schedules Found</strong><br>
+                        No schedules have been created yet. Use the auto-schedule feature to create your first schedule.
+                    </div>
+                `;
+                return;
+            }
+            
+            let schedulesHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📋 Existing Schedules</div>
+                        <small style="color: var(--text-muted);">Click to view details</small>
+                    </div>
+                    <div class="card-body">
+                        <div style="max-height: 400px; overflow-y: auto;">
+            `;
+            
+            response.schedules.forEach((schedule, index) => {
+                const createdDate = new Date(schedule.created_at).toLocaleDateString();
+                const efficiency = (schedule.efficiency_score * 100).toFixed(1);
+                const cargo = (schedule.total_cargo_delivered || 0).toFixed(1);
+                
+                schedulesHTML += `
+                    <div class="schedule-item" style="
+                        margin: 8px 0; 
+                        padding: 12px; 
+                        border: 1px solid var(--border); 
+                        border-radius: 4px; 
+                        cursor: pointer;
+                        transition: background-color 0.2s;
+                    " onclick="showScheduleDetailsById('${schedule.schedule_id}')"
+                    onmouseover="this.style.backgroundColor='var(--hover-bg)'"
+                    onmouseout="this.style.backgroundColor='transparent'">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div>
+                                <strong style="color: var(--primary);">${schedule.schedule_id}</strong>
+                                <span style="margin-left: 10px; color: var(--text-muted); font-size: 0.9rem;">${createdDate}</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="background: ${efficiency > 80 ? 'var(--success)' : efficiency > 60 ? 'var(--warning)' : 'var(--danger)'}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold;">
+                                    ${efficiency}%
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted);">
+                            <span>🚂 ${schedule.num_trains || 0} trains</span>
+                            <span>📦 ${cargo} tons</span>
+                            <span>⭐ ${schedule.total_reward?.toFixed(0) || 0} reward</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            schedulesHTML += `
+                        </div>
+                        <div style="margin-top: 16px; text-align: center;">
+                            <button class="btn btn-sm btn-outline-primary" onclick="loadExistingSchedules()">
+                                🔄 Refresh Schedules
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            schedulesList.innerHTML = schedulesHTML;
+            console.log('🔍 DEBUG: Existing schedules loaded successfully');
+            
+        } catch (err) {
+            console.error('🔍 DEBUG: Failed to load existing schedules:', err);
+            const schedulesList = document.getElementById('schedulesList');
+            if (schedulesList) {
+                schedulesList.innerHTML = `
+                    <div class="alert alert-warning">
+                        <strong>Failed to Load Schedules</strong><br>
+                        Unable to retrieve existing schedules. Please try again.
+                    </div>
+                `;
+            }
+        }
+    }
+    
+    // Debug priority queue - manual debugging function
+    async function debugPriorityQueue() {
+        console.log('🐛 DEBUG: Manual priority queue debugging started...');
+        console.log('🐛 DEBUG: Testing API endpoints...');
+        
+        try {
+            // Test status endpoint
+            console.log('🐛 DEBUG: Testing /priority/queue/status...');
+            const statusResponse = await fetchAPI('/priority/queue/status');
+            console.log('🐛 DEBUG: Status response:', statusResponse);
+            
+            // Test list endpoint
+            console.log('🐛 DEBUG: Testing /priority/queue/list...');
+            const listResponse = await fetchAPI('/priority/queue/list');
+            console.log('🐛 DEBUG: List response:', listResponse);
+            
+            // Test direct API call
+            console.log('🐛 DEBUG: Testing direct fetch...');
+            const directResponse = await fetch('/priority/queue/list');
+            const directData = await directResponse.json();
+            console.log('🐛 DEBUG: Direct response:', directData);
+            
+            console.log('🐛 DEBUG: Debugging complete! Check the console output above.');
+            alert('Debugging complete! Check browser console (F12) for detailed output.');
+            
+        } catch (error) {
+            console.error('🐛 DEBUG: Debug error:', error);
+            alert('Debug error! Check browser console for details.');
+        }
+    }
+    
+    // Get urgency color for priority display
+    function getUrgencyColor(urgency) {
+        switch(urgency) {
+            case 'emergency': return '#f44336';
+            case 'urgent': return '#ff9800';
+            case 'priority': return '#2196f3';
+            default: return '#4caf50';
+        }
+    }
+    
+    // Create auto-schedule based on priority queue
+    async function createAutoSchedule() {
+        const btn = event.target;
+        const resultDiv = document.getElementById('autoScheduleResult');
+        
+        // Get configuration
+        const numTrainsElement = document.getElementById('numTrains');
+        const numTrains = numTrainsElement ? parseInt(numTrainsElement.value) || 5 : 5;
+        
+        const maxDaysElement = document.getElementById('planDays');
+        const maxDays = maxDaysElement ? parseInt(maxDaysElement.value) || 7 : 7;
+        
+        const maxOrdersElement = document.getElementById('maxOrders');
+        const maxOrders = maxOrdersElement ? 
+            parseInt(maxOrdersElement.value) : null;
+        
+        // Validate input
+        if (!numTrains || !maxDays) {
+            showToast('Please fill in all required fields', 'warning');
+            return;
+        }
+        
+        // Disable button and show loading
+        btn.disabled = true;
+        btn.innerHTML = '🤖 Auto-Scheduling...';
+        resultDiv.innerHTML = '<div class="alert alert-info">🤖 AI is analyzing priority queue and creating optimal schedule...</div>';
+        
+        try {
+            const response = await postAPI('/priority/auto-schedule', {
+                num_trains: numTrains,
+                max_days: maxDays,
+                include_all_pending: true,
+                max_orders: maxOrders
+            });
+            
+            if (response.success) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>🎉 Auto-Schedule Created Successfully!</strong><br>
+                        Schedule ID: <strong>${response.schedule_id}</strong><br>
+                        Orders Scheduled: <strong>${response.orders_scheduled}</strong><br>
+                        Total Cargo: <strong>${response.total_cargo_tons.toFixed(1)} tons</strong><br>
+                        <small>Priority Summary: Emergency: ${response.priority_summary.emergency}, Urgent: ${response.priority_summary.urgent}, Priority: ${response.priority_summary.priority}</small>
+                    </div>
+                `;
+                
+                // Show schedule details
+                showScheduleDetails(response.schedule_id, response.schedule_details);
+                
+                // Refresh priority queue status
+                loadPriorityQueueStatus();
+                
+                showToast(`Auto-schedule ${response.schedule_id} created successfully!`, 'success');
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <strong>❌ Auto-Scheduling Failed</strong><br>
+                        ${response.message}
+                    </div>
+                `;
+                showToast('Auto-scheduling failed: ' + response.message, 'danger');
+            }
+            
+        } catch (err) {
+            console.error('Auto-scheduling error:', err);
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>❌ Auto-Scheduling Error</strong><br>
+                    ${err.message || 'Unknown error occurred'}
+                </div>
+            `;
+            showToast('Auto-scheduling failed: ' + err.message, 'danger');
+        } finally {
+            // Re-enable button
+            btn.disabled = false;
+            btn.innerHTML = '🤖 Auto-Schedule by Priority';
+        }
+    }
+    
+    // Check auto-schedule status
+    async function checkAutoScheduleStatus() {
+        const resultDiv = document.getElementById('autoScheduleResult');
+        
+        try {
+            resultDiv.innerHTML = '<div class="alert alert-info">📊 Checking auto-schedule status...</div>';
+            
+            const response = await fetchAPI('/priority/auto-schedule/status');
+            
+            if (response.success) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>📊 Auto-Schedule System Status</strong><br>
+                        Total Orders: <strong>${response.total_orders}</strong><br>
+                        Scheduled Orders: <strong>${response.scheduled_orders}</strong><br>
+                        Pending Orders: <strong>${response.pending_orders}</strong><br>
+                        Completed Orders: <strong>${response.completed_orders}</strong><br>
+                        Scheduled Cargo: <strong>${response.scheduled_cargo_tons.toFixed(1)} tons</strong><br>
+                        <small>Auto-Schedule Ready: ${response.auto_schedule_ready ? '✅ Yes' : '❌ No'}</small>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Status Check Failed</strong><br>
+                        Unable to retrieve auto-schedule status
+                    </div>
+                `;
+            }
+            
+        } catch (err) {
+            console.error('Status check error:', err);
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>❌ Status Check Error</strong><br>
+                    ${err.message || 'Failed to check status'}
+                </div>
+            `;
+        }
+    }
+    
+    // Track last loaded schedule to prevent repeated API calls
+    let lastLoadedScheduleId = null;
+
+    // Show schedule details by ID
+    async function showScheduleDetailsById(scheduleId) {
+        // Prevent repeated calls for same schedule
+        if (lastLoadedScheduleId === scheduleId) {
+            console.log('🔍 DEBUG: Skipping repeated load for schedule:', scheduleId);
+            return;
+        }
+        
+        try {
+            console.log('🔍 DEBUG: Loading schedule details for:', scheduleId);
+            const response = await fetchAPI(`/priority/auto-schedule/${scheduleId}`);
+            console.log('🔍 DEBUG: Schedule details response:', response);
+            
+            if (response && response.success) {
+                lastLoadedScheduleId = scheduleId;
+                displayScheduleDetails(response);
+            } else {
+                const detailsCard = document.getElementById('scheduleDetailsCard');
+                const detailsDiv = document.getElementById('scheduleDetails');
+                if (detailsCard && detailsDiv) {
+                    detailsCard.style.display = 'block';
+                    detailsDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            <strong>Failed to Load Schedule Details</strong><br>
+                            Unable to retrieve details for schedule ${scheduleId}
+                        </div>
+                    `;
+                }
+            }
+        } catch (err) {
+            console.error('🔍 DEBUG: Error loading schedule details:', err);
+            const detailsCard = document.getElementById('scheduleDetailsCard');
+            const detailsDiv = document.getElementById('scheduleDetails');
+            if (detailsCard && detailsDiv) {
+                detailsCard.style.display = 'block';
+                detailsDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <strong>Error Loading Schedule</strong><br>
+                        ${err.message || 'Unknown error occurred'}
+                    </div>
+                `;
+            }
+        }
+    }
+
+        
+    // loadSelectedOrders function removed - no longer needed for auto-scheduling
+    
+    // testOrderParsing function removed - no longer needed for auto-scheduling
+    
+    // Map station pairs to TAZARA routes
+    function mapStationsToRoute(origin, destination) {
+        console.log('DEBUG: mapStationsToRoute called with:', origin, destination); // Debug line
+        
+        // Valid TAZARA routes that the backend recognizes
+        const VALID_TAZARA_ROUTES = [
+            'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA', 
+            'KAPIRI_NDOLA', 'DAR_KIDATU', 'KIDATU_TRANS_SHIPMENT'
+        ];
+        
+        const routeMap = {
+            'Dar es Salaam-Kapiri Mposhi': 'DAR_KAPIRI',
+            'Dar es Salaam-Mbeya': 'DAR_MBEYA',
+            'Dar es Salaam-Ndola': 'KAPIRI_NDOLA',
+            'Dar es Salaam-Kidatu': 'DAR_KIDATU',
+            'Kapiri Mposhi-Dar es Salaam': 'DAR_KAPIRI',
+            'Kapiri Mposhi-Mbeya': 'DAR_MBEYA',
+            'Kapiri Mposhi-Ndola': 'KAPIRI_NDOLA',
+            'Mbeya-Dar es Salaam': 'DAR_MBEYA',
+            'Mbeya-Kapiri Mposhi': 'DAR_MBEYA',
+            'Mbeya-Kasama': 'MBEYA_KASAMA',
+            'Ndola-Kapiri Mposhi': 'KAPIRI_NDOLA',
+            'Ndola-Mbeya': 'MBEYA_KASAMA', // Via Kapiri
+            'Kidatu': 'KIDATU_TRANS_SHIPMENT' // Trans-shipment special case
+        };
+        
+        console.log('DEBUG: Available routes:', Object.keys(routeMap)); // Debug line
+        
+        // Normalize station names for better matching
+        const normalizeStation = (station) => {
+            return station.trim().toLowerCase();
+        };
+        
+        const originNorm = normalizeStation(origin);
+        const destNorm = normalizeStation(destination);
+        
+        // Check for exact matches first
+        const key1 = `${origin}-${destination}`;
+        const key2 = `${destination}-${origin}`;
+        
+        if (routeMap[key1]) return routeMap[key1];
+        if (routeMap[key2]) return routeMap[key2];
+        
+        // Check for normalized matches
+        if (originNorm === 'dar es salaam' && destNorm === 'kapiri mposhi') return 'DAR_KAPIRI';
+        if (originNorm === 'dar es salaam' && destNorm === 'mbeya') return 'DAR_MBEYA';
+        if (originNorm === 'dar es salaam' && destNorm === 'ndola') return 'KAPIRI_NDOLA';
+        if (originNorm === 'dar es salaam' && destNorm === 'kidatu') return 'DAR_KIDATU';
+        
+        if (originNorm === 'kapiri mposhi' && destNorm === 'dar es salaam') return 'DAR_KAPIRI';
+        if (originNorm === 'kapiri mposhi' && destNorm === 'mbeya') {
+            console.log('DEBUG: Using fallback route for Kapiri Mposhi to Mbeya'); // Debug line
+            return 'DAR_MBEYA'; // Map to existing valid route
+        }
+        if (originNorm === 'kapiri mposhi' && destNorm === 'ndola') return 'KAPIRI_NDOLA';
+        
+        if (originNorm === 'mbeya' && destNorm === 'dar es salaam') return 'DAR_MBEYA';
+        if (originNorm === 'mbeya' && destNorm === 'kapiri mposhi') return 'DAR_MBEYA';
+        if (originNorm === 'mbeya' && destNorm === 'kasama') return 'MBEYA_KASAMA';
+        
+        if (originNorm === 'ndola' && destNorm === 'kapiri mposhi') return 'KAPIRI_NDOLA';
+        if (originNorm === 'ndola' && destNorm === 'mbeya') return 'MBEYA_KASAMA'; // Via Kapiri
+        
+        // Special case: same origin and destination (local transport)
+        if (originNorm === destNorm) {
+            if (originNorm === 'dar es salaam') return 'DAR_KAPIRI'; // Default to main route
+            if (originNorm === 'kidatu') return 'KIDATU_TRANS_SHIPMENT';
+            return 'DAR_KAPIRI'; // Default fallback
+        }
+        
+        console.log('DEBUG: No route found for', origin, 'â†’', destination);
+        return null;
+    }
+    
+    // Helper functions for priority display
+    function getPriorityColor(priority) {
+        const colors = { 1: '#dc3545', 2: '#ffc107', 3: '#28a745' };
+        return colors[priority] || '#6c757d';
+    }
+    
+    function getPriorityText(priority) {
+        const texts = { 1: 'High', 2: 'Medium', 3: 'Low' };
+        return texts[priority] || 'Normal';
+    }
+    
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+    }
+    
+    // Load orders for assignment dropdown
+    async function loadWorkflowOrders() {
+        try {
+            const response = await fetchAPI('/api/workflow/orders?status=pending');
+            const select = document.getElementById('assignOrderSelect');
+            
+            select.innerHTML = '<option value="">Select an order...</option>';
+            response.forEach(order => {
+                const option = document.createElement('option');
+                option.value = order.order_id;
+                option.textContent = `${order.order_id} - ${order.customer_name}`;
+                select.appendChild(option);
+            });
+        } catch (err) {
+            console.error('Failed to load orders for assignment:', err);
+        }
+    }
+    
+    // Assign order to schedule
+    async function assignOrder() {
+        const orderId = document.getElementById('assignOrderSelect').value;
+        const scheduleId = document.getElementById('assignScheduleSelect').value;
+        const trainId = document.getElementById('assignTrainId').value;
+        
+        if (!orderId || !scheduleId || !trainId) {
+            showToast('Please select an order, schedule, and enter train ID', 'warning');
+            return;
+        }
+        
+        try {
+            showToast('Assigning order...', 'info');
+            const response = await putAPI(`/api/workflow/orders/${orderId}/assign`, {
+                schedule_id: scheduleId,
+                train_id: parseInt(trainId)
+            });
+            
+            showToast('Order assigned successfully!', 'success');
+            document.getElementById('assignmentResult').innerHTML = 
+                '<div class="alert alert-success">Order assigned successfully!</div>';
+            
+            // Reload orders
+            loadOrders();
+            loadWorkflowOrders();
+        } catch (err) {
+            showToast('Failed to assign order: ' + err.message, 'danger');
+        }
+    }
+    
+    // Helper function for GET requests
+    async function getAPI(endpoint) {
+        const token = localStorage.getItem('access_token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        const response = await fetch(`http://127.0.0.1:8000${endpoint}`, {
+            method: 'GET',
+            headers: headers
+        });
+        
+        if (!response.ok) {
+            let errorText;
+            try {
+                const error = await response.json();
+                errorText = error.detail || 'Request failed';
+            } catch (e) {
+                // If JSON parsing fails, get raw text
+                errorText = await response.text();
+                console.error('Raw error response:', errorText);
+            }
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+        
+        return response.json();
+    }
+    
+    // Helper function for PUT requests
+    async function putAPI(endpoint, data) {
+        const token = localStorage.getItem('access_token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        const response = await fetch(`http://127.0.0.1:8000${endpoint}`, {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Request failed');
+        }
+        
+        return response.json();
+    }
+
+    // â”€â”€ Status Polling â”€â”€
+    function startStatusPolling() {
+        setInterval(async () => {
+            const isOnline = await checkSystemHealth();
+            // Update status indicator
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            if (isOnline) {
+                statusDot.className = 'status-dot online';
+                statusText.textContent = 'Online';
+            } else {
+                statusDot.className = 'status-dot offline';
+                statusText.textContent = 'Offline';
+            }
+        }, 30000); // Check every 30 seconds
+    }
+
+    // Tab switching functionality
+    function setupTabSwitching() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and panels
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanels.forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding panel
+                button.classList.add('active');
+                const targetPanel = document.getElementById(targetTab);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                    
+                    // FORCE VISIBILITY: Hide all panels, show only active one
+                    tabPanels.forEach(panel => {
+                        if (panel.id === targetTab) {
+                            panel.style.display = 'block';
+                        } else {
+                            panel.style.display = 'none';
+                        }
+                    });
+                }
+                
+                // Load data for specific tabs when activated
+                if (targetTab === 'tabWorkflow') {
+                    loadWorkflowSchedules();
+                } else if (targetTab === 'tabOrders') {
+                    loadOrders();
+                    loadWorkflowOrders();
+                } else if (targetTab === 'tabSchedule') {
+                    loadPriorityQueueStatus();
+                    loadExistingSchedules();
+                } else if (targetTab === 'tabRisk') {
+                    console.log('Risk tab activated - calling analyzeRisk()');
+                    analyzeRisk(null);
+                    
+                    // Add debugging - check if tab is actually visible
+                    setTimeout(() => {
+                        const riskPanel = document.getElementById('tabRisk');
+                        console.log('ðŸ” Risk panel visibility check:', {
+                            panel: !!riskPanel,
+                            isVisible: riskPanel ? riskPanel.offsetParent !== null : false,
+                            display: riskPanel ? window.getComputedStyle(riskPanel).display : 'not found',
+                            classes: riskPanel ? riskPanel.className : 'not found'
+                        });
+                        
+                        // Check if elements are actually in the DOM and visible
+                        const scoreElement = document.getElementById('riskScoreValue');
+                        const badgeElement = document.getElementById('riskLevelBadge');
+                        console.log('ðŸ” Element checks:', {
+                            scoreElement: !!scoreElement,
+                            scoreText: scoreElement ? scoreElement.textContent : 'not found',
+                            badgeElement: !!badgeElement,
+                            badgeText: badgeElement ? badgeElement.textContent : 'not found'
+                        });
+                    }, 100);
+                }
+            });
+        });
+        
+        // Handle URL hash for direct tab navigation
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById(hash)) {
+            // Find the button that corresponds to this tab
+            const targetButton = document.querySelector(`[data-tab="${hash}"]`);
+            if (targetButton) {
+                targetButton.click();
+            }
+        }
+    }
+    
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const backdrop = document.querySelector('.mobile-backdrop');
+        const isHidden = sidebar.style.transform === 'translateX(-100%)';
+        
+        if (isHidden) {
+            sidebar.style.transform = 'translateX(0)';
+            sidebar.style.zIndex = '1000';
+            if (backdrop) backdrop.style.display = 'block';
+        } else {
+            sidebar.style.transform = 'translateX(-100%)';
+            sidebar.style.zIndex = '1';
+            if (backdrop) backdrop.style.display = 'none';
+        }
+    }
+    
+    // Authentication functions
+    async function loadUserInfo() {
+        try {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                window.location.href = '/dashboard/login.html';
+                return;
+            }
+
+            const response = await fetch('/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('token_type');
+                localStorage.removeItem('expires_in');
+                window.location.href = '/dashboard/login.html';
+                return;
+            }
+
+            const user = await response.json();
+            
+            document.getElementById('userName').textContent = user.username;
+            document.getElementById('userRole').textContent = user.role;
+            
+            const roleElement = document.getElementById('userRole');
+            roleElement.className = `user-role ${user.role}`;
+            
+            // Apply role-based UI restrictions
+            applyRoleBasedUI(user.role, user.permissions || {});
+            
+        } catch (error) {
+            console.error('Error loading user info:', error);
+            window.location.href = '/dashboard/login.html';
+        }
+    }
+
+    function applyRoleBasedUI(role, permissions) {
+        // Hide create order button from viewer role
+        if (role === 'viewer') {
+            const createOrderBtn = document.getElementById('createOrderBtn');
+            if (createOrderBtn) {
+                createOrderBtn.style.display = 'none';
+                // Also hide the entire create order form
+                const createOrderCard = createOrderBtn.closest('.card');
+                if (createOrderCard) {
+                    createOrderCard.style.display = 'none';
+                }
+            }
+        }
+        
+        // Hide create schedule button from viewer role
+        if (role === 'viewer') {
+            const createScheduleBtn = document.getElementById('createScheduleBtn');
+            if (createScheduleBtn) {
+                createScheduleBtn.style.display = 'none';
+            }
+        }
+        
+        // Additional role-based restrictions can be added here
+        console.log(`Applied UI restrictions for role: ${role}`);
+    }
+
+    function logout() {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_type');
+        localStorage.removeItem('expires_in');
+        
+        // Redirect to login
+        window.location.href = '/dashboard/login.html';
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+        // Test Step 1: Train Capacities
+        testTrainCapacities();
+        
+        loadUserInfo();
+        loadOverview();
+        loadPerformanceCharts();
+        loadForecast();
+        setupTabSwitching();
+        startStatusPolling();
+        // analyzeRisk(null); // Risk tab is commented out
+    });
+</script>
+</body>
+</html>

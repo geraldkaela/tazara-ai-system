@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - TAZARA AI Railway</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* Primary palette - match main dashboard */
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --primary-light: #a3bffa;
+            --accent: #764ba2;
+            --accent-light: #9f7aea;
+
+            /* Semantic colors - match main dashboard */
+            --success: #48bb78;
+            --success-bg: rgba(72, 187, 120, 0.1);
+            --warning: #ecc94b;
+            --warning-bg: rgba(236, 201, 75, 0.12);
+            --danger: #f56565;
+            --danger-bg: rgba(245, 101, 101, 0.1);
+            --info: #4299e1;
+            --info-bg: rgba(66, 153, 225, 0.1);
+
+            /* Dark theme colors - match main dashboard */
+            --bg-body: #0f1117;
+            --bg-surface: #1a1d2e;
+            --bg-card: rgba(26, 29, 46, 0.85);
+            --bg-card-hover: rgba(30, 34, 54, 0.95);
+            --bg-input: rgba(255, 255, 255, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: var(--primary);
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --text-muted: #718096;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-left h1 {
+            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .btn-secondary {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-1px);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--bg-surface);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .user-role {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .user-role.admin { background: var(--danger); }
+        .user-role.manager { background: var(--warning); }
+        .user-role.operator { background: var(--info); }
+        .user-role.viewer { background: var(--success); }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+            background: var(--bg-card);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: var(--bg-input);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .user-table th {
+            background: var(--bg-surface);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .user-table tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--success);
+        }
+
+        .status-inactive {
+            background: rgba(245, 101, 101, 0.1);
+            color: var(--danger);
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: rgba(72, 187, 120, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .alert-danger {
+            background: rgba(245, 101, 101, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .alert-warning {
+            background: rgba(237, 137, 54, 0.1);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <a href="index.html" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left"></i> Back to Overview
+                </a>
+                <h1><i class="fas fa-users"></i> User Management</h1>
+            </div>
+            <div class="user-info">
+                <span>Logged in as: <strong id="userName">Loading...</strong></span>
+                <span class="user-role" id="userRole">Loading...</span>
+                <button class="btn btn-sm btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Create User Form -->
+            <div class="card" id="createUserCard">
+                <div class="card-header">
+                    <i class="fas fa-user-plus"></i> Create New User
+                </div>
+                <div class="card-body">
+                    <form id="createUserForm">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-input" id="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Role</label>
+                            <select class="form-select" id="role" required>
+                                <option value="operator">Operator</option>
+                                <option value="manager">Manager</option>
+                                <option value="viewer">Viewer</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Create User
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Users List -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-list"></i> System Users
+                </div>
+                <div class="card-body">
+                    <div id="usersContainer">
+                        <div class="alert alert-info">Loading users...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API helper functions
+        async function fetchAPI(endpoint, options = {}) {
+            const token = localStorage.getItem('access_token');
+            const defaultOptions = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+            
+            const response = await fetch(`http://127.0.0.1:8000${endpoint}`, {
+                ...defaultOptions,
+                ...options
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Request failed');
+            }
+            
+            return response.json();
+        }
+
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            const container = document.querySelector('.container');
+            container.insertBefore(alertDiv, container.firstChild);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        // Authentication functions
+        async function loadUserInfo() {
+            try {
+                const token = localStorage.getItem('access_token');
+                if (!token) {
+                    window.location.href = '/dashboard/login.html';
+                    return;
+                }
+
+                // Add timeout and retry logic
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                
+                const user = await fetchAPI('/auth/me', {
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                document.getElementById('userName').textContent = user.username;
+                document.getElementById('userRole').textContent = user.role;
+                
+                const roleElement = document.getElementById('userRole');
+                roleElement.className = `user-role ${user.role}`;
+                
+                // Apply role-based UI restrictions
+                applyRoleBasedUI(user.role, user.permissions || {});
+                
+            } catch (error) {
+                console.error('Error loading user info:', error);
+                
+                // Better error handling
+                if (error.name === 'AbortError') {
+                    showAlert('Authentication service is taking too long to respond. Please try again.', 'warning');
+                } else if (error.message && error.message.includes('temporarily unavailable')) {
+                    showAlert('Authentication service temporarily unavailable. Please try again later.', 'warning');
+                } else {
+                    window.location.href = '/dashboard/login.html';
+                }
+            }
+        }
+
+        function applyRoleBasedUI(role, permissions) {
+            // Only admin can create users
+            if (role !== 'admin') {
+                const createUserCard = document.getElementById('createUserCard');
+                if (createUserCard) {
+                    createUserCard.style.display = 'none';
+                }
+            }
+            
+            console.log(`Applied UI restrictions for role: ${role}`);
+        }
+
+        function logout() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('token_type');
+            localStorage.removeItem('expires_in');
+            window.location.href = '/dashboard/login.html';
+        }
+
+        // User management functions
+        async function createUser(event) {
+            event.preventDefault();
+            
+            const formData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                role: document.getElementById('role').value
+            };
+            
+            try {
+                showAlert('Creating user...', 'info');
+                await fetchAPI('/auth/users', {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+                
+                showAlert('User created successfully!', 'success');
+                document.getElementById('createUserForm').reset();
+                loadUsers();
+                
+            } catch (error) {
+                showAlert('Failed to create user: ' + error.message, 'danger');
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                const users = await fetchAPI('/auth/users');
+                displayUsers(users);
+            } catch (error) {
+                console.error('Failed to load users:', error);
+                document.getElementById('usersContainer').innerHTML = 
+                    '<div class="alert alert-danger">Failed to load users</div>';
+            }
+        }
+
+        function displayUsers(users) {
+            const container = document.getElementById('usersContainer');
+            
+            if (!users || users.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No users found</div>';
+                return;
+            }
+            
+            const table = document.createElement('table');
+            table.className = 'user-table';
+            
+            // Table header
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+            
+            // Table body
+            const tbody = document.createElement('tbody');
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td><span class="user-role ${user.role}">${user.role}</span></td>
+                    <td>
+                        <span class="status-badge ${user.is_active ? 'status-active' : 'status-inactive'}">
+                            ${user.is_active ? 'Active' : 'Inactive'}
+                        </span>
+                    </td>
+                    <td>${new Date(user.created_at).toLocaleDateString()}</td>
+                    <td>
+                        <div class="actions">
+                            ${user.is_active ? 
+                                `<button class="btn btn-sm btn-warning" onclick="toggleUserStatus('${user.username}', false)">
+                                    <i class="fas fa-ban"></i>
+                                </button>` :
+                                `<button class="btn btn-sm btn-success" onclick="toggleUserStatus('${user.username}', true)">
+                                    <i class="fas fa-check"></i>
+                                </button>`
+                            }
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser('${user.username}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            table.appendChild(tbody);
+            container.innerHTML = '';
+            container.appendChild(table);
+        }
+
+        async function toggleUserStatus(username, isActive) {
+            if (!confirm(`Are you sure you want to ${isActive ? 'activate' : 'deactivate'} user ${username}?`)) {
+                return;
+            }
+            
+            try {
+                await fetchAPI(`/auth/users/${username}/status`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ is_active: isActive })
+                });
+                
+                showAlert(`User ${username} ${isActive ? 'activated' : 'deactivated'} successfully!`, 'success');
+                loadUsers();
+                
+            } catch (error) {
+                showAlert('Failed to update user status: ' + error.message, 'danger');
+            }
+        }
+
+        async function deleteUser(username) {
+            if (!confirm(`Are you sure you want to delete user ${username}? This action cannot be undone.`)) {
+                return;
+            }
+            
+            try {
+                await fetchAPI(`/auth/users/${username}`, {
+                    method: 'DELETE'
+                });
+                
+                showAlert(`User ${username} deleted successfully!`, 'success');
+                loadUsers();
+                
+            } catch (error) {
+                showAlert('Failed to delete user: ' + error.message, 'danger');
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            loadUsers();
+            
+            // Setup form submission
+            document.getElementById('createUserForm').addEventListener('submit', createUser);
+        });
+    </script>
+</body>
+</html>

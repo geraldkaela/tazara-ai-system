@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risk API Test</title>
+</head>
+<body>
+    <h1>Risk API Test</h1>
+    <button onclick="testRiskAPI()">Test Risk API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testRiskAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                // Get token from localStorage
+                const token = localStorage.getItem('access_token');
+                if (!token) {
+                    resultDiv.innerHTML = 'No token found. Please login first.';
+                    return;
+                }
+                
+                console.log('Token:', token);
+                
+                // Test API call
+                const response = await fetch('http://127.0.0.1:8000/api/risk/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        schedule_id: "test",
+                        route: "DAR_KAPIRI",
+                        planned_departure: new Date().toISOString(),
+                        historical_issues: []
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    resultDiv.innerHTML = `Error: ${response.status} - ${errorText}`;
+                    return;
+                }
+                
+                const data = await response.json();
+                console.log('Risk data:', data);
+                
+                resultDiv.innerHTML = `
+                    <h3>✅ API Working!</h3>
+                    <p><strong>Risk Score:</strong> ${data.risk_score}</p>
+                    <p><strong>Risk Level:</strong> ${data.risk_level}</p>
+                    <p><strong>Bottlenecks:</strong> ${data.bottlenecks.length} found</p>
+                    <p><strong>Recommendations:</strong> ${data.recommendations.length} found</p>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+        
+        // Check if user is logged in
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                document.getElementById('result').innerHTML = 'Please login first at <a href="/dashboard/login.html">Login Page</a>';
+            } else {
+                document.getElementById('result').innerHTML = 'Token found. Ready to test API.';
+            }
+        });
+    </script>
+</body>
+</html>

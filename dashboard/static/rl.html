@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARA AI — RL Performance</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo">🚂</span>
+            <h1>TAZARA AI<span>Railway Operations</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboards</div>
+                <a href="index.html" class="nav-link"><span class="icon">📊</span> Overview</a>
+                <a href="multi_route.html" class="nav-link"><span class="icon">🚂</span> Multi-Route Ops</a>
+                <a href="alerts.html" class="nav-link"><span class="icon">🚨</span> Alerts</a>
+                <a href="comparison.html" class="nav-link"><span class="icon">📈</span> Comparison</a>
+                <!--<a href="rl.html" class="nav-link"><span class="icon">🤖</span> RL Dashboard</a>-->
+            </div>
+        </nav>
+        <div class="sidebar-status">
+            <div class="status-badge offline" id="systemStatus">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Checking...</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2>🤖 RL Agent Performance</h2>
+            <p>Monitor Reinforcement Learning training progress and KPI distribution</p>
+        </div>
+
+        <div class="page-body">
+            <!-- Filter Section -->
+            <div class="card" style="margin-bottom:20px;">
+                <div class="card-header"><div class="card-title">🔍 Filters</div></div>
+                <div class="grid-3" style="align-items:flex-end;">
+                    <div class="form-group" style="margin:0;">
+                        <label class="form-label">Episode Range</label>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <input type="number" class="form-input" id="minEp" value="0">
+                            <span>to</span>
+                            <input type="number" class="form-input" id="maxEp" value="1000">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadRLData()">🔄 Refresh Data</button>
+                    <button class="btn btn-secondary" onclick="downloadCSV()">📁 Download CSV</button>
+                </div>
+            </div>
+
+            <!-- RL KPIs -->
+            <div class="metrics-grid">
+                <div class="metric-card" style="--metric-accent: var(--primary);">
+                    <div class="metric-icon">🏆</div>
+                    <div class="metric-value" id="avgReward">—</div>
+                    <div class="metric-label">Avg Total Reward</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--success);">
+                    <div class="metric-icon">📦</div>
+                    <div class="metric-value" id="avgCargo">—</div>
+                    <div class="metric-label">Avg Cargo Delivered</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--accent);">
+                    <div class="metric-icon">🚂</div>
+                    <div class="metric-value" id="avgTrains">—</div>
+                    <div class="metric-label">Avg Trains Used</div>
+                </div>
+                <div class="metric-card" style="--metric-accent: var(--danger);">
+                    <div class="metric-icon">⏱️</div>
+                    <div class="metric-value" id="avgIdle">—</div>
+                    <div class="metric-label">Avg Idle Penalty</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid-2" style="margin-top:20px;">
+                <div class="card grid-full">
+                    <div class="card-header"><div class="card-title">📈 Training Reward per Episode</div></div>
+                    <div class="chart-container tall">
+                        <canvas id="rewardChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><div class="card-title">🎮 Action Distribution</div></div>
+                    <div class="chart-container">
+                        <canvas id="actionChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><div class="card-title">📦 Cargo vs Idle Penalty</div></div>
+                    <div class="chart-container">
+                        <canvas id="cargoVsIdleChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    let rawData = [];
+
+    async function loadRLData() {
+        showLoading('rewardChart');
+        try {
+            // In a real app, this would be an API call. 
+            // Since rl_dashboard.py reads 'rl_kpi_data.csv', we'll try to fetch that via API or simulated.
+            // For now, let's simulate the data to show the visualization.
+            
+            const minEp = parseInt(document.getElementById('minEp').value);
+            const maxEp = parseInt(document.getElementById('maxEp').value);
+            
+            // Simulating RL training data
+            rawData = Array.from({length: maxEp - minEp + 1}, (_, i) => {
+                const ep = minEp + i;
+                const trend = Math.log(ep + 1) * 100;
+                return {
+                    episode: ep,
+                    total_reward: trend + Math.random() * 200 - 100,
+                    cargo_delivered: 500 + (ep/10) + Math.random() * 50,
+                    trains_used: Math.floor(Math.random() * 4 + 4),
+                    idle_penalty: Math.max(0, 500 - (ep/2) + Math.random() * 100),
+                    action_0: Math.random() * 10,
+                    action_1: Math.random() * 20,
+                    action_2: Math.random() * 5
+                };
+            });
+
+            renderRLDashboard();
+            showToast('RL data loaded successfully', 'success');
+        } catch (err) {
+            showError('rewardChart', err);
+        }
+    }
+
+    function renderRLDashboard() {
+        if (rawData.length === 0) return;
+
+        // Top metrics
+        const avgRewards = rawData.reduce((a, b) => a + b.total_reward, 0) / rawData.length;
+        const avgCargo = rawData.reduce((a, b) => a + b.cargo_delivered, 0) / rawData.length;
+        const avgTrains = rawData.reduce((a, b) => a + b.trains_used, 0) / rawData.length;
+        const avgIdle = rawData.reduce((a, b) => a + b.idle_penalty, 0) / rawData.length;
+
+        document.getElementById('avgReward').textContent = formatNumber(avgRewards, 1);
+        document.getElementById('avgCargo').textContent = formatNumber(avgCargo, 1);
+        document.getElementById('avgTrains').textContent = formatNumber(avgTrains, 1);
+        document.getElementById('avgIdle').textContent = formatNumber(avgIdle, 1);
+
+        // Reward Chart
+        const rewardCtx = document.getElementById('rewardChart');
+        if (window.rewardChartObj) window.rewardChartObj.destroy();
+        window.rewardChartObj = new Chart(rewardCtx, {
+            type: 'line',
+            data: {
+                labels: rawData.map(d => d.episode),
+                datasets: [{
+                    label: 'Total Reward',
+                    data: rawData.map(d => d.total_reward),
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102,126,234,0.1)',
+                    borderWidth: 1.5,
+                    pointRadius: 0,
+                    tension: 0.1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Episode' } },
+                    y: { title: { display: true, text: 'Reward' } }
+                }
+            }
+        });
+
+        // Action Chart
+        const actionCtx = document.getElementById('actionChart');
+        if (window.actionChartObj) window.actionChartObj.destroy();
+        window.actionChartObj = new Chart(actionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Action 0', 'Action 1', 'Action 2'],
+                datasets: [{
+                    label: 'Total Uses',
+                    data: [
+                        rawData.reduce((a, b) => a + b.action_0, 0),
+                        rawData.reduce((a, b) => a + b.action_1, 0),
+                        rawData.reduce((a, b) => a + b.action_2, 0)
+                    ],
+                    backgroundColor: ['rgba(72,187,120,0.6)', 'rgba(66,153,225,0.6)', 'rgba(237,137,54,0.6)'],
+                    borderRadius: 4
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Cargo vs Idle Chart (Scatter-like line comparison)
+        const cvsCtx = document.getElementById('cargoVsIdleChart');
+        if (window.cvsChartObj) window.cvsChartObj.destroy();
+        window.cvsChartObj = new Chart(cvsCtx, {
+            type: 'line',
+            data: {
+                labels: rawData.map(d => d.episode),
+                datasets: [
+                    { label: 'Cargo', data: rawData.map(d => d.cargo_delivered), borderColor: '#48bb78', pointRadius: 0, tension: 0.2 },
+                    { label: 'Idle Penalty', data: rawData.map(d => d.idle_penalty), borderColor: '#f56565', pointRadius: 0, tension: 0.2 }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    }
+
+    function downloadCSV() {
+        if (rawData.length === 0) return;
+        let csv = 'Episode,Total_Reward,Cargo_Delivered,Trains_Used,Idle_Penalty\n';
+        rawData.forEach(d => {
+            csv += `${d.episode},${d.total_reward},${d.cargo_delivered},${d.trains_used},${d.idle_penalty}\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'rl_kpi_data.csv');
+        a.click();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadRLData);
+</script>
+</body>
+</html>

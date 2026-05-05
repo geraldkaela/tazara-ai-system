@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARA AI — Schedule Comparison</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo"></span>
+            <h1>TAZARA AI<span>Railway Operations</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboards</div>
+                <a href="index.html" class="nav-link"><span class="icon"></span> Overview</a>
+                <a href="multi_route.html" class="nav-link"><span class="icon"></span> Multi-Route Ops</a>
+                <a href="alerts.html" class="nav-link"><span class="icon"></span> Alerts</a>
+                <a href="comparison.html" class="nav-link"><span class="icon"></span> Comparison</a>
+               <!--<a href="rl.html" class="nav-link"><span class="icon"></span> RL Dashboard</a>-->
+            </div>
+        </nav>
+        <div class="sidebar-status">
+            <div class="status-badge offline" id="systemStatus">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Checking...</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2> Baseline vs RL Comparison</h2>
+            <p>Upload a schedule file to compare Baseline and Reinforcement Learning performance</p>
+        </div>
+
+        <div class="page-body">
+            <!-- Upload Section -->
+            <div class="card" id="uploadCard">
+                <div class="card-header">
+                    <div class="card-title">📁 Upload Schedule File</div>
+                </div>
+                <div class="file-upload" id="dropZone" onclick="document.getElementById('compFile').click()">
+                    <div class="icon"></div>
+                    <p><strong>Click to upload</strong> or drag & drop an Excel file</p>
+                    <p style="font-size:0.75rem;margin-top:4px;">Requires columns: route, cargo, priority</p>
+                </div>
+                <input type="file" id="compFile" accept=".xlsx,.xls" style="display:none" onchange="uploadComparison(event)">
+                <div id="uploadStatus" style="margin-top:16px;"></div>
+            </div>
+
+            <!-- Results (hidden until data loads) -->
+            <div id="resultsSection" style="display:none;">
+                <!-- KPI Comparison -->
+                <div class="metrics-grid" style="margin-top:20px;">
+                    <div class="metric-card" style="--metric-accent: var(--info);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="baselineProfit">—</div>
+                        <div class="metric-label">Baseline Profit (ZMW)</div>
+                    </div>
+                    <div class="metric-card" style="--metric-accent: var(--accent);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="rlProfit">—</div>
+                        <div class="metric-label">RL Profit (ZMW)</div>
+                    </div>
+                    <div class="metric-card" style="--metric-accent: var(--success);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="baselineCargo">—</div>
+                        <div class="metric-label">Baseline Cargo (tons)</div>
+                    </div>
+                    <div class="metric-card" style="--metric-accent: var(--warning);">
+                        <div class="metric-icon"></div>
+                        <div class="metric-value" id="rlCargo">—</div>
+                        <div class="metric-label">RL Cargo (tons)</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="grid-2" style="margin-top:20px;">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">💰 Cost Comparison (ZMW)</div></div>
+                        <div class="chart-container tall">
+                            <canvas id="costChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title"> Improvement Analysis</div></div>
+                        <div class="chart-container tall">
+                            <canvas id="improvChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cost Breakdown Table -->
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header"><div class="card-title"> ZMW Cost Breakdown</div></div>
+                    <div class="table-wrap">
+                        <table id="costTable">
+                            <thead>
+                                <tr><th>Metric</th><th>Baseline (ZMW)</th><th>RL (ZMW)</th><th>Difference</th></tr>
+                            </thead>
+                            <tbody id="costTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Verdict -->
+                <div id="verdict" style="margin-top:20px;"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    // Drag & drop
+    const dz = document.getElementById('dropZone');
+    if (dz) {
+        ['dragenter','dragover'].forEach(e => dz.addEventListener(e, ev => { ev.preventDefault(); dz.style.borderColor='var(--primary)'; dz.style.background='rgba(102,126,234,0.08)'; }));
+        ['dragleave','drop'].forEach(e => dz.addEventListener(e, ev => { ev.preventDefault(); dz.style.borderColor=''; dz.style.background=''; }));
+        dz.addEventListener('drop', ev => {
+            const f = ev.dataTransfer.files[0];
+            if (f) { document.getElementById('compFile').files = ev.dataTransfer.files; uploadComparison({target:{files:[f]}}); }
+        });
+    }
+
+    async function uploadComparison(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const statusEl = document.getElementById('uploadStatus');
+        statusEl.innerHTML = '<div class="alert alert-info">⏳ Uploading and comparing schedules...</div>';
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const url = `${API_BASE}/compare/`;
+            const resp = await fetch(url, { method: 'POST', body: formData });
+            if (!resp.ok) throw new Error(`API Error: ${resp.status} ${await resp.text()}`);
+            const data = await resp.json();
+
+            statusEl.innerHTML = '<div class="alert alert-success"> Comparison completed!</div>';
+            renderComparison(data);
+        } catch (err) {
+            statusEl.innerHTML = `<div class="alert alert-danger"> ${err.message}</div>`;
+        }
+    }
+
+    function renderComparison(data) {
+        const comp = data.comparison || data;
+        const baseline = comp.baseline_metrics || {};
+        const rl = comp.rl_metrics || {};
+        const analysis = comp.analysis || {};
+        const baselineMetrics = baseline.metrics || {};
+        const rlMetrics = rl.metrics || {};
+        const bCost = baselineMetrics.cost_breakdown_zmw || {};
+        const rCost = rlMetrics.cost_breakdown_zmw || {};
+
+        document.getElementById('resultsSection').style.display = 'block';
+
+        // KPI values
+        document.getElementById('baselineProfit').textContent = formatCurrency(bCost.net_profit_zmw);
+        document.getElementById('rlProfit').textContent = formatCurrency(rCost.net_profit_zmw);
+        document.getElementById('baselineCargo').textContent = formatNumber(baselineMetrics.total_cargo_delivered);
+        document.getElementById('rlCargo').textContent = formatNumber(rlMetrics.total_cargo_delivered);
+
+        // Cost table
+        const metrics = ['revenue_zmw', 'train_cost_zmw', 'delay_cost_zmw', 'idle_cost_zmw', 'net_profit_zmw'];
+        const labels = ['Revenue', 'Train Cost', 'Delay Cost', 'Idle Cost', 'Net Profit'];
+        const tbody = document.getElementById('costTableBody');
+        tbody.innerHTML = metrics.map((m, i) => {
+            const bv = bCost[m] || 0, rv = rCost[m] || 0, diff = rv - bv;
+            return `<tr>
+                <td><strong>${labels[i]}</strong></td>
+                <td>${formatCurrency(bv)}</td>
+                <td>${formatCurrency(rv)}</td>
+                <td class="${diff >= 0 ? '' : ''}" style="color:${diff >= 0 ? 'var(--success)' : 'var(--danger)'};">${diff >= 0 ? '+' : ''}${formatCurrency(diff)}</td>
+            </tr>`;
+        }).join('');
+
+        // Cost comparison chart
+        const costCtx = document.getElementById('costChart');
+        if (costCtx) {
+            new Chart(costCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Baseline (ZMW)', data: metrics.map(m => bCost[m] || 0), backgroundColor: 'rgba(66,153,225,0.6)', borderRadius: 4 },
+                        { label: 'RL (ZMW)', data: metrics.map(m => rCost[m] || 0), backgroundColor: 'rgba(159,122,234,0.6)', borderRadius: 4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Improvement chart
+        const improvCtx = document.getElementById('improvChart');
+        if (improvCtx) {
+            const improvements = [
+                { label: 'Profit', value: analysis.profit_improvement_zmw || 0 },
+                { label: 'Revenue', value: analysis.revenue_improvement_zmw || 0 },
+                { label: 'Cargo', value: analysis.cargo_efficiency_improvement || 0 }
+            ];
+            new Chart(improvCtx, {
+                type: 'bar',
+                data: {
+                    labels: improvements.map(i => i.label),
+                    datasets: [{
+                        label: 'Improvement',
+                        data: improvements.map(i => i.value),
+                        backgroundColor: improvements.map(i => i.value >= 0 ? 'rgba(72,187,120,0.6)' : 'rgba(245,101,101,0.6)'),
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Verdict
+        const verdictEl = document.getElementById('verdict');
+        const cargoImprv = analysis.cargo_efficiency_improvement || 0;
+        if (cargoImprv > 0) {
+            verdictEl.innerHTML = `<div class="alert alert-success"> RL delivers <strong>${formatNumber(cargoImprv)}</strong> more tons of cargo than Baseline!</div>`;
+        } else if (cargoImprv < 0) {
+            verdictEl.innerHTML = `<div class="alert alert-warning"> Baseline delivers <strong>${formatNumber(Math.abs(cargoImprv))}</strong> more tons of cargo than RL.</div>`;
+        } else {
+            verdictEl.innerHTML = `<div class="alert alert-info"> Both systems deliver <strong>${formatNumber(rlMetrics.total_cargo_delivered)}</strong> tons of cargo equally.</div>`;
+        }
+    }
+</script>
+</body>
+</html>

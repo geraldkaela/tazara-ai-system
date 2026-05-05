@@ -1,0 +1,14 @@
+admin:
+  username: admin
+  password: admin123
+  role: Admin
+
+manager:
+  username: manager
+  password: manager123
+  role: Operations Manager
+
+analyst:
+  username: analyst
+  password: analyst123
+  role: Analyst

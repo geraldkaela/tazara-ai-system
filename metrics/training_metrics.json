@@ -1,0 +1,12 @@
+{
+  "rf": {
+    "mae": 20.88196837474897,
+    "rmse": 27.88657703280153,
+    "model_path": "models/cargo_forecast_model.pkl"
+  },
+  "gbm": {
+    "mae": 17.519258653022508,
+    "rmse": 22.53815560677855,
+    "model_path": "models/cargo_forecast_gbm.pkl"
+  }
+}

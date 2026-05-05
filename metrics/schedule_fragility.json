@@ -1,0 +1,1493 @@
+{
+  "summary": {
+    "analysis_date": "2026-02-11T10:58:20.936791",
+    "nominal_capacity": 200.0,
+    "mean_fragility_score": 54.44444444444444,
+    "max_fragility_score": 100.0,
+    "fragile_days": 91,
+    "total_days": 180
+  },
+  "capacity_utilization": {
+    "nominal_capacity": 200.0,
+    "mean_utilization": 61.968722222222226,
+    "max_utilization": 115.595,
+    "min_utilization": 4.89,
+    "days_over_90_pct": 25,
+    "days_over_80_pct": 43,
+    "days_over_70_pct": 70
+  },
+  "daily_fragility_scores": [
+    {
+      "date": "2025-08-16",
+      "demand_tons": 26.97,
+      "capacity_utilization_pct": 13.485,
+      "slack_time_pct": 86.515,
+      "fragility_score": 10.0,
+      "fragility_level": "robust"
+    },
+    {
+      "date": "2025-08-17",
+      "demand_tons": 46.15,
+      "capacity_utilization_pct": 23.075,
+      "slack_time_pct": 76.925,
+      "fragility_score": 10.0,
+      "fragility_level": "robust"
+    },
+    {
+      "date": "2025-08-18",
+      "demand_tons": 107.22,
+      "capacity_utilization_pct": 53.61,
+      "slack_time_pct": 46.39,
+      "fragility_score": 10.0,
+      "fragility_level": "robust"
+    },
+    {
+      "date": "2025-08-19",
+      "demand_tons": 123.4,
+      "capacity_utilization_pct": 61.7,
+      "slack_time_pct": 38.3,
+      "fragility_score": 20.0,
+      "fragility_level": "robust"
+    },
+    {
+      "date": "2025-08-20",
+      "demand_tons": 109.33,
+      "capacity_utilization_pct": 54.665,
+      "slack_time_pct": 45.335,
+      "fragility_score": 10.0,
+      "fragility_level": "robust"
+    },
+    {
+      "date": "2025-08-21",
+      "demand_tons": 97.13,
+      "capacity_utilization_pct": 48.565,
+      "slack_time_pct": 51.434999999999995,
+      "fragility_score": 10.0,
+      "fragility_level": "robust"
+    },
+    {
+      "date": "2025-08-22",
+      "demand_tons": 58.95,
+      "capacity_utilization_pct": 29.475,
+      "slack_time_pct": 70.525,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-23",
+      "demand_tons": 23.57,
+      "capacity_utilization_pct": 11.785,
+      "slack_time_pct": 88.215,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-24",
+      "demand_tons": 9.78,
+      "capacity_utilization_pct": 4.89,
+      "slack_time_pct": 95.11,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-25",
+      "demand_tons": 78.03,
+      "capacity_utilization_pct": 39.015,
+      "slack_time_pct": 60.985,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-26",
+      "demand_tons": 112.13,
+      "capacity_utilization_pct": 56.065,
+      "slack_time_pct": 43.935,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-27",
+      "demand_tons": 151.27,
+      "capacity_utilization_pct": 75.635,
+      "slack_time_pct": 24.364999999999995,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-08-28",
+      "demand_tons": 112.44,
+      "capacity_utilization_pct": 56.220000000000006,
+      "slack_time_pct": 43.78,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-29",
+      "demand_tons": 59.16,
+      "capacity_utilization_pct": 29.580000000000002,
+      "slack_time_pct": 70.42,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-30",
+      "demand_tons": 43.88,
+      "capacity_utilization_pct": 21.94,
+      "slack_time_pct": 78.06,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-08-31",
+      "demand_tons": 76.03,
+      "capacity_utilization_pct": 38.015,
+      "slack_time_pct": 61.985,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-01",
+      "demand_tons": 113.96,
+      "capacity_utilization_pct": 56.98,
+      "slack_time_pct": 43.02,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-02",
+      "demand_tons": 146.45,
+      "capacity_utilization_pct": 73.225,
+      "slack_time_pct": 26.775000000000006,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-09-03",
+      "demand_tons": 161.0,
+      "capacity_utilization_pct": 80.5,
+      "slack_time_pct": 19.5,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-09-04",
+      "demand_tons": 132.72,
+      "capacity_utilization_pct": 66.36,
+      "slack_time_pct": 33.64,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-09-05",
+      "demand_tons": 111.92,
+      "capacity_utilization_pct": 55.96,
+      "slack_time_pct": 44.04,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-06",
+      "demand_tons": 79.44,
+      "capacity_utilization_pct": 39.72,
+      "slack_time_pct": 60.28,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-07",
+      "demand_tons": 93.62,
+      "capacity_utilization_pct": 46.81,
+      "slack_time_pct": 53.18999999999999,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-08",
+      "demand_tons": 124.78,
+      "capacity_utilization_pct": 62.39,
+      "slack_time_pct": 37.61,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-09-09",
+      "demand_tons": 187.94,
+      "capacity_utilization_pct": 93.97,
+      "slack_time_pct": 6.030000000000001,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-09-10",
+      "demand_tons": 208.97,
+      "capacity_utilization_pct": 104.485,
+      "slack_time_pct": -4.484999999999999,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-09-11",
+      "demand_tons": 142.02,
+      "capacity_utilization_pct": 71.01,
+      "slack_time_pct": 28.989999999999995,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-09-12",
+      "demand_tons": 101.17,
+      "capacity_utilization_pct": 50.585,
+      "slack_time_pct": 49.415,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-13",
+      "demand_tons": 71.8,
+      "capacity_utilization_pct": 35.9,
+      "slack_time_pct": 64.1,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-14",
+      "demand_tons": 76.89,
+      "capacity_utilization_pct": 38.445,
+      "slack_time_pct": 61.55500000000001,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-15",
+      "demand_tons": 115.57,
+      "capacity_utilization_pct": 57.785,
+      "slack_time_pct": 42.215,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-16",
+      "demand_tons": 155.95,
+      "capacity_utilization_pct": 77.975,
+      "slack_time_pct": 22.025000000000006,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-09-17",
+      "demand_tons": 138.15,
+      "capacity_utilization_pct": 69.075,
+      "slack_time_pct": 30.924999999999997,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-09-18",
+      "demand_tons": 106.68,
+      "capacity_utilization_pct": 53.339999999999996,
+      "slack_time_pct": 46.66,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-19",
+      "demand_tons": 54.78,
+      "capacity_utilization_pct": 27.390000000000004,
+      "slack_time_pct": 72.61,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-20",
+      "demand_tons": 38.68,
+      "capacity_utilization_pct": 19.34,
+      "slack_time_pct": 80.66,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-21",
+      "demand_tons": 44.03,
+      "capacity_utilization_pct": 22.015,
+      "slack_time_pct": 77.985,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-22",
+      "demand_tons": 71.53,
+      "capacity_utilization_pct": 35.765,
+      "slack_time_pct": 64.235,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-23",
+      "demand_tons": 118.86,
+      "capacity_utilization_pct": 59.43000000000001,
+      "slack_time_pct": 40.57,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-24",
+      "demand_tons": 145.66,
+      "capacity_utilization_pct": 72.83,
+      "slack_time_pct": 27.169999999999998,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-09-25",
+      "demand_tons": 95.31,
+      "capacity_utilization_pct": 47.655,
+      "slack_time_pct": 52.345,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-26",
+      "demand_tons": 56.13,
+      "capacity_utilization_pct": 28.065,
+      "slack_time_pct": 71.935,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-27",
+      "demand_tons": 41.41,
+      "capacity_utilization_pct": 20.705,
+      "slack_time_pct": 79.295,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-28",
+      "demand_tons": 51.29,
+      "capacity_utilization_pct": 25.645,
+      "slack_time_pct": 74.355,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-29",
+      "demand_tons": 94.32,
+      "capacity_utilization_pct": 47.16,
+      "slack_time_pct": 52.839999999999996,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-09-30",
+      "demand_tons": 132.82,
+      "capacity_utilization_pct": 66.41,
+      "slack_time_pct": 33.59,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-10-01",
+      "demand_tons": 178.7,
+      "capacity_utilization_pct": 89.35,
+      "slack_time_pct": 10.650000000000006,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-02",
+      "demand_tons": 157.38,
+      "capacity_utilization_pct": 78.69,
+      "slack_time_pct": 21.310000000000002,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-03",
+      "demand_tons": 105.62,
+      "capacity_utilization_pct": 52.81,
+      "slack_time_pct": 47.19,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-04",
+      "demand_tons": 86.37,
+      "capacity_utilization_pct": 43.185,
+      "slack_time_pct": 56.81499999999999,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-05",
+      "demand_tons": 97.03,
+      "capacity_utilization_pct": 48.515,
+      "slack_time_pct": 51.485,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-06",
+      "demand_tons": 152.78,
+      "capacity_utilization_pct": 76.39,
+      "slack_time_pct": 23.61,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-07",
+      "demand_tons": 189.84,
+      "capacity_utilization_pct": 94.92,
+      "slack_time_pct": 5.079999999999998,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-08",
+      "demand_tons": 186.68,
+      "capacity_utilization_pct": 93.34,
+      "slack_time_pct": 6.659999999999997,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-09",
+      "demand_tons": 165.02,
+      "capacity_utilization_pct": 82.51,
+      "slack_time_pct": 17.489999999999995,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-10",
+      "demand_tons": 107.39,
+      "capacity_utilization_pct": 53.69500000000001,
+      "slack_time_pct": 46.305,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-11",
+      "demand_tons": 94.82,
+      "capacity_utilization_pct": 47.41,
+      "slack_time_pct": 52.59,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-12",
+      "demand_tons": 85.21,
+      "capacity_utilization_pct": 42.605,
+      "slack_time_pct": 57.39500000000001,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-13",
+      "demand_tons": 145.38,
+      "capacity_utilization_pct": 72.69,
+      "slack_time_pct": 27.310000000000002,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-10-14",
+      "demand_tons": 149.04,
+      "capacity_utilization_pct": 74.52,
+      "slack_time_pct": 25.480000000000004,
+      "fragility_score": 60.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-10-15",
+      "demand_tons": 160.58,
+      "capacity_utilization_pct": 80.29,
+      "slack_time_pct": 19.709999999999994,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-16",
+      "demand_tons": 144.41,
+      "capacity_utilization_pct": 72.205,
+      "slack_time_pct": 27.795,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-10-17",
+      "demand_tons": 85.15,
+      "capacity_utilization_pct": 42.575,
+      "slack_time_pct": 57.42499999999999,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-18",
+      "demand_tons": 57.92,
+      "capacity_utilization_pct": 28.96,
+      "slack_time_pct": 71.03999999999999,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-19",
+      "demand_tons": 55.48,
+      "capacity_utilization_pct": 27.74,
+      "slack_time_pct": 72.26,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-20",
+      "demand_tons": 89.63,
+      "capacity_utilization_pct": 44.815,
+      "slack_time_pct": 55.18500000000001,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-21",
+      "demand_tons": 126.37,
+      "capacity_utilization_pct": 63.185,
+      "slack_time_pct": 36.815,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-10-22",
+      "demand_tons": 124.75,
+      "capacity_utilization_pct": 62.375,
+      "slack_time_pct": 37.625,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-10-23",
+      "demand_tons": 111.96,
+      "capacity_utilization_pct": 55.98,
+      "slack_time_pct": 44.02,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-24",
+      "demand_tons": 65.93,
+      "capacity_utilization_pct": 32.965,
+      "slack_time_pct": 67.035,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-25",
+      "demand_tons": 52.11,
+      "capacity_utilization_pct": 26.055,
+      "slack_time_pct": 73.945,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-26",
+      "demand_tons": 74.88,
+      "capacity_utilization_pct": 37.44,
+      "slack_time_pct": 62.56,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-27",
+      "demand_tons": 107.2,
+      "capacity_utilization_pct": 53.6,
+      "slack_time_pct": 46.4,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-10-28",
+      "demand_tons": 155.16,
+      "capacity_utilization_pct": 77.58,
+      "slack_time_pct": 22.42,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-29",
+      "demand_tons": 150.96,
+      "capacity_utilization_pct": 75.48,
+      "slack_time_pct": 24.519999999999996,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-10-30",
+      "demand_tons": 140.37,
+      "capacity_utilization_pct": 70.185,
+      "slack_time_pct": 29.814999999999998,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-10-31",
+      "demand_tons": 99.2,
+      "capacity_utilization_pct": 49.6,
+      "slack_time_pct": 50.4,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-01",
+      "demand_tons": 77.13,
+      "capacity_utilization_pct": 38.565,
+      "slack_time_pct": 61.43500000000001,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-02",
+      "demand_tons": 87.69,
+      "capacity_utilization_pct": 43.845,
+      "slack_time_pct": 56.155,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-03",
+      "demand_tons": 132.19,
+      "capacity_utilization_pct": 66.095,
+      "slack_time_pct": 33.905,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-11-04",
+      "demand_tons": 184.33,
+      "capacity_utilization_pct": 92.165,
+      "slack_time_pct": 7.834999999999994,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-05",
+      "demand_tons": 202.18,
+      "capacity_utilization_pct": 101.09000000000002,
+      "slack_time_pct": -1.0900000000000034,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-06",
+      "demand_tons": 158.79,
+      "capacity_utilization_pct": 79.395,
+      "slack_time_pct": 20.605000000000004,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-07",
+      "demand_tons": 137.45,
+      "capacity_utilization_pct": 68.725,
+      "slack_time_pct": 31.27500000000001,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-11-08",
+      "demand_tons": 94.41,
+      "capacity_utilization_pct": 47.205,
+      "slack_time_pct": 52.795,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-09",
+      "demand_tons": 111.08,
+      "capacity_utilization_pct": 55.54,
+      "slack_time_pct": 44.46,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-10",
+      "demand_tons": 141.27,
+      "capacity_utilization_pct": 70.635,
+      "slack_time_pct": 29.364999999999995,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-11-11",
+      "demand_tons": 181.75,
+      "capacity_utilization_pct": 90.875,
+      "slack_time_pct": 9.125,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-12",
+      "demand_tons": 204.23,
+      "capacity_utilization_pct": 102.115,
+      "slack_time_pct": -2.114999999999995,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-13",
+      "demand_tons": 144.64,
+      "capacity_utilization_pct": 72.32,
+      "slack_time_pct": 27.680000000000003,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-11-14",
+      "demand_tons": 101.72,
+      "capacity_utilization_pct": 50.85999999999999,
+      "slack_time_pct": 49.14,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-15",
+      "demand_tons": 65.72,
+      "capacity_utilization_pct": 32.86,
+      "slack_time_pct": 67.14,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-16",
+      "demand_tons": 69.78,
+      "capacity_utilization_pct": 34.89,
+      "slack_time_pct": 65.11,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-17",
+      "demand_tons": 126.51,
+      "capacity_utilization_pct": 63.255,
+      "slack_time_pct": 36.745,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-11-18",
+      "demand_tons": 168.91,
+      "capacity_utilization_pct": 84.455,
+      "slack_time_pct": 15.545,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-19",
+      "demand_tons": 178.06,
+      "capacity_utilization_pct": 89.03,
+      "slack_time_pct": 10.969999999999999,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-20",
+      "demand_tons": 100.44,
+      "capacity_utilization_pct": 50.22,
+      "slack_time_pct": 49.78,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-21",
+      "demand_tons": 79.81,
+      "capacity_utilization_pct": 39.905,
+      "slack_time_pct": 60.095,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-22",
+      "demand_tons": 33.28,
+      "capacity_utilization_pct": 16.64,
+      "slack_time_pct": 83.36,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-23",
+      "demand_tons": 68.01,
+      "capacity_utilization_pct": 34.005,
+      "slack_time_pct": 65.995,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-24",
+      "demand_tons": 104.21,
+      "capacity_utilization_pct": 52.105000000000004,
+      "slack_time_pct": 47.895,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-25",
+      "demand_tons": 138.23,
+      "capacity_utilization_pct": 69.115,
+      "slack_time_pct": 30.885000000000005,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-11-26",
+      "demand_tons": 147.39,
+      "capacity_utilization_pct": 73.695,
+      "slack_time_pct": 26.305000000000007,
+      "fragility_score": 60.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-11-27",
+      "demand_tons": 152.07,
+      "capacity_utilization_pct": 76.035,
+      "slack_time_pct": 23.965000000000003,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-11-28",
+      "demand_tons": 87.77,
+      "capacity_utilization_pct": 43.885,
+      "slack_time_pct": 56.115,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-29",
+      "demand_tons": 78.97,
+      "capacity_utilization_pct": 39.485,
+      "slack_time_pct": 60.51499999999999,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-11-30",
+      "demand_tons": 93.91,
+      "capacity_utilization_pct": 46.955,
+      "slack_time_pct": 53.044999999999995,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-01",
+      "demand_tons": 127.35,
+      "capacity_utilization_pct": 63.67499999999999,
+      "slack_time_pct": 36.325,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-12-02",
+      "demand_tons": 194.35,
+      "capacity_utilization_pct": 97.175,
+      "slack_time_pct": 2.825000000000003,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-03",
+      "demand_tons": 203.26,
+      "capacity_utilization_pct": 101.63,
+      "slack_time_pct": -1.6299999999999955,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-04",
+      "demand_tons": 193.56,
+      "capacity_utilization_pct": 96.78,
+      "slack_time_pct": 3.2199999999999984,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-05",
+      "demand_tons": 127.73,
+      "capacity_utilization_pct": 63.865,
+      "slack_time_pct": 36.135,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-12-06",
+      "demand_tons": 107.95,
+      "capacity_utilization_pct": 53.97500000000001,
+      "slack_time_pct": 46.025,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-07",
+      "demand_tons": 106.63,
+      "capacity_utilization_pct": 53.315,
+      "slack_time_pct": 46.685,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-08",
+      "demand_tons": 169.4,
+      "capacity_utilization_pct": 84.7,
+      "slack_time_pct": 15.299999999999997,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-09",
+      "demand_tons": 196.55,
+      "capacity_utilization_pct": 98.275,
+      "slack_time_pct": 1.7249999999999943,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-10",
+      "demand_tons": 223.16,
+      "capacity_utilization_pct": 111.57999999999998,
+      "slack_time_pct": -11.579999999999998,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-11",
+      "demand_tons": 166.89,
+      "capacity_utilization_pct": 83.445,
+      "slack_time_pct": 16.555000000000007,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-12",
+      "demand_tons": 106.81,
+      "capacity_utilization_pct": 53.405,
+      "slack_time_pct": 46.595,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-13",
+      "demand_tons": 103.69,
+      "capacity_utilization_pct": 51.845,
+      "slack_time_pct": 48.155,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-14",
+      "demand_tons": 106.01,
+      "capacity_utilization_pct": 53.005,
+      "slack_time_pct": 46.995,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-15",
+      "demand_tons": 117.72,
+      "capacity_utilization_pct": 58.86,
+      "slack_time_pct": 41.14,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-16",
+      "demand_tons": 167.14,
+      "capacity_utilization_pct": 83.57,
+      "slack_time_pct": 16.430000000000007,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-17",
+      "demand_tons": 158.57,
+      "capacity_utilization_pct": 79.285,
+      "slack_time_pct": 20.715000000000003,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-18",
+      "demand_tons": 145.52,
+      "capacity_utilization_pct": 72.76,
+      "slack_time_pct": 27.24,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-12-19",
+      "demand_tons": 79.39,
+      "capacity_utilization_pct": 39.695,
+      "slack_time_pct": 60.305,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-20",
+      "demand_tons": 68.82,
+      "capacity_utilization_pct": 34.41,
+      "slack_time_pct": 65.59,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-21",
+      "demand_tons": 69.78,
+      "capacity_utilization_pct": 34.89,
+      "slack_time_pct": 65.11,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-22",
+      "demand_tons": 120.99,
+      "capacity_utilization_pct": 60.495,
+      "slack_time_pct": 39.505,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-12-23",
+      "demand_tons": 141.77,
+      "capacity_utilization_pct": 70.885,
+      "slack_time_pct": 29.114999999999995,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-12-24",
+      "demand_tons": 149.74,
+      "capacity_utilization_pct": 74.87,
+      "slack_time_pct": 25.129999999999995,
+      "fragility_score": 60.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-12-25",
+      "demand_tons": 135.72,
+      "capacity_utilization_pct": 67.86,
+      "slack_time_pct": 32.14,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2025-12-26",
+      "demand_tons": 82.12,
+      "capacity_utilization_pct": 41.06,
+      "slack_time_pct": 58.93999999999999,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-27",
+      "demand_tons": 79.41,
+      "capacity_utilization_pct": 39.705,
+      "slack_time_pct": 60.295,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-28",
+      "demand_tons": 67.55,
+      "capacity_utilization_pct": 33.775,
+      "slack_time_pct": 66.225,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-29",
+      "demand_tons": 117.55,
+      "capacity_utilization_pct": 58.775,
+      "slack_time_pct": 41.225,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2025-12-30",
+      "demand_tons": 184.14,
+      "capacity_utilization_pct": 92.07,
+      "slack_time_pct": 7.930000000000007,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2025-12-31",
+      "demand_tons": 191.86,
+      "capacity_utilization_pct": 95.93,
+      "slack_time_pct": 4.069999999999993,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-01",
+      "demand_tons": 161.75,
+      "capacity_utilization_pct": 80.875,
+      "slack_time_pct": 19.125,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-02",
+      "demand_tons": 129.52,
+      "capacity_utilization_pct": 64.76,
+      "slack_time_pct": 35.239999999999995,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-03",
+      "demand_tons": 88.08,
+      "capacity_utilization_pct": 44.04,
+      "slack_time_pct": 55.96,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-04",
+      "demand_tons": 120.3,
+      "capacity_utilization_pct": 60.150000000000006,
+      "slack_time_pct": 39.85,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-05",
+      "demand_tons": 154.51,
+      "capacity_utilization_pct": 77.255,
+      "slack_time_pct": 22.745000000000005,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-06",
+      "demand_tons": 216.36,
+      "capacity_utilization_pct": 108.18,
+      "slack_time_pct": -8.180000000000007,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-07",
+      "demand_tons": 231.19,
+      "capacity_utilization_pct": 115.595,
+      "slack_time_pct": -15.594999999999997,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-08",
+      "demand_tons": 196.58,
+      "capacity_utilization_pct": 98.29,
+      "slack_time_pct": 1.7099999999999937,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-09",
+      "demand_tons": 143.34,
+      "capacity_utilization_pct": 71.67,
+      "slack_time_pct": 28.33,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-10",
+      "demand_tons": 132.62,
+      "capacity_utilization_pct": 66.31,
+      "slack_time_pct": 33.69,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-11",
+      "demand_tons": 119.62,
+      "capacity_utilization_pct": 59.81000000000001,
+      "slack_time_pct": 40.19,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-12",
+      "demand_tons": 149.16,
+      "capacity_utilization_pct": 74.58,
+      "slack_time_pct": 25.420000000000005,
+      "fragility_score": 60.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-13",
+      "demand_tons": 194.4,
+      "capacity_utilization_pct": 97.2,
+      "slack_time_pct": 2.799999999999997,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-14",
+      "demand_tons": 190.27,
+      "capacity_utilization_pct": 95.135,
+      "slack_time_pct": 4.864999999999995,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-15",
+      "demand_tons": 167.59,
+      "capacity_utilization_pct": 83.795,
+      "slack_time_pct": 16.205,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-16",
+      "demand_tons": 119.07,
+      "capacity_utilization_pct": 59.535,
+      "slack_time_pct": 40.465,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-17",
+      "demand_tons": 85.51,
+      "capacity_utilization_pct": 42.755,
+      "slack_time_pct": 57.245000000000005,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-18",
+      "demand_tons": 89.24,
+      "capacity_utilization_pct": 44.62,
+      "slack_time_pct": 55.38000000000001,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-19",
+      "demand_tons": 135.86,
+      "capacity_utilization_pct": 67.93,
+      "slack_time_pct": 32.06999999999999,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-20",
+      "demand_tons": 149.92,
+      "capacity_utilization_pct": 74.96,
+      "slack_time_pct": 25.040000000000006,
+      "fragility_score": 60.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-21",
+      "demand_tons": 170.28,
+      "capacity_utilization_pct": 85.14,
+      "slack_time_pct": 14.859999999999998,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-22",
+      "demand_tons": 126.6,
+      "capacity_utilization_pct": 63.3,
+      "slack_time_pct": 36.7,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-23",
+      "demand_tons": 77.67,
+      "capacity_utilization_pct": 38.835,
+      "slack_time_pct": 61.165000000000006,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-24",
+      "demand_tons": 71.21,
+      "capacity_utilization_pct": 35.605,
+      "slack_time_pct": 64.39500000000001,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-25",
+      "demand_tons": 88.25,
+      "capacity_utilization_pct": 44.125,
+      "slack_time_pct": 55.875,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-26",
+      "demand_tons": 139.48,
+      "capacity_utilization_pct": 69.74,
+      "slack_time_pct": 30.260000000000005,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-01-27",
+      "demand_tons": 156.26,
+      "capacity_utilization_pct": 78.13,
+      "slack_time_pct": 21.870000000000005,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-28",
+      "demand_tons": 160.8,
+      "capacity_utilization_pct": 80.4,
+      "slack_time_pct": 19.599999999999994,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-29",
+      "demand_tons": 169.15,
+      "capacity_utilization_pct": 84.575,
+      "slack_time_pct": 15.424999999999997,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-01-30",
+      "demand_tons": 119.3,
+      "capacity_utilization_pct": 59.650000000000006,
+      "slack_time_pct": 40.35,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-01-31",
+      "demand_tons": 104.95,
+      "capacity_utilization_pct": 52.47500000000001,
+      "slack_time_pct": 47.525,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-02-01",
+      "demand_tons": 118.32,
+      "capacity_utilization_pct": 59.160000000000004,
+      "slack_time_pct": 40.84,
+      "fragility_score": 40.0,
+      "fragility_level": "flexible"
+    },
+    {
+      "date": "2026-02-02",
+      "demand_tons": 163.69,
+      "capacity_utilization_pct": 81.845,
+      "slack_time_pct": 18.155,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-03",
+      "demand_tons": 183.9,
+      "capacity_utilization_pct": 91.95,
+      "slack_time_pct": 8.049999999999997,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-04",
+      "demand_tons": 224.18,
+      "capacity_utilization_pct": 112.09,
+      "slack_time_pct": -12.090000000000003,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-05",
+      "demand_tons": 191.0,
+      "capacity_utilization_pct": 95.5,
+      "slack_time_pct": 4.5,
+      "fragility_score": 85.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-06",
+      "demand_tons": 160.84,
+      "capacity_utilization_pct": 80.42,
+      "slack_time_pct": 19.58,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-07",
+      "demand_tons": 132.68,
+      "capacity_utilization_pct": 66.34,
+      "slack_time_pct": 33.66,
+      "fragility_score": 50.0,
+      "fragility_level": "fragile"
+    },
+    {
+      "date": "2026-02-08",
+      "demand_tons": 160.21,
+      "capacity_utilization_pct": 80.105,
+      "slack_time_pct": 19.894999999999996,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-09",
+      "demand_tons": 173.12,
+      "capacity_utilization_pct": 86.56,
+      "slack_time_pct": 13.439999999999996,
+      "fragility_score": 75.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-10",
+      "demand_tons": 205.11,
+      "capacity_utilization_pct": 102.55499999999999,
+      "slack_time_pct": -2.555000000000007,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    },
+    {
+      "date": "2026-02-11",
+      "demand_tons": 221.18,
+      "capacity_utilization_pct": 110.59,
+      "slack_time_pct": -10.590000000000003,
+      "fragility_score": 100.0,
+      "fragility_level": "critical"
+    }
+  ],
+  "what_if_scenarios": {
+    "surge_10pct": {
+      "avg_fragility_score": 58.30555555555556,
+      "max_fragility_score": 100.0,
+      "avg_demand": 136.3311888888889,
+      "capacity_util_pct": 68.16559444444445
+    },
+    "surge_20pct": {
+      "avg_fragility_score": 61.166666666666664,
+      "max_fragility_score": 100.0,
+      "avg_demand": 148.72493333333335,
+      "capacity_util_pct": 74.36246666666668
+    },
+    "drop_10pct": {
+      "avg_fragility_score": 51.833333333333336,
+      "max_fragility_score": 100.0,
+      "avg_demand": 111.54370000000002,
+      "capacity_util_pct": 55.771850000000015
+    },
+    "drop_20pct": {
+      "avg_fragility_score": 48.861111111111114,
+      "max_fragility_score": 100.0,
+      "avg_demand": 99.14995555555555,
+      "capacity_util_pct": 49.574977777777775
+    },
+    "volatility_15pct": {
+      "avg_fragility_score": 55.888888888888886,
+      "max_fragility_score": 100.0,
+      "avg_demand": 124.32503222859201,
+      "capacity_util_pct": 62.162516114296004
+    }
+  }
+}

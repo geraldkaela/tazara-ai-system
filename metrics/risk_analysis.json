@@ -1,0 +1,2478 @@
+{
+  "summary": {
+    "analysis_date": "2026-02-11T10:52:51.343523",
+    "total_days_analyzed": 180,
+    "mean_demand": 123.93744444444445,
+    "std_demand": 46.8132711492303,
+    "cv": 0.37771693098137565,
+    "high_risk_days": 109,
+    "anomaly_days": 7,
+    "num_bottleneck_periods": 15,
+    "avg_risk_score": 52.6300324476488,
+    "max_risk_score": 100.0
+  },
+  "daily_risk_scores": [
+    {
+      "date": "2025-08-16",
+      "demand_tons": 26.97,
+      "volatility": 0.0,
+      "trend": 0.0,
+      "is_anomaly": true,
+      "risk_score": 30.0,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -0.0,
+        "upper": 0.0
+      }
+    },
+    {
+      "date": "2025-08-17",
+      "demand_tons": 46.15,
+      "volatility": 0.0,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 1.6917315822178534,
+      "risk_level": "low",
+      "duration_uncertainty_pct": {
+        "lower": -0.0,
+        "upper": 0.0
+      }
+    },
+    {
+      "date": "2025-08-18",
+      "demand_tons": 107.22,
+      "volatility": 0.0,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 8.214454573025568,
+      "risk_level": "low",
+      "duration_uncertainty_pct": {
+        "lower": -0.0,
+        "upper": 0.0
+      }
+    },
+    {
+      "date": "2025-08-19",
+      "demand_tons": 123.4,
+      "volatility": 0.0,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 9.942596999606032,
+      "risk_level": "low",
+      "duration_uncertainty_pct": {
+        "lower": -0.0,
+        "upper": 0.0
+      }
+    },
+    {
+      "date": "2025-08-20",
+      "demand_tons": 109.33,
+      "volatility": 0.0,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 8.439818016788534,
+      "risk_level": "low",
+      "duration_uncertainty_pct": {
+        "lower": -0.0,
+        "upper": 0.0
+      }
+    },
+    {
+      "date": "2025-08-21",
+      "demand_tons": 97.13,
+      "volatility": 0.0,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 7.1367687210974555,
+      "risk_level": "low",
+      "duration_uncertainty_pct": {
+        "lower": -0.0,
+        "upper": 0.0
+      }
+    },
+    {
+      "date": "2025-08-22",
+      "demand_tons": 58.95,
+      "volatility": 36.894714487889146,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 33.058865269500295,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -36.894714487889146,
+        "upper": 36.894714487889146
+      }
+    },
+    {
+      "date": "2025-08-23",
+      "demand_tons": 23.57,
+      "volatility": 37.7419326605353,
+      "trend": 0.0,
+      "is_anomaly": true,
+      "risk_score": 60.0,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -37.7419326605353,
+        "upper": 37.7419326605353
+      }
+    },
+    {
+      "date": "2025-08-24",
+      "demand_tons": 9.78,
+      "volatility": 45.097171698878135,
+      "trend": 0.0,
+      "is_anomaly": true,
+      "risk_score": 60.0,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -40.0,
+        "upper": 40.0
+      }
+    },
+    {
+      "date": "2025-08-25",
+      "demand_tons": 78.03,
+      "volatility": 42.98912415062785,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 35.09674892210569,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.0,
+        "upper": 40.0
+      }
+    },
+    {
+      "date": "2025-08-26",
+      "demand_tons": 112.13,
+      "volatility": 40.87874910722475,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 38.73887851088157,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.0,
+        "upper": 40.0
+      }
+    },
+    {
+      "date": "2025-08-27",
+      "demand_tons": 151.27,
+      "volatility": 49.742767887833274,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 42.919316989024914,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.0,
+        "upper": 40.0
+      }
+    },
+    {
+      "date": "2025-08-28",
+      "demand_tons": 112.44,
+      "volatility": 51.15166333468308,
+      "trend": 0.0,
+      "is_anomaly": false,
+      "risk_score": 38.77198877987044,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.0,
+        "upper": 40.0
+      }
+    },
+    {
+      "date": "2025-08-29",
+      "demand_tons": 59.16,
+      "volatility": 51.13867188248793,
+      "trend": 2.2226153846153838,
+      "is_anomaly": false,
+      "risk_score": 44.19437172963419,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -51.11307692307692,
+        "upper": 51.11307692307692
+      }
+    },
+    {
+      "date": "2025-08-30",
+      "demand_tons": 43.88,
+      "volatility": 48.012843718163175,
+      "trend": -0.5379780219780266,
+      "is_anomaly": false,
+      "risk_score": 34.139169077253996,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -42.689890109890136,
+        "upper": 42.689890109890136
+      }
+    },
+    {
+      "date": "2025-08-31",
+      "demand_tons": 76.03,
+      "volatility": 36.88421161780019,
+      "trend": -1.8220219780219828,
+      "is_anomaly": false,
+      "risk_score": 43.99324417357772,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -45.9943215079101,
+        "upper": 45.9943215079101
+      }
+    },
+    {
+      "date": "2025-09-01",
+      "demand_tons": 113.96,
+      "volatility": 37.36947583000762,
+      "trend": -0.1403956043956127,
+      "is_anomaly": false,
+      "risk_score": 39.636313927213294,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -38.07145385198569,
+        "upper": 38.07145385198569
+      }
+    },
+    {
+      "date": "2025-09-02",
+      "demand_tons": 146.45,
+      "volatility": 41.885394772379726,
+      "trend": 2.9732967032967004,
+      "is_anomaly": false,
+      "risk_score": 57.27098922639111,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -54.86648351648351,
+        "upper": 54.86648351648351
+      }
+    },
+    {
+      "date": "2025-09-03",
+      "demand_tons": 161.0,
+      "volatility": 43.96269625381002,
+      "trend": 5.937538461538461,
+      "is_anomaly": false,
+      "risk_score": 63.9585522059982,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-04",
+      "demand_tons": 132.72,
+      "volatility": 45.42125152917068,
+      "trend": 7.4644615384615385,
+      "is_anomaly": false,
+      "risk_score": 60.93804121565856,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-05",
+      "demand_tons": 111.92,
+      "volatility": 40.73204185077558,
+      "trend": 6.981978021978022,
+      "is_anomaly": false,
+      "risk_score": 58.71644897382459,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-06",
+      "demand_tons": 79.44,
+      "volatility": 32.07765629427021,
+      "trend": 4.172285714285715,
+      "is_anomaly": false,
+      "risk_score": 55.24734724234539,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -52.07765629427021,
+        "upper": 52.07765629427021
+      }
+    },
+    {
+      "date": "2025-09-07",
+      "demand_tons": 93.62,
+      "volatility": 28.82439286107383,
+      "trend": 1.0675384615384549,
+      "is_anomaly": false,
+      "risk_score": 42.09956733798025,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -34.162085168766104,
+        "upper": 34.162085168766104
+      }
+    },
+    {
+      "date": "2025-09-08",
+      "demand_tons": 124.78,
+      "volatility": 28.744469861506367,
+      "trend": 0.7345494505494494,
+      "is_anomaly": false,
+      "risk_score": 43.76273835301342,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -32.41721711425362,
+        "upper": 32.41721711425362
+      }
+    },
+    {
+      "date": "2025-09-09",
+      "demand_tons": 187.94,
+      "volatility": 37.66093947188204,
+      "trend": 3.1248131868131854,
+      "is_anomaly": false,
+      "risk_score": 62.4600073225164,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -53.28500540594796,
+        "upper": 53.28500540594796
+      }
+    },
+    {
+      "date": "2025-09-10",
+      "demand_tons": 208.97,
+      "volatility": 47.80386958834032,
+      "trend": 7.073032967032966,
+      "is_anomaly": false,
+      "risk_score": 69.0820993137278,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-11",
+      "demand_tons": 142.02,
+      "volatility": 47.88509257040432,
+      "trend": 7.574659340659342,
+      "is_anomaly": false,
+      "risk_score": 61.931349285324714,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-12",
+      "demand_tons": 101.17,
+      "volatility": 48.929370330634555,
+      "trend": 5.022637362637361,
+      "is_anomaly": false,
+      "risk_score": 57.56827029114598,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-13",
+      "demand_tons": 71.8,
+      "volatility": 50.411765491797645,
+      "trend": 0.9430769230769183,
+      "is_anomaly": false,
+      "risk_score": 39.14672393813328,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -44.71538461538459,
+        "upper": 44.71538461538459
+      }
+    },
+    {
+      "date": "2025-09-14",
+      "demand_tons": 76.89,
+      "volatility": 52.91863817849686,
+      "trend": -2.0538901098901166,
+      "is_anomaly": false,
+      "risk_score": 45.24443912753267,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -50.26945054945059,
+        "upper": 50.26945054945059
+      }
+    },
+    {
+      "date": "2025-09-15",
+      "demand_tons": 115.57,
+      "volatility": 53.19860050074715,
+      "trend": -2.699054945054947,
+      "is_anomaly": false,
+      "risk_score": 52.601570414613455,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -53.49527472527473,
+        "upper": 53.49527472527473
+      }
+    },
+    {
+      "date": "2025-09-16",
+      "demand_tons": 155.95,
+      "volatility": 48.4753572643334,
+      "trend": -1.1264835164835225,
+      "is_anomaly": false,
+      "risk_score": 49.05159282585517,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -45.63241758241762,
+        "upper": 45.63241758241762
+      }
+    },
+    {
+      "date": "2025-09-17",
+      "demand_tons": 138.15,
+      "volatility": 32.79077853822404,
+      "trend": 0.3754285714285662,
+      "is_anomaly": false,
+      "risk_score": 43.395147816703236,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -34.667921395366875,
+        "upper": 34.667921395366875
+      }
+    },
+    {
+      "date": "2025-09-18",
+      "demand_tons": 106.68,
+      "volatility": 30.488525944783074,
+      "trend": 0.14632967032966515,
+      "is_anomaly": false,
+      "risk_score": 38.88842697224167,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -31.220174296431402,
+        "upper": 31.220174296431402
+      }
+    },
+    {
+      "date": "2025-09-19",
+      "demand_tons": 54.78,
+      "volatility": 36.94796766110025,
+      "trend": -2.136879120879128,
+      "is_anomaly": false,
+      "risk_score": 43.29787435233595,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -47.63236326549589,
+        "upper": 47.63236326549589
+      }
+    },
+    {
+      "date": "2025-09-20",
+      "demand_tons": 38.68,
+      "volatility": 43.179210275316464,
+      "trend": -5.699692307692311,
+      "is_anomaly": false,
+      "risk_score": 50.893880906905366,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-21",
+      "demand_tons": 44.03,
+      "volatility": 47.444900975462296,
+      "trend": -8.463010989011,
+      "is_anomaly": false,
+      "risk_score": 51.4653000652617,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-22",
+      "demand_tons": 71.53,
+      "volatility": 46.93315915822652,
+      "trend": -9.19538461538463,
+      "is_anomaly": false,
+      "risk_score": 54.402501346532574,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-09-23",
+      "demand_tons": 118.86,
+      "volatility": 39.34725609117814,
+      "trend": -6.259208791208799,
+      "is_anomaly": false,
+      "risk_score": 59.45769176989804,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -59.347256091178146,
+        "upper": 59.347256091178146
+      }
+    },
+    {
+      "date": "2025-09-24",
+      "demand_tons": 145.66,
+      "volatility": 41.19814576271252,
+      "trend": -1.5603736263736294,
+      "is_anomaly": false,
+      "risk_score": 50.1219960595138,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -47.801868131868154,
+        "upper": 47.801868131868154
+      }
+    },
+    {
+      "date": "2025-09-25",
+      "demand_tons": 95.31,
+      "volatility": 40.3185543958538,
+      "trend": -0.22896703296703755,
+      "is_anomaly": false,
+      "risk_score": 38.08721456477217,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -41.14483516483519,
+        "upper": 41.14483516483519
+      }
+    },
+    {
+      "date": "2025-09-26",
+      "demand_tons": 56.13,
+      "volatility": 40.173725955440716,
+      "trend": -1.1583736263736273,
+      "is_anomaly": false,
+      "risk_score": 38.54953676088902,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -45.79186813186814,
+        "upper": 45.79186813186814
+      }
+    },
+    {
+      "date": "2025-09-27",
+      "demand_tons": 41.41,
+      "volatility": 39.6996946731691,
+      "trend": -3.2786153846153887,
+      "is_anomaly": false,
+      "risk_score": 47.578541811723014,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -56.09277159624604,
+        "upper": 56.09277159624604
+      }
+    },
+    {
+      "date": "2025-09-28",
+      "demand_tons": 51.29,
+      "volatility": 38.62742456560394,
+      "trend": -4.8151868131868145,
+      "is_anomaly": false,
+      "risk_score": 52.24072120351721,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -58.627424565603945,
+        "upper": 58.627424565603945
+      }
+    },
+    {
+      "date": "2025-09-29",
+      "demand_tons": 94.32,
+      "volatility": 38.47104019042542,
+      "trend": -3.734637362637369,
+      "is_anomaly": false,
+      "risk_score": 55.50982696699808,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -57.14422700361227,
+        "upper": 57.14422700361227
+      }
+    },
+    {
+      "date": "2025-09-30",
+      "demand_tons": 132.82,
+      "volatility": 40.74454845217239,
+      "trend": -0.12947252747253366,
+      "is_anomaly": false,
+      "risk_score": 41.596084584953125,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.64736263736267,
+        "upper": 40.64736263736267
+      }
+    },
+    {
+      "date": "2025-10-01",
+      "demand_tons": 178.7,
+      "volatility": 49.49360458926073,
+      "trend": 4.30140659340659,
+      "is_anomaly": false,
+      "risk_score": 65.84904175794345,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-02",
+      "demand_tons": 157.38,
+      "volatility": 55.23413058021623,
+      "trend": 6.907428571428571,
+      "is_anomaly": false,
+      "risk_score": 63.571909710063636,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-03",
+      "demand_tons": 105.62,
+      "volatility": 51.46452060354181,
+      "trend": 6.100747252747251,
+      "is_anomaly": false,
+      "risk_score": 58.043562862115266,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-04",
+      "demand_tons": 86.37,
+      "volatility": 43.903821343607746,
+      "trend": 3.989824175824175,
+      "is_anomaly": false,
+      "risk_score": 55.93664284434652,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -59.949120879120876,
+        "upper": 59.949120879120876
+      }
+    },
+    {
+      "date": "2025-10-05",
+      "demand_tons": 97.03,
+      "volatility": 35.38066535485702,
+      "trend": 2.150219780219777,
+      "is_anomaly": false,
+      "risk_score": 47.87718689026445,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -46.13176425595591,
+        "upper": 46.13176425595591
+      }
+    },
+    {
+      "date": "2025-10-06",
+      "demand_tons": 152.78,
+      "volatility": 34.72066483618462,
+      "trend": 2.5770989010989,
+      "is_anomaly": false,
+      "risk_score": 55.966090546691014,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -47.60615934167912,
+        "upper": 47.60615934167912
+      }
+    },
+    {
+      "date": "2025-10-07",
+      "demand_tons": 189.84,
+      "volatility": 41.493268472987644,
+      "trend": 5.266021978021977,
+      "is_anomaly": false,
+      "risk_score": 67.03887529515646,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-08",
+      "demand_tons": 186.68,
+      "volatility": 42.8765312096423,
+      "trend": 8.436175824175823,
+      "is_anomaly": false,
+      "risk_score": 66.7013641661086,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-09",
+      "demand_tons": 165.02,
+      "volatility": 43.50357330698471,
+      "trend": 9.147274725274727,
+      "is_anomaly": false,
+      "risk_score": 64.38791762966035,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-10",
+      "demand_tons": 107.39,
+      "volatility": 43.27173134198972,
+      "trend": 6.613736263736265,
+      "is_anomaly": false,
+      "risk_score": 58.23261181730979,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-11",
+      "demand_tons": 94.82,
+      "volatility": 41.587607414663715,
+      "trend": 3.010461538461535,
+      "is_anomaly": false,
+      "risk_score": 51.942351505778376,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -55.05230769230768,
+        "upper": 55.05230769230768
+      }
+    },
+    {
+      "date": "2025-10-12",
+      "demand_tons": 85.21,
+      "volatility": 43.891025820992716,
+      "trend": -0.7764395604395642,
+      "is_anomaly": false,
+      "risk_score": 39.7458232770135,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -43.88219780219782,
+        "upper": 43.88219780219782
+      }
+    },
+    {
+      "date": "2025-10-13",
+      "demand_tons": 145.38,
+      "volatility": 43.62721796790451,
+      "trend": -1.574725274725285,
+      "is_anomaly": false,
+      "risk_score": 50.163848251862774,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -47.87362637362643,
+        "upper": 47.87362637362643
+      }
+    },
+    {
+      "date": "2025-10-14",
+      "demand_tons": 149.04,
+      "volatility": 38.109307137183585,
+      "trend": -1.223648351648355,
+      "is_anomaly": false,
+      "risk_score": 48.799378425185445,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -44.227548895425365,
+        "upper": 44.227548895425365
+      }
+    },
+    {
+      "date": "2025-10-15",
+      "demand_tons": 160.58,
+      "volatility": 32.95111321191991,
+      "trend": 0.8983736263736236,
+      "is_anomaly": false,
+      "risk_score": 48.40556126375237,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -37.44298134378803,
+        "upper": 37.44298134378803
+      }
+    },
+    {
+      "date": "2025-10-16",
+      "demand_tons": 144.41,
+      "volatility": 30.055910123190973,
+      "trend": 1.935186813186807,
+      "is_anomaly": false,
+      "risk_score": 51.862552844431015,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -39.73184418912501,
+        "upper": 39.73184418912501
+      }
+    },
+    {
+      "date": "2025-10-17",
+      "demand_tons": 85.15,
+      "volatility": 33.4229670108673,
+      "trend": -0.37050549450549836,
+      "is_anomaly": false,
+      "risk_score": 37.70974450818404,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -35.275494483394795,
+        "upper": 35.275494483394795
+      }
+    },
+    {
+      "date": "2025-10-18",
+      "demand_tons": 57.92,
+      "volatility": 40.798683568865066,
+      "trend": -3.9988351648351714,
+      "is_anomaly": false,
+      "risk_score": 52.94302955477764,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -59.994175824175855,
+        "upper": 59.994175824175855
+      }
+    },
+    {
+      "date": "2025-10-19",
+      "demand_tons": 55.48,
+      "volatility": 46.02327232214257,
+      "trend": -7.220395604395612,
+      "is_anomaly": false,
+      "risk_score": 52.68824387146357,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-20",
+      "demand_tons": 89.63,
+      "volatility": 44.484821381380556,
+      "trend": -7.445692307692319,
+      "is_anomaly": false,
+      "risk_score": 56.3357138262054,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-21",
+      "demand_tons": 126.37,
+      "volatility": 41.56086517730007,
+      "trend": -5.121934065934074,
+      "is_anomaly": false,
+      "risk_score": 60.259814737983284,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-22",
+      "demand_tons": 124.75,
+      "volatility": 34.9358806550351,
+      "trend": -2.669648351648361,
+      "is_anomaly": false,
+      "risk_score": 53.43502863892841,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -48.28412241327691,
+        "upper": 48.28412241327691
+      }
+    },
+    {
+      "date": "2025-10-23",
+      "demand_tons": 111.96,
+      "volatility": 29.417759780040846,
+      "trend": -1.024637362637368,
+      "is_anomaly": false,
+      "risk_score": 43.84390807978419,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -34.54094659322769,
+        "upper": 34.54094659322769
+      }
+    },
+    {
+      "date": "2025-10-24",
+      "demand_tons": 65.93,
+      "volatility": 31.124066480550262,
+      "trend": -2.3614285714285783,
+      "is_anomaly": false,
+      "risk_score": 45.6115232154894,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -42.931209337693154,
+        "upper": 42.931209337693154
+      }
+    },
+    {
+      "date": "2025-10-25",
+      "demand_tons": 52.11,
+      "volatility": 32.19040976676717,
+      "trend": -4.325230769230775,
+      "is_anomaly": false,
+      "risk_score": 52.32830320535874,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -52.19040976676717,
+        "upper": 52.19040976676717
+      }
+    },
+    {
+      "date": "2025-10-26",
+      "demand_tons": 74.88,
+      "volatility": 29.499858030328248,
+      "trend": -5.76753846153847,
+      "is_anomaly": false,
+      "risk_score": 54.760305866251024,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -49.49985803032825,
+        "upper": 49.49985803032825
+      }
+    },
+    {
+      "date": "2025-10-27",
+      "demand_tons": 107.2,
+      "volatility": 29.984967185955956,
+      "trend": -4.257384615384619,
+      "is_anomaly": false,
+      "risk_score": 58.212318426639186,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -49.98496718595596,
+        "upper": 49.98496718595596
+      }
+    },
+    {
+      "date": "2025-10-28",
+      "demand_tons": 155.16,
+      "volatility": 36.345874069896304,
+      "trend": -1.0884615384615461,
+      "is_anomaly": false,
+      "risk_score": 48.77710515348332,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -41.78818176220403,
+        "upper": 41.78818176220403
+      }
+    },
+    {
+      "date": "2025-10-29",
+      "demand_tons": 150.96,
+      "volatility": 40.5634075656044,
+      "trend": 2.313999999999997,
+      "is_anomaly": false,
+      "risk_score": 54.45620672003603,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -51.56999999999998,
+        "upper": 51.56999999999998
+      }
+    },
+    {
+      "date": "2025-10-30",
+      "demand_tons": 140.37,
+      "volatility": 43.003874797732436,
+      "trend": 4.923098901098902,
+      "is_anomaly": false,
+      "risk_score": 61.75511720844845,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-10-31",
+      "demand_tons": 99.2,
+      "volatility": 39.44338914975547,
+      "trend": 4.420043956043954,
+      "is_anomaly": false,
+      "risk_score": 57.357859872087666,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -59.44338914975547,
+        "upper": 59.44338914975547
+      }
+    },
+    {
+      "date": "2025-11-01",
+      "demand_tons": 77.13,
+      "volatility": 33.921020944316545,
+      "trend": 2.3269670329670293,
+      "is_anomaly": false,
+      "risk_score": 46.63545749955379,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -45.55585610915169,
+        "upper": 45.55585610915169
+      }
+    },
+    {
+      "date": "2025-11-02",
+      "demand_tons": 87.69,
+      "volatility": 31.667436932987837,
+      "trend": 0.37072527472526967,
+      "is_anomaly": false,
+      "risk_score": 37.982134000353,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -33.52106330661419,
+        "upper": 33.52106330661419
+      }
+    },
+    {
+      "date": "2025-11-03",
+      "demand_tons": 132.19,
+      "volatility": 31.81103522214834,
+      "trend": 0.6701538461538387,
+      "is_anomaly": false,
+      "risk_score": 44.232202567188715,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -35.161804452917536,
+        "upper": 35.161804452917536
+      }
+    },
+    {
+      "date": "2025-11-04",
+      "demand_tons": 184.33,
+      "volatility": 38.36169300847124,
+      "trend": 3.483428571428569,
+      "is_anomaly": false,
+      "risk_score": 63.86750982285194,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -55.778835865614084,
+        "upper": 55.778835865614084
+      }
+    },
+    {
+      "date": "2025-11-05",
+      "demand_tons": 202.18,
+      "volatility": 47.9297558933905,
+      "trend": 6.498527472527473,
+      "is_anomaly": false,
+      "risk_score": 68.35687761555218,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-06",
+      "demand_tons": 158.79,
+      "volatility": 48.96858599434657,
+      "trend": 7.511912087912085,
+      "is_anomaly": false,
+      "risk_score": 63.722508030303345,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-07",
+      "demand_tons": 137.45,
+      "volatility": 46.44177137633135,
+      "trend": 6.192263736263731,
+      "is_anomaly": false,
+      "risk_score": 61.44323983603715,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-08",
+      "demand_tons": 94.41,
+      "volatility": 42.86678584372089,
+      "trend": 2.872923076923074,
+      "is_anomaly": false,
+      "risk_score": 51.210868197165304,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -54.36461538461537,
+        "upper": 54.36461538461537
+      }
+    },
+    {
+      "date": "2025-11-09",
+      "demand_tons": 111.08,
+      "volatility": 38.58619436065309,
+      "trend": 0.5945934065934004,
+      "is_anomaly": false,
+      "risk_score": 41.59969785856369,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -41.55916139362009,
+        "upper": 41.55916139362009
+      }
+    },
+    {
+      "date": "2025-11-10",
+      "demand_tons": 141.27,
+      "volatility": 38.20409695058274,
+      "trend": 0.08520879120878455,
+      "is_anomaly": false,
+      "risk_score": 42.27728775187942,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -38.630140906626664,
+        "upper": 38.630140906626664
+      }
+    },
+    {
+      "date": "2025-11-11",
+      "demand_tons": 181.75,
+      "volatility": 37.79501018968107,
+      "trend": 2.163736263736258,
+      "is_anomaly": false,
+      "risk_score": 56.99348540054751,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -48.61369150836236,
+        "upper": 48.61369150836236
+      }
+    },
+    {
+      "date": "2025-11-12",
+      "demand_tons": 204.23,
+      "volatility": 38.30106469985994,
+      "trend": 4.629208791208788,
+      "is_anomaly": false,
+      "risk_score": 68.575832620156,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -58.301064699859936,
+        "upper": 58.301064699859936
+      }
+    },
+    {
+      "date": "2025-11-13",
+      "demand_tons": 144.64,
+      "volatility": 37.94669676319792,
+      "trend": 4.808835164835161,
+      "is_anomaly": false,
+      "risk_score": 62.211184461940334,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -57.94669676319793,
+        "upper": 57.94669676319793
+      }
+    },
+    {
+      "date": "2025-11-14",
+      "demand_tons": 101.72,
+      "volatility": 41.37582846242938,
+      "trend": 2.3861538461538387,
+      "is_anomaly": false,
+      "risk_score": 49.55778354754059,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -51.9307692307692,
+        "upper": 51.9307692307692
+      }
+    },
+    {
+      "date": "2025-11-15",
+      "demand_tons": 65.72,
+      "volatility": 47.58476636988135,
+      "trend": -1.803758241758245,
+      "is_anomaly": false,
+      "risk_score": 42.800742030080755,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -49.01879120879123,
+        "upper": 49.01879120879123
+      }
+    },
+    {
+      "date": "2025-11-16",
+      "demand_tons": 69.78,
+      "volatility": 53.36589101485634,
+      "trend": -5.479384615384624,
+      "is_anomaly": false,
+      "risk_score": 54.21558853772443,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-17",
+      "demand_tons": 126.51,
+      "volatility": 53.131599780527,
+      "trend": -5.988395604395616,
+      "is_anomaly": false,
+      "risk_score": 60.27476776268794,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-18",
+      "demand_tons": 168.91,
+      "volatility": 51.14157082713306,
+      "trend": -3.5421098901098973,
+      "is_anomaly": false,
+      "risk_score": 62.51394755236051,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -57.710549450549486,
+        "upper": 57.710549450549486
+      }
+    },
+    {
+      "date": "2025-11-19",
+      "demand_tons": 178.06,
+      "volatility": 45.05842519387892,
+      "trend": -0.17815384615385335,
+      "is_anomaly": false,
+      "risk_score": 46.6714543043486,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.89076923076927,
+        "upper": 40.89076923076927
+      }
+    },
+    {
+      "date": "2025-11-20",
+      "demand_tons": 100.44,
+      "volatility": 44.48157847704513,
+      "trend": -0.35632967032967927,
+      "is_anomaly": false,
+      "risk_score": 39.27194929969154,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -41.7816483516484,
+        "upper": 41.7816483516484
+      }
+    },
+    {
+      "date": "2025-11-21",
+      "demand_tons": 79.81,
+      "volatility": 46.374383630867364,
+      "trend": -1.5709670329670375,
+      "is_anomaly": false,
+      "risk_score": 43.14170111532859,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -47.854835164835194,
+        "upper": 47.854835164835194
+      }
+    },
+    {
+      "date": "2025-11-22",
+      "demand_tons": 33.28,
+      "volatility": 53.00414943325531,
+      "trend": -5.280571428571433,
+      "is_anomaly": false,
+      "risk_score": 50.31712138258308,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-23",
+      "demand_tons": 68.01,
+      "volatility": 53.22127206296371,
+      "trend": -7.179626373626384,
+      "is_anomaly": false,
+      "risk_score": 54.0265395825299,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-24",
+      "demand_tons": 104.21,
+      "volatility": 52.58244537775666,
+      "trend": -6.859802197802203,
+      "is_anomaly": false,
+      "risk_score": 57.89296454187556,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-25",
+      "demand_tons": 138.23,
+      "volatility": 47.35464476640473,
+      "trend": -4.070571428571438,
+      "is_anomaly": false,
+      "risk_score": 61.52654954510592,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-11-26",
+      "demand_tons": 147.39,
+      "volatility": 39.77168297503474,
+      "trend": -0.08723076923077382,
+      "is_anomaly": false,
+      "risk_score": 42.94105843622129,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.207836821188614,
+        "upper": 40.207836821188614
+      }
+    },
+    {
+      "date": "2025-11-27",
+      "demand_tons": 152.07,
+      "volatility": 45.17251592769764,
+      "trend": 2.3151648351648313,
+      "is_anomaly": false,
+      "risk_score": 54.58058702030422,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -51.57582417582416,
+        "upper": 51.57582417582416
+      }
+    },
+    {
+      "date": "2025-11-28",
+      "demand_tons": 87.77,
+      "volatility": 44.57935572821638,
+      "trend": 1.4328131868131846,
+      "is_anomaly": false,
+      "risk_score": 43.30111814633809,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -47.164065934065924,
+        "upper": 47.164065934065924
+      }
+    },
+    {
+      "date": "2025-11-29",
+      "demand_tons": 78.97,
+      "volatility": 34.670425437251296,
+      "trend": -0.8264615384615447,
+      "is_anomaly": false,
+      "risk_score": 39.32945549457321,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -38.802733129559016,
+        "upper": 38.802733129559016
+      }
+    },
+    {
+      "date": "2025-11-30",
+      "demand_tons": 93.91,
+      "volatility": 30.449188275989698,
+      "trend": -2.5832747252747286,
+      "is_anomaly": false,
+      "risk_score": 49.70922277926411,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -43.36556190236334,
+        "upper": 43.36556190236334
+      }
+    },
+    {
+      "date": "2025-12-01",
+      "demand_tons": 127.35,
+      "volatility": 30.3828914890946,
+      "trend": -1.6205054945055026,
+      "is_anomaly": false,
+      "risk_score": 48.46701338344336,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -38.485418961622116,
+        "upper": 38.485418961622116
+      }
+    },
+    {
+      "date": "2025-12-02",
+      "demand_tons": 194.35,
+      "volatility": 41.86055968501686,
+      "trend": 2.6506593406593337,
+      "is_anomaly": false,
+      "risk_score": 60.773873008581546,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -53.25329670329667,
+        "upper": 53.25329670329667
+      }
+    },
+    {
+      "date": "2025-12-03",
+      "demand_tons": 203.26,
+      "volatility": 50.96162734749316,
+      "trend": 7.366219780219779,
+      "is_anomaly": false,
+      "risk_score": 68.47222952041665,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-04",
+      "demand_tons": 193.56,
+      "volatility": 55.61964533884632,
+      "trend": 9.134967032967031,
+      "is_anomaly": false,
+      "risk_score": 67.43619852302291,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-05",
+      "demand_tons": 127.73,
+      "volatility": 51.25948920281331,
+      "trend": 7.933428571428573,
+      "is_anomaly": false,
+      "risk_score": 60.40507269225704,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-06",
+      "demand_tons": 107.95,
+      "volatility": 45.868978987256014,
+      "trend": 4.422153846153846,
+      "is_anomaly": false,
+      "risk_score": 58.2924239161284,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-07",
+      "demand_tons": 106.63,
+      "volatility": 43.478736072661896,
+      "trend": 1.6898901098901067,
+      "is_anomaly": false,
+      "risk_score": 46.600888804077925,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -48.44945054945053,
+        "upper": 48.44945054945053
+      }
+    },
+    {
+      "date": "2025-12-08",
+      "demand_tons": 169.4,
+      "volatility": 42.47160889235021,
+      "trend": 1.7747032967032934,
+      "is_anomaly": false,
+      "risk_score": 53.72925017179378,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -48.87351648351647,
+        "upper": 48.87351648351647
+      }
+    },
+    {
+      "date": "2025-12-09",
+      "demand_tons": 196.55,
+      "volatility": 42.796174061307326,
+      "trend": 3.470219780219777,
+      "is_anomaly": false,
+      "risk_score": 65.10665130888543,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -57.35109890109889,
+        "upper": 57.35109890109889
+      }
+    },
+    {
+      "date": "2025-12-10",
+      "demand_tons": 223.16,
+      "volatility": 46.78869358743677,
+      "trend": 5.971648351648351,
+      "is_anomaly": true,
+      "risk_score": 100.0,
+      "risk_level": "critical",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-11",
+      "demand_tons": 166.89,
+      "volatility": 44.70761397814747,
+      "trend": 6.6865934065934045,
+      "is_anomaly": false,
+      "risk_score": 64.58764731678676,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-12",
+      "demand_tons": 106.81,
+      "volatility": 47.58900878504256,
+      "trend": 3.500043956043953,
+      "is_anomaly": false,
+      "risk_score": 55.670883352324566,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -57.50021978021977,
+        "upper": 57.50021978021977
+      }
+    },
+    {
+      "date": "2025-12-13",
+      "demand_tons": 103.69,
+      "volatility": 48.29672378714139,
+      "trend": -0.14945054945055675,
+      "is_anomaly": false,
+      "risk_score": 38.58467748308249,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.74725274725279,
+        "upper": 40.74725274725279
+      }
+    },
+    {
+      "date": "2025-12-14",
+      "demand_tons": 106.01,
+      "volatility": 48.39705013639532,
+      "trend": -3.348791208791215,
+      "is_anomaly": false,
+      "risk_score": 54.82917376060573,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -56.743956043956075,
+        "upper": 56.743956043956075
+      }
+    },
+    {
+      "date": "2025-12-15",
+      "demand_tons": 117.72,
+      "volatility": 49.44713564818013,
+      "trend": -5.164329670329685,
+      "is_anomaly": false,
+      "risk_score": 59.33593142587445,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-16",
+      "demand_tons": 167.14,
+      "volatility": 45.51248379238804,
+      "trend": -3.316747252747265,
+      "is_anomaly": false,
+      "risk_score": 61.19808541035283,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -56.58373626373633,
+        "upper": 56.58373626373633
+      }
+    },
+    {
+      "date": "2025-12-17",
+      "demand_tons": 158.57,
+      "volatility": 30.20028468803068,
+      "trend": -1.3006813186813277,
+      "is_anomaly": false,
+      "risk_score": 50.202417013459815,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -36.70369128143732,
+        "upper": 36.70369128143732
+      }
+    },
+    {
+      "date": "2025-12-18",
+      "demand_tons": 145.52,
+      "volatility": 27.048909669073918,
+      "trend": 0.21918681318680744,
+      "is_anomaly": false,
+      "risk_score": 43.40110896887504,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -28.144843735007953,
+        "upper": 28.144843735007953
+      }
+    },
+    {
+      "date": "2025-12-19",
+      "demand_tons": 79.39,
+      "volatility": 32.327700638483954,
+      "trend": -2.1094285714285728,
+      "is_anomaly": false,
+      "risk_score": 45.789149733522315,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -42.87484349562682,
+        "upper": 42.87484349562682
+      }
+    },
+    {
+      "date": "2025-12-20",
+      "demand_tons": 68.82,
+      "volatility": 38.36044478117443,
+      "trend": -5.179648351648356,
+      "is_anomaly": false,
+      "risk_score": 54.113053511178244,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -58.36044478117444,
+        "upper": 58.36044478117444
+      }
+    },
+    {
+      "date": "2025-12-21",
+      "demand_tons": 69.78,
+      "volatility": 42.818937677265346,
+      "trend": -8.093956043956053,
+      "is_anomaly": false,
+      "risk_score": 54.21558853772443,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-22",
+      "demand_tons": 120.99,
+      "volatility": 42.867839871377996,
+      "trend": -7.313802197802198,
+      "is_anomaly": false,
+      "risk_score": 59.685191360047384,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2025-12-23",
+      "demand_tons": 141.77,
+      "volatility": 38.66475656201668,
+      "trend": -4.832087912087921,
+      "is_anomaly": false,
+      "risk_score": 61.904647455494974,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -58.664756562016684,
+        "upper": 58.664756562016684
+      }
+    },
+    {
+      "date": "2025-12-24",
+      "demand_tons": 149.74,
+      "volatility": 37.00518856798858,
+      "trend": -1.0046153846153902,
+      "is_anomaly": false,
+      "risk_score": 47.778978713543886,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -42.02826549106554,
+        "upper": 42.02826549106554
+      }
+    },
+    {
+      "date": "2025-12-25",
+      "demand_tons": 135.72,
+      "volatility": 35.635328644746075,
+      "trend": 0.8899560439560393,
+      "is_anomaly": false,
+      "risk_score": 45.70824339339558,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.08510886452627,
+        "upper": 40.08510886452627
+      }
+    },
+    {
+      "date": "2025-12-26",
+      "demand_tons": 82.12,
+      "volatility": 35.264414749419274,
+      "trend": -0.590549450549456,
+      "is_anomaly": false,
+      "risk_score": 38.486338110867436,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -38.21716200216655,
+        "upper": 38.21716200216655
+      }
+    },
+    {
+      "date": "2025-12-27",
+      "demand_tons": 79.41,
+      "volatility": 33.38816029102321,
+      "trend": -2.142813186813192,
+      "is_anomaly": false,
+      "risk_score": 45.95820895683178,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -44.10222622508917,
+        "upper": 44.10222622508917
+      }
+    },
+    {
+      "date": "2025-12-28",
+      "demand_tons": 67.55,
+      "volatility": 33.85835973300443,
+      "trend": -3.8507252747252765,
+      "is_anomaly": false,
+      "risk_score": 53.23103458926957,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -53.111986106630816,
+        "upper": 53.111986106630816
+      }
+    },
+    {
+      "date": "2025-12-29",
+      "demand_tons": 117.55,
+      "volatility": 33.714581132684906,
+      "trend": -3.574967032967046,
+      "is_anomaly": false,
+      "risk_score": 57.192609346425456,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -51.58941629752014,
+        "upper": 51.58941629752014
+      }
+    },
+    {
+      "date": "2025-12-30",
+      "demand_tons": 184.14,
+      "volatility": 42.825726246865194,
+      "trend": 0.2333406593406569,
+      "is_anomaly": false,
+      "risk_score": 47.596776871741774,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -41.16670329670329,
+        "upper": 41.16670329670329
+      }
+    },
+    {
+      "date": "2025-12-31",
+      "demand_tons": 191.86,
+      "volatility": 50.524353675091405,
+      "trend": 3.90496703296703,
+      "is_anomaly": false,
+      "risk_score": 66.77946124501587,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -59.52483516483515,
+        "upper": 59.52483516483515
+      }
+    },
+    {
+      "date": "2026-01-01",
+      "demand_tons": 161.75,
+      "volatility": 52.56573662250605,
+      "trend": 6.139758241758241,
+      "is_anomaly": false,
+      "risk_score": 64.03865769548742,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-02",
+      "demand_tons": 129.52,
+      "volatility": 48.8410317351342,
+      "trend": 5.202241758241756,
+      "is_anomaly": false,
+      "risk_score": 60.59625779383795,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-03",
+      "demand_tons": 88.08,
+      "volatility": 47.339071248458936,
+      "trend": 2.5119120879120853,
+      "is_anomaly": false,
+      "risk_score": 48.72972292082147,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -52.55956043956043,
+        "upper": 52.55956043956043
+      }
+    },
+    {
+      "date": "2026-01-04",
+      "demand_tons": 120.3,
+      "volatility": 38.26133725539962,
+      "trend": 0.6891428571428513,
+      "is_anomaly": false,
+      "risk_score": 43.057208595431575,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -41.70705154111388,
+        "upper": 41.70705154111388
+      }
+    },
+    {
+      "date": "2026-01-05",
+      "demand_tons": 154.51,
+      "volatility": 36.86818043477911,
+      "trend": 1.3099780219780184,
+      "is_anomaly": false,
+      "risk_score": 49.815262813508376,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -43.418070544669206,
+        "upper": 43.418070544669206
+      }
+    },
+    {
+      "date": "2026-01-06",
+      "demand_tons": 216.36,
+      "volatility": 43.64253217087334,
+      "trend": 4.235670329670326,
+      "is_anomaly": false,
+      "risk_score": 69.87140540349478,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-07",
+      "demand_tons": 231.19,
+      "volatility": 51.4902675963415,
+      "trend": 7.519956043956041,
+      "is_anomaly": true,
+      "risk_score": 100.0,
+      "risk_level": "critical",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-08",
+      "demand_tons": 196.58,
+      "volatility": 53.62093394508207,
+      "trend": 8.995164835164834,
+      "is_anomaly": false,
+      "risk_score": 67.75875662736613,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-09",
+      "demand_tons": 143.34,
+      "volatility": 52.45181684628463,
+      "trend": 6.914681318681318,
+      "is_anomaly": false,
+      "risk_score": 62.07233494682571,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-10",
+      "demand_tons": 132.62,
+      "volatility": 43.61685874368605,
+      "trend": 4.169472527472525,
+      "is_anomaly": false,
+      "risk_score": 60.927360483726666,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-11",
+      "demand_tons": 119.62,
+      "volatility": 43.74837624197633,
+      "trend": 0.42795604395603865,
+      "is_anomaly": false,
+      "risk_score": 41.67864555236063,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -42.1397802197802,
+        "upper": 42.1397802197802
+      }
+    },
+    {
+      "date": "2026-01-12",
+      "demand_tons": 149.16,
+      "volatility": 44.12151721045387,
+      "trend": -1.0500879120879185,
+      "is_anomaly": false,
+      "risk_score": 47.94439310570154,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -45.250439560439595,
+        "upper": 45.250439560439595
+      }
+    },
+    {
+      "date": "2026-01-13",
+      "demand_tons": 194.4,
+      "volatility": 40.92753450859674,
+      "trend": 0.8207692307692261,
+      "is_anomaly": false,
+      "risk_score": 51.629762825096954,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -44.103846153846135,
+        "upper": 44.103846153846135
+      }
+    },
+    {
+      "date": "2026-01-14",
+      "demand_tons": 190.27,
+      "volatility": 32.16590734361605,
+      "trend": 2.7830329670329657,
+      "is_anomaly": false,
+      "risk_score": 60.999967277628436,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -46.08107217878087,
+        "upper": 46.08107217878087
+      }
+    },
+    {
+      "date": "2026-01-15",
+      "demand_tons": 167.59,
+      "volatility": 28.45153648876326,
+      "trend": 3.1116483516483493,
+      "is_anomaly": false,
+      "risk_score": 60.22065419855177,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -44.00977824700501,
+        "upper": 44.00977824700501
+      }
+    },
+    {
+      "date": "2026-01-16",
+      "demand_tons": 119.07,
+      "volatility": 31.651784422728156,
+      "trend": 0.965780219780214,
+      "is_anomaly": false,
+      "risk_score": 44.30902240585608,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -36.48068552162923,
+        "upper": 36.48068552162923
+      }
+    },
+    {
+      "date": "2026-01-17",
+      "demand_tons": 85.51,
+      "volatility": 40.531477361957315,
+      "trend": -3.4591648351648443,
+      "is_anomaly": false,
+      "risk_score": 53.19149184643559,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -57.29582417582423,
+        "upper": 57.29582417582423
+      }
+    },
+    {
+      "date": "2026-01-18",
+      "demand_tons": 89.24,
+      "volatility": 45.24409637889633,
+      "trend": -6.704043956043962,
+      "is_anomaly": false,
+      "risk_score": 56.294058971671014,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-19",
+      "demand_tons": 135.86,
+      "volatility": 45.181201000078865,
+      "trend": -7.3525934065934155,
+      "is_anomaly": false,
+      "risk_score": 61.273416198320035,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-01-20",
+      "demand_tons": 149.92,
+      "volatility": 39.006640338232096,
+      "trend": -5.478439560439566,
+      "is_anomaly": false,
+      "risk_score": 62.77512710794434,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -59.006640338232096,
+        "upper": 59.006640338232096
+      }
+    },
+    {
+      "date": "2026-01-21",
+      "demand_tons": 170.28,
+      "volatility": 34.68636509940943,
+      "trend": -2.2416263736263766,
+      "is_anomaly": false,
+      "risk_score": 56.157855997409854,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -45.89449696754131,
+        "upper": 45.89449696754131
+      }
+    },
+    {
+      "date": "2026-01-22",
+      "demand_tons": 126.6,
+      "volatility": 30.726953655583678,
+      "trend": -1.1260659340659427,
+      "is_anomaly": false,
+      "risk_score": 45.914710091756355,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -36.35728332591339,
+        "upper": 36.35728332591339
+      }
+    },
+    {
+      "date": "2026-01-23",
+      "demand_tons": 77.67,
+      "volatility": 35.689617871441705,
+      "trend": -2.8560659340659424,
+      "is_anomaly": false,
+      "risk_score": 49.33862795748058,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -49.96994754177142,
+        "upper": 49.96994754177142
+      }
+    },
+    {
+      "date": "2026-01-24",
+      "demand_tons": 71.21,
+      "volatility": 38.26243233997855,
+      "trend": -4.83538461538462,
+      "is_anomaly": false,
+      "risk_score": 54.36832300435051,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -58.26243233997855,
+        "upper": 58.26243233997855
+      }
+    },
+    {
+      "date": "2026-01-25",
+      "demand_tons": 88.25,
+      "volatility": 38.38487276444805,
+      "trend": -6.486483516483529,
+      "is_anomaly": false,
+      "risk_score": 56.18831972554526,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -58.38487276444805,
+        "upper": 58.38487276444805
+      }
+    },
+    {
+      "date": "2026-01-26",
+      "demand_tons": 139.48,
+      "volatility": 38.702610592396404,
+      "trend": -5.562131868131875,
+      "is_anomaly": false,
+      "risk_score": 61.6600586942546,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -58.70261059239641,
+        "upper": 58.70261059239641
+      }
+    },
+    {
+      "date": "2026-01-27",
+      "demand_tons": 156.26,
+      "volatility": 39.64686404460554,
+      "trend": -2.6243736263736377,
+      "is_anomaly": false,
+      "risk_score": 56.57415364429462,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -52.76873217647373,
+        "upper": 52.76873217647373
+      }
+    },
+    {
+      "date": "2026-01-28",
+      "demand_tons": 160.8,
+      "volatility": 37.69881316813199,
+      "trend": 0.474593406593396,
+      "is_anomaly": false,
+      "risk_score": 46.3101577751014,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -40.071780201098974,
+        "upper": 40.071780201098974
+      }
+    },
+    {
+      "date": "2026-01-29",
+      "demand_tons": 169.15,
+      "volatility": 42.58439228950759,
+      "trend": 3.1939780219780203,
+      "is_anomaly": false,
+      "risk_score": 60.79892196833767,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -55.96989010989011,
+        "upper": 55.96989010989011
+      }
+    },
+    {
+      "date": "2026-01-30",
+      "demand_tons": 119.3,
+      "volatility": 37.79381947456747,
+      "trend": 2.8826593406593406,
+      "is_anomaly": false,
+      "risk_score": 53.91798369369507,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -52.20711617786418,
+        "upper": 52.20711617786418
+      }
+    },
+    {
+      "date": "2026-01-31",
+      "demand_tons": 104.95,
+      "volatility": 30.63862035312395,
+      "trend": 1.0539560439560396,
+      "is_anomaly": false,
+      "risk_score": 43.24178217795178,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -35.908400572904156,
+        "upper": 35.908400572904156
+      }
+    },
+    {
+      "date": "2026-02-01",
+      "demand_tons": 118.32,
+      "volatility": 24.679092848188873,
+      "trend": -0.3552307692307734,
+      "is_anomaly": false,
+      "risk_score": 41.17616966361968,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -26.455246694342737,
+        "upper": 26.455246694342737
+      }
+    },
+    {
+      "date": "2026-02-02",
+      "demand_tons": 163.69,
+      "volatility": 26.49769387989045,
+      "trend": 0.940967032967031,
+      "is_anomaly": false,
+      "risk_score": 48.95069905980131,
+      "risk_level": "medium",
+      "duration_uncertainty_pct": {
+        "lower": -31.2025290447256,
+        "upper": 31.2025290447256
+      }
+    },
+    {
+      "date": "2026-02-03",
+      "demand_tons": 183.9,
+      "volatility": 30.73535748938024,
+      "trend": 3.1557802197802167,
+      "is_anomaly": false,
+      "risk_score": 62.18334091730304,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -46.51425858828133,
+        "upper": 46.51425858828133
+      }
+    },
+    {
+      "date": "2026-02-04",
+      "demand_tons": 224.18,
+      "volatility": 42.859091162063805,
+      "trend": 7.043296703296698,
+      "is_anomaly": true,
+      "risk_score": 100.0,
+      "risk_level": "critical",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-02-05",
+      "demand_tons": 191.0,
+      "volatility": 44.83007021228157,
+      "trend": 8.305890109890107,
+      "is_anomaly": false,
+      "risk_score": 67.16277178556643,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-02-06",
+      "demand_tons": 160.84,
+      "volatility": 41.49319181102685,
+      "trend": 6.810615384615381,
+      "is_anomaly": false,
+      "risk_score": 63.94146303490717,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -60.00000000000001,
+        "upper": 60.00000000000001
+      }
+    },
+    {
+      "date": "2026-02-07",
+      "demand_tons": 132.68,
+      "volatility": 35.8775066155994,
+      "trend": 3.932219780219778,
+      "is_anomaly": false,
+      "risk_score": 60.59486782398469,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -55.53860551669829,
+        "upper": 55.53860551669829
+      }
+    },
+    {
+      "date": "2026-02-08",
+      "demand_tons": 160.21,
+      "volatility": 29.102431660798125,
+      "trend": 2.131956043956042,
+      "is_anomaly": false,
+      "risk_score": 54.53395464351645,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -39.762211880578334,
+        "upper": 39.762211880578334
+      }
+    },
+    {
+      "date": "2026-02-09",
+      "demand_tons": 173.12,
+      "volatility": 28.77361448404053,
+      "trend": 2.0731428571428516,
+      "is_anomaly": false,
+      "risk_score": 55.618771201858024,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -39.13932876975479,
+        "upper": 39.13932876975479
+      }
+    },
+    {
+      "date": "2026-02-10",
+      "demand_tons": 205.11,
+      "volatility": 30.889656690811353,
+      "trend": 3.3336483516483515,
+      "is_anomaly": false,
+      "risk_score": 65.33806481939844,
+      "risk_level": "high",
+      "duration_uncertainty_pct": {
+        "lower": -47.55789844905311,
+        "upper": 47.55789844905311
+      }
+    },
+    {
+      "date": "2026-02-11",
+      "demand_tons": 221.18,
+      "volatility": 30.156913998364594,
+      "trend": 4.988241758241756,
+      "is_anomaly": true,
+      "risk_score": 100.0,
+      "risk_level": "critical",
+      "duration_uncertainty_pct": {
+        "lower": -50.156913998364594,
+        "upper": 50.156913998364594
+      }
+    }
+  ],
+  "bottleneck_periods": [
+    {
+      "start_date": "2025-09-03",
+      "end_date": "2025-09-03",
+      "duration_days": 1,
+      "avg_demand": 161.0,
+      "max_demand": 161.0,
+      "avg_volatility": 43.96269625381002
+    },
+    {
+      "start_date": "2025-09-09",
+      "end_date": "2025-09-10",
+      "duration_days": 2,
+      "avg_demand": 198.45499999999998,
+      "max_demand": 208.97,
+      "avg_volatility": 42.73240453011118
+    },
+    {
+      "start_date": "2025-10-01",
+      "end_date": "2025-10-01",
+      "duration_days": 1,
+      "avg_demand": 178.7,
+      "max_demand": 178.7,
+      "avg_volatility": 49.49360458926073
+    },
+    {
+      "start_date": "2025-10-07",
+      "end_date": "2025-10-09",
+      "duration_days": 3,
+      "avg_demand": 180.51333333333332,
+      "max_demand": 189.84,
+      "avg_volatility": 42.624457663204886
+    },
+    {
+      "start_date": "2025-11-04",
+      "end_date": "2025-11-06",
+      "duration_days": 3,
+      "avg_demand": 181.76666666666665,
+      "max_demand": 202.18,
+      "avg_volatility": 45.0866782987361
+    },
+    {
+      "start_date": "2025-11-11",
+      "end_date": "2025-11-12",
+      "duration_days": 2,
+      "avg_demand": 192.99,
+      "max_demand": 204.23,
+      "avg_volatility": 38.04803744477051
+    },
+    {
+      "start_date": "2025-11-18",
+      "end_date": "2025-11-19",
+      "duration_days": 2,
+      "avg_demand": 173.485,
+      "max_demand": 178.06,
+      "avg_volatility": 48.099998010505985
+    },
+    {
+      "start_date": "2025-12-02",
+      "end_date": "2025-12-04",
+      "duration_days": 3,
+      "avg_demand": 197.0566666666667,
+      "max_demand": 203.26,
+      "avg_volatility": 49.48061079045211
+    },
+    {
+      "start_date": "2025-12-08",
+      "end_date": "2025-12-11",
+      "duration_days": 4,
+      "avg_demand": 189.0,
+      "max_demand": 223.16,
+      "avg_volatility": 44.19102262981044
+    },
+    {
+      "start_date": "2025-12-16",
+      "end_date": "2025-12-16",
+      "duration_days": 1,
+      "avg_demand": 167.14,
+      "max_demand": 167.14,
+      "avg_volatility": 45.51248379238804
+    },
+    {
+      "start_date": "2025-12-30",
+      "end_date": "2026-01-01",
+      "duration_days": 3,
+      "avg_demand": 179.25,
+      "max_demand": 191.86,
+      "avg_volatility": 48.63860551482088
+    },
+    {
+      "start_date": "2026-01-06",
+      "end_date": "2026-01-08",
+      "duration_days": 3,
+      "avg_demand": 214.71,
+      "max_demand": 231.19,
+      "avg_volatility": 49.58457790409897
+    },
+    {
+      "start_date": "2026-01-13",
+      "end_date": "2026-01-13",
+      "duration_days": 1,
+      "avg_demand": 194.4,
+      "max_demand": 194.4,
+      "avg_volatility": 40.92753450859674
+    },
+    {
+      "start_date": "2026-01-28",
+      "end_date": "2026-01-29",
+      "duration_days": 2,
+      "avg_demand": 164.97500000000002,
+      "max_demand": 169.15,
+      "avg_volatility": 40.14160272881979
+    },
+    {
+      "start_date": "2026-02-04",
+      "end_date": "2026-02-06",
+      "duration_days": 3,
+      "avg_demand": 192.00666666666666,
+      "max_demand": 224.18,
+      "avg_volatility": 43.060784395124074
+    }
+  ]
+}
