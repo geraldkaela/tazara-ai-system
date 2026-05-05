@@ -1,0 +1,9 @@
+﻿services:
+  - type: web
+    name: tazara-ai-system
+    runtime: python
+    repo: https://github.com/geraldkaela/tazara-ai-system
+    plan: free
+    branch: master
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port \
