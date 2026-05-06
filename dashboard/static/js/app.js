@@ -2,7 +2,7 @@
    TAZARA AI System — Shared JavaScript Utilities
    ================================================ */
 
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = '';
 
 // ── API Helper ──
 async function fetchAPI(path, options = {}) {
