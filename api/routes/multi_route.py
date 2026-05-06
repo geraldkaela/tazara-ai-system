@@ -12,7 +12,7 @@ import numpy as np
 import os
 import sys
 import importlib
-import psycopg2
+import psycopg2\nfrom api.db_utils import get_db_connection
 import json
 
 # RBAC imports
@@ -116,12 +116,7 @@ def save_schedule_to_db(schedule_data):
     """Save schedule to PostgreSQL database"""
     try:
         # Connect to database
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Insert schedule into multi_route_schedules table
@@ -631,12 +626,7 @@ async def get_performance_trends(days: int = 30):
     """Get real performance trends from database"""
     try:
         # Connect to database
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Get real performance data from database
@@ -693,12 +683,7 @@ async def check_data_source():
     """Debug endpoint to check data source"""
     try:
         # Try to connect to database
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Check if schedules table exists and has data
@@ -732,12 +717,7 @@ async def get_route_performance():
     print("🔍 DEBUG: Getting route performance...")
     try:
         # Connect to database
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Get route performance from all schedules
@@ -838,12 +818,7 @@ async def get_dashboard_stats(
     """Get dashboard statistics from database"""
     try:
         # Connect to database
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Get real statistics from recent optimized schedules (last 7 days)
@@ -997,12 +972,7 @@ async def get_schedules(
     """Get list of created schedules from database"""
     try:
         # Connect to database
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Get recent schedules
