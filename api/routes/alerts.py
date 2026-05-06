@@ -78,14 +78,10 @@ async def get_schedules(status: Optional[str] = None, schedule_type: Optional[st
     # Also fetch multi-route schedules from database
     try:
         import psycopg2
+        from api.db_utils import get_db_connection
         import json
         
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         cursor.execute("""
@@ -436,13 +432,9 @@ async def get_alerts_summary(
     # Add multi-route schedules from database
     try:
         import psycopg2
+        from api.db_utils import get_db_connection
         
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         cursor.execute("SELECT COUNT(*) FROM multi_route_schedules")
@@ -644,14 +636,10 @@ def generate_sample_daily_reports():
     
     try:
         import psycopg2
+        from api.db_utils import get_db_connection
         import json
         
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # First, get the actual dates that have schedules
