@@ -17,16 +17,16 @@ import sqlite3
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Query
 from pydantic import BaseModel
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 # RBAC imports
 from api.auth.rbac import Permission, require_permission
 from api.auth.auth import get_current_user, UserInDB
-from fastapi import Query
+from api.db_utils import get_db_connection
 import json
 
 router = APIRouter()
@@ -40,9 +40,7 @@ class DashboardData:
     @staticmethod
     def connect():
         """Get database connection."""
-        from api.db_utils import get_db_connection
         return get_db_connection()
-        """Get database connection."""
     
     @staticmethod
     def get_risk_trends(days: int = 90) -> Dict[str, Any]:
@@ -332,9 +330,6 @@ async def dashboard_health(
 ) -> Dict[str, Any]:
     """Check dashboard data availability and DB connection (PostgreSQL)."""
     try:
-        # Use direct PostgreSQL connection to avoid import issues
-        import psycopg2\nfrom api.db_utils import get_db_connection
-        
         conn = get_db_connection()
         cursor = conn.cursor()
         
