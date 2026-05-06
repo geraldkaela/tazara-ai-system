@@ -16,19 +16,32 @@ import os
 # ---------------------------------------------------------------------------
 # Database
 # ---------------------------------------------------------------------------
-DB_CONFIG = {
-    "host":     os.getenv("DB_HOST",     "localhost"),
-    "database": os.getenv("DB_NAME",     "tazara_multi_route"),
-    "user":     os.getenv("DB_USER",     "tazara"),
-    "password": os.getenv("DB_PASSWORD", "tazara123"),
-}
+
+# Check if running on Railway (has special environment variable)
+if 'RAILWAY_SERVICE_POSTGRES_URL' in os.environ:
+    # Running on Railway - use cloud PostgreSQL
+    DB_CONFIG = {
+        "host": "trolley.proxy.rlwy.net",
+        "port": "48704",
+        "user": "postgres",
+        "password": "tSaCccFLweXbbXLOQiXDxRLhyljbGEZF",
+        "database": "railway"
+    }
+else:
+    # Running locally - use your original settings
+    DB_CONFIG = {
+        "host":     os.getenv("DB_HOST",     "localhost"),
+        "database": os.getenv("DB_NAME",     "tazara_multi_route"),
+        "user":     os.getenv("DB_USER",     "tazara"),
+        "password": os.getenv("DB_PASSWORD", "tazara123"),
+    }
 
 # ---------------------------------------------------------------------------
 # JWT
 # ---------------------------------------------------------------------------
 JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "CHANGE-ME-IN-PRODUCTION")
 JWT_ALGORITHM: str = "HS256"
-JWT_EXPIRE_MINUTES: int = int(os.getenv("JWT_EXPIRE_MINUTES", "1440"))  # 24 hours (1440 minutes)
+JWT_EXPIRE_MINUTES: int = int(os.getenv("JWT_EXPIRE_MINUTES", "1440"))
 
 # ---------------------------------------------------------------------------
 # CORS
