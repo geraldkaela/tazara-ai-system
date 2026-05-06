@@ -12,7 +12,8 @@ import numpy as np
 import os
 import sys
 import importlib
-import psycopg2\nfrom api.db_utils import get_db_connection
+import psycopg2
+from api.db_utils import get_db_connection
 import json
 
 # RBAC imports
