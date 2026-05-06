@@ -24,7 +24,7 @@
                 console.log('Token:', token);
                 
                 // Test API call
-                const response = await fetch('http://127.0.0.1:8000/api/risk/analyze', {
+                const response = await fetch('/api/risk/analyze', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

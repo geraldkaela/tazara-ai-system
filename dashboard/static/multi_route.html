@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,7 @@
     <!-- Main Content -->
     <main class="main-content">
       <!-- Sidebar Toggle Button -->
-<button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">◀</button>
+<button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">?</button>
         <!-- Mobile Backdrop -->
         <div class="mobile-backdrop" onclick="toggleSidebar()"></div>
         
@@ -137,10 +137,10 @@
                             </div>
                             <div style="display: flex; gap: 10px;">
                                 <button class="btn btn-sm btn-success" onclick="createAutoSchedule()" style="flex: 1;">
-                                    🤖 Auto-Schedule by Priority
+                                    ?? Auto-Schedule by Priority
                                 </button>
                                 <button class="btn btn-sm btn-outline-info" onclick="checkAutoScheduleStatus()" style="flex: 1;">
-                                    📊 Check Status
+                                    ?? Check Status
                                 </button>
                             </div>
                             <div id="autoScheduleResult" style="margin-top: 16px;"></div>
@@ -296,7 +296,7 @@
                     <!--
                     <div class="card" style="border:1px solid var(--danger);">
                         <div class="card-header" style="background:rgba(229,62,62,0.1)">
-                            <div class="card-title">ðŸš¨ Disruption Simulation (Phase 3)</div>
+                            <div class="card-title">🚨 Disruption Simulation (Phase 3)</div>
                         </div>
                         <div style="padding:15px;" id="disruptionUI">
                             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">
@@ -320,7 +320,7 @@
                                 </div>
                             </div>
                             <button class="btn btn-danger" style="width:100%; justify-content:center;" onclick="simulateDisruption()">
-                                ðŸ’¥ Simulate Disruption
+                                💥 Simulate Disruption
                             </button>
                             <div id="disruptionResult" style="margin-top:15px;"></div>
                         </div>
@@ -364,7 +364,7 @@
                         <div class="card-header">
                             <div class="card-title"> Cargo Delivery Trend</div>
                             <button class="btn btn-sm btn-primary" onclick="loadPerformanceCharts()" style="float:right; margin-top:5px;">
-                                🔄 Refresh Charts
+                                ?? Refresh Charts
                             </button>
                         </div>
                         <div class="chart-container" style="height: 300px; position: relative;">
@@ -464,10 +464,10 @@
                                     <div class="card-title" style="font-size: 0.9rem;"> Zambia Local Routes</div>
                                 </div>
                                 <div style="padding: 10px;">
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KASAMAâ€“MPIKA</strong><br>Kasama to Mpika</div>
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>MPIKAâ€“SERENJE</strong><br>Mpika to Serenje</div>
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>SERENJEâ€“KAPIRI</strong><br>Serenje to Kapiri Mposhi</div>
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KAPIRIâ€“NDOLA</strong><br>Kapiri Mposhi to Ndola</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KASAMA–MPIKA</strong><br>Kasama to Mpika</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>MPIKA–SERENJE</strong><br>Mpika to Serenje</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>SERENJE–KAPIRI</strong><br>Serenje to Kapiri Mposhi</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KAPIRI–NDOLA</strong><br>Kapiri Mposhi to Ndola</div>
                                     <div style="font-size: 0.8rem; margin-bottom: 8px;"> <strong>KAPIRI DISTRIBUTION</strong><br>Central Province Hubs</div>
                                 </div>
                             </div>
@@ -496,7 +496,7 @@
                     <!-- Schedule Approval -->
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">âœ… Schedule Approvals</div>
+                            <div class="card-title">✅ Schedule Approvals</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Select Schedule</label>
@@ -507,9 +507,9 @@
                         <div class="form-group">
                             <label class="form-label">Approval Action</label>
                             <select class="form-input" id="approvalAction">
-                                <option value="approved">âœ… Approve</option>
-                                <option value="rejected">âŒ Reject</option>
-                                <option value="needs_revision">ðŸ“ Needs Revision</option>
+                                <option value="approved">✅ Approve</option>
+                                <option value="rejected">❌ Reject</option>
+                                <option value="needs_revision">📝 Needs Revision</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -521,14 +521,14 @@
                             <textarea class="form-input" id="approvalReason" rows="3" placeholder="Enter reason for rejection or revision notes"></textarea>
                         </div>
                         <button class="btn btn-primary" onclick="submitApproval()" style="width:100%;">
-                            ðŸ”„ Submit Approval
+                            🔄 Submit Approval
                         </button>
                     </div>
 
                     <!-- Schedule Modifications -->
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">âœï¸ Schedule Modifications</div>
+                            <div class="card-title">✏️ Schedule Modifications</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Select Schedule</label>
@@ -539,10 +539,10 @@
                         <div class="form-group">
                             <label class="form-label">Modification Type</label>
                             <select class="form-input" id="modificationType">
-                                <option value="train_add">âž• Add Train</option>
-                                <option value="train_remove">âž– Remove Train</option>
-                                <option value="time_adjust">â° Adjust Time</option>
-                                <option value="priority_change">ðŸŽ¯ Change Priority</option>
+                                <option value="train_add">➕ Add Train</option>
+                                <option value="train_remove">➖ Remove Train</option>
+                                <option value="time_adjust">⏰ Adjust Time</option>
+                                <option value="priority_change">🎯 Change Priority</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -550,7 +550,7 @@
                             <textarea class="form-input" id="modificationDetails" rows="3" placeholder="Enter modification details"></textarea>
                         </div>
                         <button class="btn btn-secondary" onclick="submitModification()" style="width:100%;">
-                            ðŸ“ Submit Modification
+                            📝 Submit Modification
                         </button>
                     </div>
                 </div>
@@ -558,7 +558,7 @@
                 <!-- Modification History -->
                 <div class="card" style="margin-top:20px;">
                     <div class="card-header">
-                        <div class="card-title">ðŸ“œ Recent Modifications</div>
+                        <div class="card-title">📜 Recent Modifications</div>
                     </div>
                     <div id="modificationHistory" style="max-height:300px; overflow-y:auto;">
                         <div class="alert alert-info">Loading modification history...</div>
@@ -706,11 +706,11 @@
     let currentScheduleId = null;
 
     // Test: Display train capacities in console
-    console.log('🚂 Train Capacities Loaded:', TRAIN_CAPACITIES);
+    console.log('?? Train Capacities Loaded:', TRAIN_CAPACITIES);
 
     // Test function to verify capacity access
     function testTrainCapacities() {
-        console.log('🧪 Testing Train Capacity Access:');
+        console.log('?? Testing Train Capacity Access:');
         for (let i = 1; i <= 6; i++) {
             const train = TRAIN_CAPACITIES[i];
             console.log(`Train ${i}: ${train.name} - Capacity: ${train.capacity} tons - Type: ${train.type}`);
@@ -776,7 +776,7 @@
         const sortedRoutes = Object.entries(cargoRequirements)
             .sort(([, a], [, b]) => b - a);
         
-        console.log('🔄 Sorted Routes by Cargo:', sortedRoutes);
+        console.log('?? Sorted Routes by Cargo:', sortedRoutes);
         
         sortedRoutes.forEach(([route, totalCargo], routeIndex) => {
             let remainingCargo = totalCargo;
@@ -787,7 +787,7 @@
                 .sort(([,a], [,b]) => b.capacity - a.capacity)
                 .map(([id, train]) => ({ id: parseInt(id), ...train }));
             
-            console.log(`🚂 Optimized train allocation for ${totalCargo} tons of ${route} cargo`);
+            console.log(`?? Optimized train allocation for ${totalCargo} tons of ${route} cargo`);
             console.log(` Available trains (sorted by capacity):`, sortedTrains.map(t => `Train ${t.id}: ${t.capacity} tons (${t.type})`));
             
             for (const train of sortedTrains) {
@@ -808,8 +808,8 @@
                     const fuelRate = fuelRates[trainType] || 60;
                     const fuelCost = Math.round(loadAmount * fuelRate);
                     
-                    console.log(`✅ Loading ${loadAmount} tons onto Train ${train.id} (${trainCapacity} ton capacity, ${trainType} type)`);
-                    console.log(`   Fuel cost: ${loadAmount} tons × ${fuelRate} ZMW/ton = ${fuelCost} ZMW`);
+                    console.log(`? Loading ${loadAmount} tons onto Train ${train.id} (${trainCapacity} ton capacity, ${trainType} type)`);
+                    console.log(`   Fuel cost: ${loadAmount} tons � ${fuelRate} ZMW/ton = ${fuelCost} ZMW`);
                     
                     allocations.push({
                         day: dayOffset + 1, // Days start from 1
@@ -834,23 +834,23 @@
             }
         });
         
-        console.log('📋 Final Train Allocations:', allocations);
+        console.log('?? Final Train Allocations:', allocations);
         return allocations;
     }
 
     function getRouteDisplayName(route) {
         const routeNames = {
-            'DAR_KAPIRI': 'Dar → Kapiri',
-            'DAR_MBEYA': 'Dar → Mbeya', 
-            'MBEYA_KASAMA': 'Mbeya → Kasama',
-            'KAPIRI_NDOLA': 'Kapiri → Ndola',
-            'DAR_KIDATU': 'Dar → Kidatu',
-            'KIDATU_TRANS_SHIPMENT': 'Kidatu → Transshipment'
+            'DAR_KAPIRI': 'Dar ? Kapiri',
+            'DAR_MBEYA': 'Dar ? Mbeya', 
+            'MBEYA_KASAMA': 'Mbeya ? Kasama',
+            'KAPIRI_NDOLA': 'Kapiri ? Ndola',
+            'DAR_KIDATU': 'Dar ? Kidatu',
+            'KIDATU_TRANS_SHIPMENT': 'Kidatu ? Transshipment'
         };
         return routeNames[route] || route;
     }
 
-    // â”€â”€ Load Overview Data â”€â”€
+    // ── Load Overview Data ──
     async function loadOverview() {
         try {
             // Get system status
@@ -863,8 +863,8 @@
             const schedulesResponse = await fetchAPI('/priority/auto-schedule/list?limit=10');
             const schedules = schedulesResponse.schedules || [];
             
-            console.log('🔍 DEBUG: Overview - schedules loaded:', schedules.length);
-            console.log('🔍 DEBUG: Overview - sample schedules:', schedules.slice(0, 3));
+            console.log('?? DEBUG: Overview - schedules loaded:', schedules.length);
+            console.log('?? DEBUG: Overview - sample schedules:', schedules.slice(0, 3));
             
             if (schedules.length > 0) {
                 // Calculate overview metrics from recent schedules
@@ -873,7 +873,7 @@
                 const totalProfit = schedules.reduce((sum, s) => sum + (s.total_reward || 0), 0);
                 const totalTrains = Math.max(...schedules.map(s => s.num_trains || 0));
                 
-                console.log('🔍 DEBUG: Overview calculated metrics:', {
+                console.log('?? DEBUG: Overview calculated metrics:', {
                     totalCargo,
                     avgEfficiency,
                     totalProfit,
@@ -886,7 +886,7 @@
                 const ovEfficiencyEl = document.getElementById('ovEfficiency');
                 const ovProfitEl = document.getElementById('ovProfit');
                 
-                console.log('🔍 DEBUG: Overview elements found:', {
+                console.log('?? DEBUG: Overview elements found:', {
                     ovCargo: !!ovCargoEl,
                     ovEfficiency: !!ovEfficiencyEl,
                     ovProfit: !!ovProfitEl
@@ -894,26 +894,26 @@
                 
                 if (ovCargoEl) {
                     ovCargoEl.textContent = formatNumber(totalCargo);
-                    console.log('✅ DEBUG: Updated cargo to:', formatNumber(totalCargo));
+                    console.log('? DEBUG: Updated cargo to:', formatNumber(totalCargo));
                 } else {
-                    console.error('❌ DEBUG: ovCargo element not found');
+                    console.error('? DEBUG: ovCargo element not found');
                 }
                 
                 if (ovEfficiencyEl) {
                     ovEfficiencyEl.textContent = formatNumber(avgEfficiency * 100, 1) + '%';
-                    console.log('✅ DEBUG: Updated efficiency to:', formatNumber(avgEfficiency * 100, 1) + '%');
+                    console.log('? DEBUG: Updated efficiency to:', formatNumber(avgEfficiency * 100, 1) + '%');
                 } else {
-                    console.error('❌ DEBUG: ovEfficiency element not found');
+                    console.error('? DEBUG: ovEfficiency element not found');
                 }
                 
                 if (ovProfitEl) {
                     ovProfitEl.textContent = formatNumber(totalProfit);
-                    console.log('✅ DEBUG: Updated profit to:', formatNumber(totalProfit));
+                    console.log('? DEBUG: Updated profit to:', formatNumber(totalProfit));
                 } else {
-                    console.error('❌ DEBUG: ovProfit element not found');
+                    console.error('? DEBUG: ovProfit element not found');
                 }
             } else {
-                console.log('🔍 DEBUG: No schedules found for overview');
+                console.log('?? DEBUG: No schedules found for overview');
             }
         } catch {
             document.getElementById('ovTrains').textContent = '6';
@@ -971,7 +971,7 @@
         detailsDiv.innerHTML = `
             <div class="metrics-grid" style="margin-bottom:16px;">
                 <div class="metric-card" style="--metric-accent:var(--primary);">
-                    <div class="metric-value">${data.schedule?.schedule_id || 'â€”'}</div>
+                    <div class="metric-value">${data.schedule?.schedule_id || '—'}</div>
                     <div class="metric-label">Schedule ID</div>
                     <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
                         ${data.schedule?.created_at ? formatDate(data.schedule.created_at) : 'No date'}
@@ -1084,7 +1084,7 @@
                 <div class="card" style="margin:0; border:1px solid var(--warning);">
                     <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Overall Efficiency</div></div>
                     <div style="padding:15px;">
-                        <div style="font-size:1.5rem; font-weight:bold; color:var(--warning);">${data.schedule ? ((data.schedule.efficiency_score || 0) * 100).toFixed(1) + '%' : 'â€”'}</div>
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--warning);">${data.schedule ? ((data.schedule.efficiency_score || 0) * 100).toFixed(1) + '%' : '—'}</div>
                         <div style="font-size:0.8rem; color:var(--text-muted);">Efficiency Score</div>
                     </div>
                 </div>
@@ -1092,7 +1092,7 @@
                 <div class="card" style="margin:0; border:1px solid var(--primary);">
                     <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Order Fulfillment</div></div>
                     <div style="padding:15px;">
-                        <div style="font-size:1.5rem; font-weight:bold; color:var(--primary);">${data.summary ? data.summary.total_orders : 'â€”'}</div>
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--primary);">${data.summary ? data.summary.total_orders : '—'}</div>
                         <div style="font-size:0.8rem; color:var(--text-muted);">Orders Fulfilled</div>
                     </div>
                 </div>
@@ -1112,7 +1112,7 @@
         currentScheduleId = data.schedule_id;
     }
 
-    // â”€â”€ Create Schedule â”€â”€
+    // ── Create Schedule ──
     async function createSchedule() {
         const btn = document.getElementById('createScheduleBtn');
         const resultDiv = document.getElementById('scheduleResult');
@@ -1127,7 +1127,7 @@
             const ordersSelect = document.getElementById('ordersSelect');
             const selectedOrders = Array.from(ordersSelect.selectedOptions);
             
-            console.log('🔍 DEBUGGING 422 ERROR:');
+            console.log('?? DEBUGGING 422 ERROR:');
             console.log('1. Orders Select Element:', ordersSelect);
             console.log('2. Selected Options Count:', selectedOrders.length);
             console.log('3. Selected Options:', selectedOrders);
@@ -1141,7 +1141,7 @@
                 // Parse order data properly
                 const parsedOrders = selectedOrders.map(opt => {
                     try {
-                        console.log('🔍 Selected option details:', {
+                        console.log('?? Selected option details:', {
                             value: opt.value,
                             text: opt.textContent,
                             dataset: opt.dataset,
@@ -1149,10 +1149,10 @@
                         });
                         
                         const orderData = JSON.parse(opt.dataset.order || '{}');
-                        console.log('✅ Parsed order data:', orderData);
+                        console.log('? Parsed order data:', orderData);
                         return orderData;
                     } catch (e) {
-                        console.warn('❌ Failed to parse order data:', opt.dataset.order, e);
+                        console.warn('? Failed to parse order data:', opt.dataset.order, e);
                         return null;
                     }
                 }).filter(order => order !== null);
@@ -1168,7 +1168,7 @@
             
             // If no parsed orders, try to use globally stored cargo from loadSelectedOrders
             if (Object.keys(cargoRequirements).length === 0 && window.loadedCargoRequirements) {
-                console.log('🔄 Using globally stored cargo requirements:', window.loadedCargoRequirements);
+                console.log('?? Using globally stored cargo requirements:', window.loadedCargoRequirements);
                 
                 // Map global cargo to valid TAZARA routes
                 const mappedCargoRequirements = {};
@@ -1181,15 +1181,15 @@
                     if (VALID_TAZARA_ROUTES.includes(route)) {
                         mappedCargoRequirements[route] = cargo;
                     } else {
-                        console.warn(`⚠️ Invalid global route ${route}, mapping to DAR_KAPIRI`);
+                        console.warn(`?? Invalid global route ${route}, mapping to DAR_KAPIRI`);
                         mappedCargoRequirements['DAR_KAPIRI'] = (mappedCargoRequirements['DAR_KAPIRI'] || 0) + cargo;
                     }
                 });
                 
                 cargoRequirements = mappedCargoRequirements;
-                console.log('✅ Mapped global cargo requirements:', cargoRequirements);
+                console.log('? Mapped global cargo requirements:', cargoRequirements);
             } else if (Object.keys(cargoRequirements).length === 0) {
-                console.warn('⚠️ No order data available, using TEST cargo');
+                console.warn('?? No order data available, using TEST cargo');
                 // Force test data for debugging (using valid TAZARA routes)
                 cargoRequirements = {
                     'DAR_KAPIRI': 500,
@@ -1199,7 +1199,7 @@
             
             const trainAllocations = allocateTrainsSequentially(cargoRequirements);
             
-            console.log('🚀 Using Sequential Train Allocation:', trainAllocations);
+            console.log('?? Using Sequential Train Allocation:', trainAllocations);
             
             // Create daily assignments from train allocations
             const dailyAssignments = [];
@@ -1221,7 +1221,7 @@
                 total_cargo_from_orders: Object.values(cargoRequirements).reduce((sum, val) => sum + val, 0)
             };
             
-            console.log('🔍 API Request Data:', {
+            console.log('?? API Request Data:', {
                 num_trains: 6,
                 max_days: 14,
                 use_deep_rl: false,
@@ -1234,7 +1234,7 @@
             const actualTrainsUsed = new Set(dailyAssignments.map(assignment => assignment.train_id)).size;
             const actualDaysUsed = Math.max(...dailyAssignments.map(assignment => assignment.day || 1));
             
-            console.log(`🚂 Actual train usage calculation:`);
+            console.log(`?? Actual train usage calculation:`);
             console.log(`   Unique trains used: ${actualTrainsUsed}`);
             console.log(`   Days allocated: ${actualDaysUsed}`);
             console.log(`   Total assignments: ${dailyAssignments.length}`);
@@ -1249,7 +1249,7 @@
                 metadata: scheduleMetadata
             };
             
-            console.log('🔍 FINAL API REQUEST DEBUG:');
+            console.log('?? FINAL API REQUEST DEBUG:');
             console.log('1. Complete API Request Object:', apiRequest);
             console.log('2. Cargo Requirements Type:', typeof cargoRequirements);
             console.log('3. Cargo Requirements Keys:', Object.keys(cargoRequirements));
@@ -1258,7 +1258,7 @@
             console.log('6. Metadata:', JSON.stringify(scheduleMetadata));
             
             // Debug: Show what we're actually sending for train assignments
-            console.log('🚂 TRAIN ASSIGNMENTS DEBUG:');
+            console.log('?? TRAIN ASSIGNMENTS DEBUG:');
             dailyAssignments.forEach((assignment, index) => {
                 console.log(`   Assignment ${index + 1}: Train ${assignment.train_id + 1}, Route: ${assignment.route}, Cargo: ${assignment.cargo_carried} tons`);
             });
@@ -1269,7 +1269,7 @@
                 const trainCapacity = TRAIN_CAPACITIES[trainId]?.capacity || 0;
                 const cargoAmount = assignment.cargo_carried || 0;
                 const isOverloaded = cargoAmount > trainCapacity;
-                console.log(`   Train ${trainId} Check: ${cargoAmount} tons vs ${trainCapacity} capacity ${isOverloaded ? '❌ OVERLOADED' : '✅ OK'}`);
+                console.log(`   Train ${trainId} Check: ${cargoAmount} tons vs ${trainCapacity} capacity ${isOverloaded ? '? OVERLOADED' : '? OK'}`);
             });
             console.log('7. Daily Assignments (Sequential Loading):', dailyAssignments);
             console.log('8. Train Allocations Detail:', trainAllocations.map(t => 
@@ -1278,7 +1278,7 @@
             
             // Validate before sending
             if (!cargoRequirements || Object.keys(cargoRequirements).length === 0) {
-                console.error('❌ ERROR: Empty cargo requirements detected!');
+                console.error('? ERROR: Empty cargo requirements detected!');
                 throw new Error('No valid cargo requirements found');
             }
             
@@ -1286,7 +1286,7 @@
             Object.entries(cargoRequirements).forEach(([route, cargo]) => {
                 console.log(`7. Route Check: ${route} -> ${cargo} (type: ${typeof cargo})`);
                 if (typeof cargo !== 'number' || cargo <= 0 || isNaN(cargo)) {
-                    console.error(`❌ ERROR: Invalid cargo value for ${route}: ${cargo} (type: ${typeof cargo})`);
+                    console.error(`? ERROR: Invalid cargo value for ${route}: ${cargo} (type: ${typeof cargo})`);
                     throw new Error(`Invalid cargo value for ${route}: ${cargo}`);
                 }
             });
@@ -1294,19 +1294,19 @@
             // Final validation
             const totalCargo = Object.values(cargoRequirements).reduce((sum, val) => sum + val, 0);
             if (totalCargo <= 0 || isNaN(totalCargo)) {
-                console.error('❌ ERROR: Total cargo is invalid:', totalCargo);
+                console.error('? ERROR: Total cargo is invalid:', totalCargo);
                 throw new Error('No valid cargo requirements found');
             }
             
-            console.log('✅ All cargo values validated successfully!');
+            console.log('? All cargo values validated successfully!');
             
             console.log('8. About to send API request...');
             
             const data = await postAPI('/multi-route/schedule', apiRequest);
 
-            let successMessage = `âœ… <strong>Schedule Created Successfully!</strong>`;
+            let successMessage = `✅ <strong>Schedule Created Successfully!</strong>`;
             if (selectedOrders.length > 0) {
-                successMessage += `<br><small style="color: var(--text-muted);">ðŸ“¦ Fulfilling ${selectedOrders.length} customer orders</small>`;
+                successMessage += `<br><small style="color: var(--text-muted);">📦 Fulfilling ${selectedOrders.length} customer orders</small>`;
             }
             
             resultDiv.innerHTML = `<div class="alert alert-success">${successMessage}</div>`;
@@ -1314,13 +1314,13 @@
             showToast('Schedule created successfully!', 'success');
             
             // Refresh performance charts to include new schedule
-            console.log('🔄 Refreshing performance charts after schedule creation...');
+            console.log('?? Refreshing performance charts after schedule creation...');
             setTimeout(() => {
                 loadPerformanceCharts();
                 loadOverview();
             }, 1000); // Wait 1 second for database to update
         } catch (err) {
-            console.error('🔍 DETAILED ERROR ANALYSIS:');
+            console.error('?? DETAILED ERROR ANALYSIS:');
             console.error('1. Error Message:', err.message);
             console.error('2. Error Type:', typeof err);
             console.error('3. Error Object:', err);
@@ -1329,7 +1329,7 @@
             // Try to get the raw error response
             try {
                 console.log('5. Attempting raw API call for debugging...');
-                const rawResponse = await fetch('http://127.0.0.1:8000/multi-route/schedule', {
+                const rawResponse = await fetch('/multi-route/schedule', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1357,21 +1357,21 @@
             
             // Display the actual error message
             const errorMessage = err.message === '[object Object]' ? 'Backend validation error - check console for details' : err.message;
-            resultDiv.innerHTML = `<div class="alert alert-danger">❌ ${errorMessage}</div>`;
+            resultDiv.innerHTML = `<div class="alert alert-danger">? ${errorMessage}</div>`;
             showToast('Failed to create schedule', 'danger');
         } finally {
             btn.disabled = false;
-            btn.innerHTML = 'ðŸš€ Create Schedule';
+            btn.innerHTML = '🚀 Create Schedule';
         }
     }
 
-    // â”€â”€ Excel Upload â”€â”€
+    // ── Excel Upload ──
     async function handleExcelUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
 
         const resultDiv = document.getElementById('uploadResult');
-        resultDiv.innerHTML = '<div class="alert alert-info">â³ Uploading and processing...</div>';
+        resultDiv.innerHTML = '<div class="alert alert-info">⏳ Uploading and processing...</div>';
 
         try {
             const numTrains = document.getElementById('numTrains').value;
@@ -1384,27 +1384,27 @@
 
             const data = await postAPI(`/multi-route/upload-and-schedule?num_trains=${numTrains}&max_days=${planDays}&use_deep_rl=${useDeepRL}`, formData, true);
             
-            resultDiv.innerHTML = `<div class="alert alert-success">âœ… <strong>File Processed & Schedule Created!</strong></div>`;
+            resultDiv.innerHTML = `<div class="alert alert-success">✅ <strong>File Processed & Schedule Created!</strong></div>`;
             displayScheduleDetails(data);
             showToast('Excel file processed!', 'success');
             loadOverview();
         } catch (err) {
-            resultDiv.innerHTML = `<div class="alert alert-danger">âŒ ${err.message}</div>`;
+            resultDiv.innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
         }
     }
 
-    // â”€â”€ Live Performance Charts â”€â”€
+    // ── Live Performance Charts ──
     async function loadPerformanceCharts() {
         try {
             // Get recent auto-schedules for performance data
             const schedulesResponse = await fetchAPI('/priority/auto-schedule/list?limit=30');
             const schedules = schedulesResponse.schedules || [];
             
-            console.log('🔍 DEBUG: Chart data - schedules loaded:', schedules.length);
-            console.log('🔍 DEBUG: Raw schedules:', schedules);
+            console.log('?? DEBUG: Chart data - schedules loaded:', schedules.length);
+            console.log('?? DEBUG: Raw schedules:', schedules);
             
             if (schedules.length === 0) {
-                console.log('🔍 DEBUG: No schedules found, using mock data');
+                console.log('?? DEBUG: No schedules found, using mock data');
                 renderMockCharts(); // Fallback if no schedules exist
                 return;
             }
@@ -1412,14 +1412,14 @@
             // Aggregate data by date to avoid multiple values per date
             const dailyData = {};
             
-            console.log('🔍 DEBUG: Processing all schedules for date aggregation...');
+            console.log('?? DEBUG: Processing all schedules for date aggregation...');
             schedules.forEach((schedule, index) => {
                 const scheduleDate = new Date(schedule.created_at);
                 const dateKey = scheduleDate.toLocaleDateString('en-US', {month:'short', day:'numeric'});
                 const cargo = schedule.total_cargo_delivered || 0;
                 const profit = schedule.total_reward || 0;
                 
-                console.log(`🔍 DEBUG: Schedule ${index + 1}: ${schedule.schedule_id} - ${dateKey} - ${cargo} tons`);
+                console.log(`?? DEBUG: Schedule ${index + 1}: ${schedule.schedule_id} - ${dateKey} - ${cargo} tons`);
                 
                 if (!dailyData[dateKey]) {
                     dailyData[dateKey] = {
@@ -1445,22 +1445,22 @@
             const cargoData = aggregatedData.map(d => d.totalCargo);
             const profitData = aggregatedData.map(d => d.totalProfit);
             
-            console.log('🔍 DEBUG: Total unique dates found:', Object.keys(dailyData).length);
-            console.log('🔍 DEBUG: All dates with data:', Object.keys(dailyData));
-            console.log('🔍 DEBUG: Aggregated data details:', aggregatedData.map(d => ({
+            console.log('?? DEBUG: Total unique dates found:', Object.keys(dailyData).length);
+            console.log('?? DEBUG: All dates with data:', Object.keys(dailyData));
+            console.log('?? DEBUG: Aggregated data details:', aggregatedData.map(d => ({
                 date: d.date.toLocaleDateString(),
                 totalCargo: d.totalCargo,
                 totalProfit: d.totalProfit,
                 count: d.count,
                 scheduleIds: d.scheduleIds
             })));
-            console.log('🔍 DEBUG: Final labels (chronological):', labels);
-            console.log('🔍 DEBUG: Final cargo data:', cargoData);
-            console.log('🔍 DEBUG: Final profit data:', profitData);
+            console.log('?? DEBUG: Final labels (chronological):', labels);
+            console.log('?? DEBUG: Final cargo data:', cargoData);
+            console.log('?? DEBUG: Final profit data:', profitData);
             
-            console.log('🔍 DEBUG: Chart labels:', labels);
-            console.log('🔍 DEBUG: Cargo data:', cargoData);
-            console.log('🔍 DEBUG: Profit data:', profitData);
+            console.log('?? DEBUG: Chart labels:', labels);
+            console.log('?? DEBUG: Cargo data:', cargoData);
+            console.log('?? DEBUG: Profit data:', profitData);
 
             // Cargo chart
             const cargoCtx = document.getElementById('cargoChart');
@@ -1471,7 +1471,7 @@
                     existingChart.destroy();
                 }
                 
-                console.log('🔍 DEBUG: Creating cargo chart with data:', {
+                console.log('?? DEBUG: Creating cargo chart with data:', {
                     labels: labels,
                     cargoData: cargoData,
                     firstLabel: labels[0],
@@ -1520,10 +1520,10 @@
                     }
                 });
                 
-                console.log('✅ DEBUG: Cargo chart created/updated successfully');
-                console.log('🔍 DEBUG: Chart now shows', labels.length, 'data points from', labels[0], 'to', labels[labels.length - 1]);
+                console.log('? DEBUG: Cargo chart created/updated successfully');
+                console.log('?? DEBUG: Chart now shows', labels.length, 'data points from', labels[0], 'to', labels[labels.length - 1]);
             } else {
-                console.error('❌ DEBUG: Cargo chart canvas not found');
+                console.error('? DEBUG: Cargo chart canvas not found');
             }
 
             // Profit chart
@@ -1535,7 +1535,7 @@
                     existingChart.destroy();
                 }
                 
-                console.log('🔍 DEBUG: Creating profit chart with data:', {
+                console.log('?? DEBUG: Creating profit chart with data:', {
                     labels: labels,
                     profitData: profitData,
                     firstLabel: labels[0],
@@ -1584,10 +1584,10 @@
                     }
                 });
                 
-                console.log('✅ DEBUG: Profit chart created/updated successfully');
-                console.log('🔍 DEBUG: Chart now shows', labels.length, 'data points from', labels[0], 'to', labels[labels.length - 1]);
+                console.log('? DEBUG: Profit chart created/updated successfully');
+                console.log('?? DEBUG: Chart now shows', labels.length, 'data points from', labels[0], 'to', labels[labels.length - 1]);
             } else {
-                console.error('❌ DEBUG: Profit chart canvas not found');
+                console.error('? DEBUG: Profit chart canvas not found');
             }
         } catch (err) {
             console.warn('Postgres trends error:', err);
@@ -1599,7 +1599,7 @@
             const schedulesResponse = await fetchAPI('/priority/auto-schedule/list?limit=20');
             const schedules = schedulesResponse.schedules || [];
             
-            console.log('🔍 DEBUG: Route chart - schedules loaded:', schedules.length);
+            console.log('?? DEBUG: Route chart - schedules loaded:', schedules.length);
             
             // Calculate route performance from schedules
             const routePerformance = {};
@@ -1607,7 +1607,7 @@
             
             // Fetch detailed data for each schedule to get assignments
             for (const schedule of schedules) {
-                console.log('🔍 DEBUG: Processing schedule:', schedule.schedule_id);
+                console.log('?? DEBUG: Processing schedule:', schedule.schedule_id);
                 
                 try {
                     // Get detailed schedule data including assignments
@@ -1615,14 +1615,14 @@
                     
                     if (detailResponse.success && detailResponse.daily_assignments) {
                         const assignments = detailResponse.daily_assignments;
-                        console.log('🔍 DEBUG: Schedule assignments count:', assignments.length);
+                        console.log('?? DEBUG: Schedule assignments count:', assignments.length);
                         
                         if (assignments && assignments.length > 0) {
                             assignments.forEach((assignment, index) => {
                                 const routeName = assignment.route || assignment.route_name;
                                 const cargo = assignment.cargo_tons || assignment.cargo_carried || 0;
                                 
-                                console.log(`🔍 DEBUG: Assignment ${index + 1}: Route="${routeName}", Cargo=${cargo} tons, Action=${assignment.action || 'N/A'}`);
+                                console.log(`?? DEBUG: Assignment ${index + 1}: Route="${routeName}", Cargo=${cargo} tons, Action=${assignment.action || 'N/A'}`);
                                 
                                 if (routeName) {
                                     if (!routePerformance[routeName]) {
@@ -1655,14 +1655,14 @@
                         }
                     }
                 } catch (detailErr) {
-                    console.warn('🔍 DEBUG: Failed to get details for schedule:', schedule.schedule_id, detailErr);
+                    console.warn('?? DEBUG: Failed to get details for schedule:', schedule.schedule_id, detailErr);
                     // Continue with next schedule
                 }
             }
             
             const routes = Object.values(routePerformance);
-            console.log('🔍 DEBUG: All assignment details:', assignmentDetails);
-            console.log('🔍 DEBUG: Final route performance data:', routes.map(r => ({
+            console.log('?? DEBUG: All assignment details:', assignmentDetails);
+            console.log('?? DEBUG: Final route performance data:', routes.map(r => ({
                 route: r.route_name,
                 total_cargo: r.total_cargo,
                 total_trips: r.total_trips,
@@ -1672,13 +1672,13 @@
             })));
             
             if (routes.length === 0) {
-                console.warn('🔍 DEBUG: No route data found, using mock data');
+                console.warn('?? DEBUG: No route data found, using mock data');
                 renderMockRouteChart();
                 return;
             }
 
             const routeCtx = document.getElementById('routeChart');
-            console.log('🔍 DEBUG: Route chart canvas element:', routeCtx);
+            console.log('?? DEBUG: Route chart canvas element:', routeCtx);
             
             if (routeCtx) {
                 try {
@@ -1702,7 +1702,7 @@
                         ]
                     };
                     
-                    console.log('🔍 DEBUG: Route chart data:', chartData);
+                    console.log('?? DEBUG: Route chart data:', chartData);
                     
                     new Chart(routeCtx, {
                         type: 'bar',
@@ -1740,16 +1740,16 @@
                         }
                     });
                     
-                    console.log('✅ DEBUG: Route chart created successfully');
+                    console.log('? DEBUG: Route chart created successfully');
                 } catch (chartErr) {
-                    console.error('❌ DEBUG: Error creating route chart:', chartErr);
+                    console.error('? DEBUG: Error creating route chart:', chartErr);
                     renderMockRouteChart();
                 }
             } else {
-                console.warn('❌ DEBUG: Route chart canvas not found');
+                console.warn('? DEBUG: Route chart canvas not found');
             }
         } catch (err) {
-            console.warn('❌ Route performance error:', err);
+            console.warn('? Route performance error:', err);
             renderMockRouteChart();
         }
     }
@@ -1842,7 +1842,7 @@
         }
     }
 
-    // â”€â”€ Gantt Chart Rendering (Redesigned) â”€â”€
+    // ── Gantt Chart Rendering (Redesigned) ──
     function renderGanttChart(data) {
         const container = document.getElementById('ganttContainer');
         const assignments = data.train_assignments || [];
@@ -1876,7 +1876,7 @@
             // Train Label
             const trainLabel = document.createElement('div');
             trainLabel.className = 'timeline-train-label';
-            trainLabel.innerHTML = `<span style="margin-right:8px">ðŸš‚</span> T-${t + 1}`;
+            trainLabel.innerHTML = `<span style="margin-right:8px">🚂</span> T-${t + 1}`;
             grid.appendChild(trainLabel);
             
             for (let d = 0; d < totalDays; d++) {
@@ -1890,10 +1890,10 @@
                     pill.classList.add(route === 'IDLE' ? 'idle' : `route-${routeClass}`);
                     
                     const routeLabels = {
-                        'DAR_KAPIRI': 'Dar âž¡ Kapiri',
-                        'DAR_MBEYA': 'Dar âž¡ Mbeya',
-                        'KAPIRI_NDOLA': 'Kapiri âž¡ Ndola',
-                        'IDLE': 'âš¡ IDLE'
+                        'DAR_KAPIRI': 'Dar ➡ Kapiri',
+                        'DAR_MBEYA': 'Dar ➡ Mbeya',
+                        'KAPIRI_NDOLA': 'Kapiri ➡ Ndola',
+                        'IDLE': '⚡ IDLE'
                     };
                     const displayLabel = routeLabels[route] || route;
                     
@@ -1905,7 +1905,7 @@
                     pill.onclick = () => showRationale(assignment.rationale, t + 1, d + 1, route);
                 } else {
                     pill.classList.add('idle');
-                    pill.innerHTML = '<div class="action-route-name">â€”</div>';
+                    pill.innerHTML = '<div class="action-route-name">—</div>';
                 }
                 grid.appendChild(pill);
             }
@@ -1923,7 +1923,7 @@
         content.innerHTML = `
             <div style="margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">
                 <strong style="color:var(--primary-light)">Train ${train}</strong> 
-                <span style="color:var(--text-muted)">â€” Day ${day} Assignment:</span> 
+                <span style="color:var(--text-muted)">— Day ${day} Assignment:</span> 
                 <span class="badge ${route === 'IDLE' ? 'badge-low' : 'badge-info'}" style="margin-left:8px">${route}</span>
             </div>
             <div style="line-height:1.6; color:var(--text-primary)">
@@ -1934,14 +1934,14 @@
     }
 
     async function analyzeRisk(data) {
-        console.log('ðŸ” analyzeRisk function called with data:', data);
+        console.log('🔍 analyzeRisk function called with data:', data);
         
         const grid = document.getElementById('bottleneckGrid');
         const recs = document.getElementById('riskRecommendations');
         const scoreVal = document.getElementById('riskScoreValue');
         const levelBadge = document.getElementById('riskLevelBadge');
         
-        console.log('ðŸ” Found elements:', {
+        console.log('🔍 Found elements:', {
             grid: !!grid,
             recs: !!recs,
             scoreVal: !!scoreVal,
@@ -1949,7 +1949,7 @@
         });
         
         try {
-            console.log('ðŸ” Making API call to /api/risk/analyze...');
+            console.log('🔍 Making API call to /api/risk/analyze...');
             const risk = await postAPI('/api/risk/analyze', {
                 schedule_id: data ? data.schedule_id : "SIM_LATEST",
                 route: "DAR_KAPIRI",
@@ -1957,7 +1957,7 @@
                 historical_issues: []
             });
             
-            console.log('ðŸ” API response received:', risk);
+            console.log('🔍 API response received:', risk);
             
             // Update Score & Badge
             const score = Math.round(risk.risk_score * 100);
@@ -1965,7 +1965,7 @@
             levelBadge.textContent = risk.risk_level.toUpperCase();
             levelBadge.className = `badge badge-${risk.risk_level === 'high' ? 'critical' : risk.risk_level === 'medium' ? 'medium' : 'low'}`;
             
-            console.log('ðŸ” Updated score and badge:', score, risk.risk_level);
+            console.log('🔍 Updated score and badge:', score, risk.risk_level);
             
             // Force visibility
             scoreVal.style.display = 'block';
@@ -1994,10 +1994,10 @@
                 </div>
             `).join('');
             
-            console.log('ðŸ” Risk analysis completed successfully');
+            console.log('🔍 Risk analysis completed successfully');
             
         } catch (err) {
-            console.error('âŒ Risk analysis failed:', err);
+            console.error('❌ Risk analysis failed:', err);
             grid.innerHTML = `<div class="alert alert-danger">Risk analysis failed: ${err.message}</div>`;
         }
     }
@@ -2134,13 +2134,13 @@
         }
     }
 
-    // â”€â”€ Phase 3: Disruption Simulation â”€â”€
+    // ── Phase 3: Disruption Simulation ──
     async function simulateDisruption() {
         const trainId = document.getElementById('disrupt-train').value;
         const delay = document.getElementById('disrupt-delay').value;
         const resultDiv = document.getElementById('disruptionResult');
         
-        resultDiv.innerHTML = '<div class="alert alert-warning">âš¡ AI calculating cascade effects...</div>';
+        resultDiv.innerHTML = '<div class="alert alert-warning">⚡ AI calculating cascade effects...</div>';
         
         try {
             const data = await postAPI('/multi-route/simulate-disruption', {
@@ -2156,25 +2156,25 @@
             
             resultDiv.innerHTML = `
                 <div class="card" style="background:rgba(229,62,62,0.05); border:1px solid var(--danger);">
-                    <div style="font-weight:bold; color:var(--danger); margin-bottom:8px;">ðŸ’¥ Cascade Impact Analysis</div>
+                    <div style="font-weight:bold; color:var(--danger); margin-bottom:8px;">💥 Cascade Impact Analysis</div>
                     <ul style="font-size:0.8rem; padding-left:15px; margin-bottom:12px;">
                         <li><strong>Ripple Effect:</strong> ${cascade.disruption_summary.total_ripple_days} days</li>
                         <li><strong>Severity Score:</strong> ${cascade.severity_score}</li>
                         <li><strong>Affected Drivers:</strong> ${cascade.disruption_summary.affected_drivers_count}</li>
                     </ul>
-                    <div style="font-weight:bold; color:var(--success); margin-bottom:8px;">âœ… AI Resolution Plan</div>
+                    <div style="font-weight:bold; color:var(--success); margin-bottom:8px;">✅ AI Resolution Plan</div>
                     <div style="font-size:0.8rem;">
-                        ${res.resolution_plan.map(p => `<div>â€¢ <strong>${p.action}</strong>: ${p.target}</div>`).join('')}
+                        ${res.resolution_plan.map(p => `<div>• <strong>${p.action}</strong>: ${p.target}</div>`).join('')}
                     </div>
                 </div>
             `;
             showToast('Disruption analyzed!', 'warning');
         } catch (err) {
-            resultDiv.innerHTML = `<div class="alert alert-danger">âŒ ${err.message}</div>`;
+            resultDiv.innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
         }
     }
 
-    // â”€â”€ What-If Manual Simulation â”€â”€
+    // ── What-If Manual Simulation ──
     async function runSimulation() {
         if (!currentScheduleId) {
             showToast('Please create or load a schedule first', 'warning');
@@ -2232,7 +2232,7 @@
         }
     }
 
-    // â”€â”€ Configuration Management â”€â”€
+    // ── Configuration Management ──
     async function loadConfig() {
         try {
             const config = await fetchAPI('/api/config/');
@@ -2268,7 +2268,7 @@
         }
     }
 
-    // â”€â”€ WORKFLOW FUNCTIONS â”€â”€
+    // ── WORKFLOW FUNCTIONS ──
     
     // Load schedules for workflow dropdowns
     async function loadWorkflowSchedules() {
@@ -2642,10 +2642,10 @@
     
     // Load priority queue status
     async function loadPriorityQueueStatus() {
-        console.log('🔍 DEBUG: Loading priority queue status...');
+        console.log('?? DEBUG: Loading priority queue status...');
         try {
             const response = await fetchAPI('/priority/queue/status');
-            console.log('🔍 DEBUG: Queue status response:', response);
+            console.log('?? DEBUG: Queue status response:', response);
             const statusDiv = document.getElementById('priorityQueueStatus');
             
             if (!response || response.total_orders === 0) {
@@ -2660,14 +2660,14 @@
             
             // Get queue list for more details
             const queueResponse = await fetchAPI('/priority/queue/list');
-            console.log('🔍 DEBUG: Queue list response:', queueResponse);
-            console.log('🔍 DEBUG: Number of orders returned:', queueResponse?.orders?.length || 0);
+            console.log('?? DEBUG: Queue list response:', queueResponse);
+            console.log('?? DEBUG: Number of orders returned:', queueResponse?.orders?.length || 0);
             
             let ordersHtml = '';
             if (queueResponse && queueResponse.orders) {
-                console.log('🔍 DEBUG: First 3 orders:');
+                console.log('?? DEBUG: First 3 orders:');
                 queueResponse.orders.slice(0, 3).forEach((order, index) => {
-                    console.log(`🔍 DEBUG: Order ${index + 1}:`, {
+                    console.log(`?? DEBUG: Order ${index + 1}:`, {
                         customer: order.customer_name,
                         cargo: order.cargo_type,
                         weight: order.cargo_weight,
@@ -2733,14 +2733,14 @@
                         View Full Queue
                     </button>
                     <button class="btn btn-sm btn-outline-warning" onclick="debugPriorityQueue()">
-                        🐛 Debug Console
+                        ?? Debug Console
                     </button>
                 </div>
             `;
             
         } catch (err) {
-            console.error('🔍 DEBUG: Failed to load priority queue status:', err);
-            console.error('🔍 DEBUG: Error details:', err.message, err.stack);
+            console.error('?? DEBUG: Failed to load priority queue status:', err);
+            console.error('?? DEBUG: Error details:', err.message, err.stack);
             document.getElementById('priorityQueueStatus').innerHTML = `
                 <div class="alert alert-warning">
                     <strong>Priority Queue Unavailable</strong><br>
@@ -2760,13 +2760,13 @@
     // Load existing schedules
     async function loadExistingSchedules() {
         try {
-            console.log('🔍 DEBUG: Loading existing schedules...');
+            console.log('?? DEBUG: Loading existing schedules...');
             const response = await fetchAPI('/priority/auto-schedule/list');
-            console.log('🔍 DEBUG: Existing schedules response:', response);
+            console.log('?? DEBUG: Existing schedules response:', response);
             
             const schedulesList = document.getElementById('schedulesList');
             if (!schedulesList) {
-                console.log('🔍 DEBUG: schedulesList element not found');
+                console.log('?? DEBUG: schedulesList element not found');
                 return;
             }
             
@@ -2783,7 +2783,7 @@
             let schedulesHTML = `
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">📋 Existing Schedules</div>
+                        <div class="card-title">?? Existing Schedules</div>
                         <small style="color: var(--text-muted);">Click to view details</small>
                     </div>
                     <div class="card-body">
@@ -2818,9 +2818,9 @@
                             </div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted);">
-                            <span>🚂 ${schedule.num_trains || 0} trains</span>
-                            <span>📦 ${cargo} tons</span>
-                            <span>⭐ ${schedule.total_reward?.toFixed(0) || 0} reward</span>
+                            <span>?? ${schedule.num_trains || 0} trains</span>
+                            <span>?? ${cargo} tons</span>
+                            <span>? ${schedule.total_reward?.toFixed(0) || 0} reward</span>
                         </div>
                     </div>
                 `;
@@ -2830,7 +2830,7 @@
                         </div>
                         <div style="margin-top: 16px; text-align: center;">
                             <button class="btn btn-sm btn-outline-primary" onclick="loadExistingSchedules()">
-                                🔄 Refresh Schedules
+                                ?? Refresh Schedules
                             </button>
                         </div>
                     </div>
@@ -2838,10 +2838,10 @@
             `;
             
             schedulesList.innerHTML = schedulesHTML;
-            console.log('🔍 DEBUG: Existing schedules loaded successfully');
+            console.log('?? DEBUG: Existing schedules loaded successfully');
             
         } catch (err) {
-            console.error('🔍 DEBUG: Failed to load existing schedules:', err);
+            console.error('?? DEBUG: Failed to load existing schedules:', err);
             const schedulesList = document.getElementById('schedulesList');
             if (schedulesList) {
                 schedulesList.innerHTML = `
@@ -2856,31 +2856,31 @@
     
     // Debug priority queue - manual debugging function
     async function debugPriorityQueue() {
-        console.log('🐛 DEBUG: Manual priority queue debugging started...');
-        console.log('🐛 DEBUG: Testing API endpoints...');
+        console.log('?? DEBUG: Manual priority queue debugging started...');
+        console.log('?? DEBUG: Testing API endpoints...');
         
         try {
             // Test status endpoint
-            console.log('🐛 DEBUG: Testing /priority/queue/status...');
+            console.log('?? DEBUG: Testing /priority/queue/status...');
             const statusResponse = await fetchAPI('/priority/queue/status');
-            console.log('🐛 DEBUG: Status response:', statusResponse);
+            console.log('?? DEBUG: Status response:', statusResponse);
             
             // Test list endpoint
-            console.log('🐛 DEBUG: Testing /priority/queue/list...');
+            console.log('?? DEBUG: Testing /priority/queue/list...');
             const listResponse = await fetchAPI('/priority/queue/list');
-            console.log('🐛 DEBUG: List response:', listResponse);
+            console.log('?? DEBUG: List response:', listResponse);
             
             // Test direct API call
-            console.log('🐛 DEBUG: Testing direct fetch...');
+            console.log('?? DEBUG: Testing direct fetch...');
             const directResponse = await fetch('/priority/queue/list');
             const directData = await directResponse.json();
-            console.log('🐛 DEBUG: Direct response:', directData);
+            console.log('?? DEBUG: Direct response:', directData);
             
-            console.log('🐛 DEBUG: Debugging complete! Check the console output above.');
+            console.log('?? DEBUG: Debugging complete! Check the console output above.');
             alert('Debugging complete! Check browser console (F12) for detailed output.');
             
         } catch (error) {
-            console.error('🐛 DEBUG: Debug error:', error);
+            console.error('?? DEBUG: Debug error:', error);
             alert('Debug error! Check browser console for details.');
         }
     }
@@ -2919,8 +2919,8 @@
         
         // Disable button and show loading
         btn.disabled = true;
-        btn.innerHTML = '🤖 Auto-Scheduling...';
-        resultDiv.innerHTML = '<div class="alert alert-info">🤖 AI is analyzing priority queue and creating optimal schedule...</div>';
+        btn.innerHTML = '?? Auto-Scheduling...';
+        resultDiv.innerHTML = '<div class="alert alert-info">?? AI is analyzing priority queue and creating optimal schedule...</div>';
         
         try {
             const response = await postAPI('/priority/auto-schedule', {
@@ -2933,7 +2933,7 @@
             if (response.success) {
                 resultDiv.innerHTML = `
                     <div class="alert alert-success">
-                        <strong>🎉 Auto-Schedule Created Successfully!</strong><br>
+                        <strong>?? Auto-Schedule Created Successfully!</strong><br>
                         Schedule ID: <strong>${response.schedule_id}</strong><br>
                         Orders Scheduled: <strong>${response.orders_scheduled}</strong><br>
                         Total Cargo: <strong>${response.total_cargo_tons.toFixed(1)} tons</strong><br>
@@ -2951,7 +2951,7 @@
             } else {
                 resultDiv.innerHTML = `
                     <div class="alert alert-danger">
-                        <strong>❌ Auto-Scheduling Failed</strong><br>
+                        <strong>? Auto-Scheduling Failed</strong><br>
                         ${response.message}
                     </div>
                 `;
@@ -2962,7 +2962,7 @@
             console.error('Auto-scheduling error:', err);
             resultDiv.innerHTML = `
                 <div class="alert alert-danger">
-                    <strong>❌ Auto-Scheduling Error</strong><br>
+                    <strong>? Auto-Scheduling Error</strong><br>
                     ${err.message || 'Unknown error occurred'}
                 </div>
             `;
@@ -2970,7 +2970,7 @@
         } finally {
             // Re-enable button
             btn.disabled = false;
-            btn.innerHTML = '🤖 Auto-Schedule by Priority';
+            btn.innerHTML = '?? Auto-Schedule by Priority';
         }
     }
     
@@ -2979,26 +2979,26 @@
         const resultDiv = document.getElementById('autoScheduleResult');
         
         try {
-            resultDiv.innerHTML = '<div class="alert alert-info">📊 Checking auto-schedule status...</div>';
+            resultDiv.innerHTML = '<div class="alert alert-info">?? Checking auto-schedule status...</div>';
             
             const response = await fetchAPI('/priority/auto-schedule/status');
             
             if (response.success) {
                 resultDiv.innerHTML = `
                     <div class="alert alert-success">
-                        <strong>📊 Auto-Schedule System Status</strong><br>
+                        <strong>?? Auto-Schedule System Status</strong><br>
                         Total Orders: <strong>${response.total_orders}</strong><br>
                         Scheduled Orders: <strong>${response.scheduled_orders}</strong><br>
                         Pending Orders: <strong>${response.pending_orders}</strong><br>
                         Completed Orders: <strong>${response.completed_orders}</strong><br>
                         Scheduled Cargo: <strong>${response.scheduled_cargo_tons.toFixed(1)} tons</strong><br>
-                        <small>Auto-Schedule Ready: ${response.auto_schedule_ready ? '✅ Yes' : '❌ No'}</small>
+                        <small>Auto-Schedule Ready: ${response.auto_schedule_ready ? '? Yes' : '? No'}</small>
                     </div>
                 `;
             } else {
                 resultDiv.innerHTML = `
                     <div class="alert alert-warning">
-                        <strong>⚠️ Status Check Failed</strong><br>
+                        <strong>?? Status Check Failed</strong><br>
                         Unable to retrieve auto-schedule status
                     </div>
                 `;
@@ -3008,7 +3008,7 @@
             console.error('Status check error:', err);
             resultDiv.innerHTML = `
                 <div class="alert alert-danger">
-                    <strong>❌ Status Check Error</strong><br>
+                    <strong>? Status Check Error</strong><br>
                     ${err.message || 'Failed to check status'}
                 </div>
             `;
@@ -3022,14 +3022,14 @@
     async function showScheduleDetailsById(scheduleId) {
         // Prevent repeated calls for same schedule
         if (lastLoadedScheduleId === scheduleId) {
-            console.log('🔍 DEBUG: Skipping repeated load for schedule:', scheduleId);
+            console.log('?? DEBUG: Skipping repeated load for schedule:', scheduleId);
             return;
         }
         
         try {
-            console.log('🔍 DEBUG: Loading schedule details for:', scheduleId);
+            console.log('?? DEBUG: Loading schedule details for:', scheduleId);
             const response = await fetchAPI(`/priority/auto-schedule/${scheduleId}`);
-            console.log('🔍 DEBUG: Schedule details response:', response);
+            console.log('?? DEBUG: Schedule details response:', response);
             
             if (response && response.success) {
                 lastLoadedScheduleId = scheduleId;
@@ -3048,7 +3048,7 @@
                 }
             }
         } catch (err) {
-            console.error('🔍 DEBUG: Error loading schedule details:', err);
+            console.error('?? DEBUG: Error loading schedule details:', err);
             const detailsCard = document.getElementById('scheduleDetailsCard');
             const detailsDiv = document.getElementById('scheduleDetails');
             if (detailsCard && detailsDiv) {
@@ -3138,7 +3138,7 @@
             return 'DAR_KAPIRI'; // Default fallback
         }
         
-        console.log('DEBUG: No route found for', origin, 'â†’', destination);
+        console.log('DEBUG: No route found for', origin, '→', destination);
         return null;
     }
     
@@ -3215,7 +3215,7 @@
             headers['Authorization'] = `Bearer ${token}`;
         }
         
-        const response = await fetch(`http://127.0.0.1:8000${endpoint}`, {
+        const response = await fetch(`${endpoint}`, {
             method: 'GET',
             headers: headers
         });
@@ -3244,7 +3244,7 @@
             headers['Authorization'] = `Bearer ${token}`;
         }
         
-        const response = await fetch(`http://127.0.0.1:8000${endpoint}`, {
+        const response = await fetch(`${endpoint}`, {
             method: 'PUT',
             headers: headers,
             body: JSON.stringify(data)
@@ -3258,7 +3258,7 @@
         return response.json();
     }
 
-    // â”€â”€ Status Polling â”€â”€
+    // ── Status Polling ──
     function startStatusPolling() {
         setInterval(async () => {
             const isOnline = await checkSystemHealth();
@@ -3320,7 +3320,7 @@
                     // Add debugging - check if tab is actually visible
                     setTimeout(() => {
                         const riskPanel = document.getElementById('tabRisk');
-                        console.log('ðŸ” Risk panel visibility check:', {
+                        console.log('🔍 Risk panel visibility check:', {
                             panel: !!riskPanel,
                             isVisible: riskPanel ? riskPanel.offsetParent !== null : false,
                             display: riskPanel ? window.getComputedStyle(riskPanel).display : 'not found',
@@ -3330,7 +3330,7 @@
                         // Check if elements are actually in the DOM and visible
                         const scoreElement = document.getElementById('riskScoreValue');
                         const badgeElement = document.getElementById('riskLevelBadge');
-                        console.log('ðŸ” Element checks:', {
+                        console.log('🔍 Element checks:', {
                             scoreElement: !!scoreElement,
                             scoreText: scoreElement ? scoreElement.textContent : 'not found',
                             badgeElement: !!badgeElement,
