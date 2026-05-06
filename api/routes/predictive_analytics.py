@@ -22,7 +22,7 @@ import numpy as np
 # RBAC imports
 from api.auth.rbac import Permission, require_permission
 from api.auth.auth import get_current_user, UserInDB
-import psycopg2
+import psycopg2\nfrom api.db_utils import get_db_connection
 
 logger = logging.getLogger(__name__)
 
@@ -186,12 +186,7 @@ def forecast_demand(
     """
     try:
         # Load recent data from database instead of old CSV
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         
         # Get recent auto-schedule data for forecasting
         query = """
@@ -230,12 +225,7 @@ def forecast_demand(
                 WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
             """
             
-            verify_conn = psycopg2.connect(
-                host="localhost",
-                database="tazara_multi_route", 
-                user="tazara",
-                password="tazara123"
-            )
+            verify_conn = get_db_connection()
             verify_df = pd.read_sql_query(verify_query, verify_conn)
             verify_conn.close()
             

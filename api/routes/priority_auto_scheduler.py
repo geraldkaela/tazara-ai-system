@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict
 from datetime import datetime, timedelta
 
-import psycopg2
+import psycopg2\nfrom api.db_utils import get_db_connection
 from psycopg2.extras import RealDictCursor
 
 from api.config import DB_CONFIG
@@ -163,7 +163,7 @@ async def create_auto_schedule(
 ):
     """Create automatic schedule based on priority queue"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get pending orders and calculate priority scores
@@ -522,7 +522,7 @@ def save_schedule_to_database(schedule_data, route_groups):
         print(f"DEBUG: Attempting to save schedule: {schedule_data['schedule_id']}")
         print(f"DEBUG: Schedule data keys: {list(schedule_data.keys())}")
         
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Insert schedule
@@ -612,7 +612,7 @@ def save_schedule_to_database(schedule_data, route_groups):
 async def list_schedules():
     """Get list of all created schedules"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get all schedules
@@ -650,7 +650,7 @@ async def get_schedule_details(
 ):
     """Get detailed schedule information including included orders"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get schedule details
@@ -746,7 +746,7 @@ async def get_schedule_details(
 async def list_schedules(limit: int = 10):
     """List recent schedules"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get recent schedules
@@ -781,7 +781,7 @@ async def get_auto_schedule_status():
     """Get status of auto-scheduling system"""
     print("DEBUG: Auto-schedule status endpoint called")
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get statistics

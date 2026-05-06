@@ -6,7 +6,7 @@ Shows detailed priority score calculations for debugging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict, Optional
-import psycopg2
+import psycopg2\nfrom api.db_utils import get_db_connection
 from psycopg2.extras import RealDictCursor
 import json
 from datetime import datetime, timedelta
@@ -152,7 +152,7 @@ def calculate_priority_score_with_breakdown(order):
 async def get_priority_scoring_debug():
     """Get detailed priority scoring breakdown for all orders"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get customer orders

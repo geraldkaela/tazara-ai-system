@@ -6,7 +6,7 @@ AI-powered automatic scheduling based on priority queue
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict, Optional
-import psycopg2
+import psycopg2\nfrom api.db_utils import get_db_connection
 from psycopg2.extras import RealDictCursor
 import json
 from datetime import datetime, timedelta
@@ -123,7 +123,7 @@ def save_schedule_to_database(schedule_data):
     try:
         print(f"DEBUG: Attempting to save schedule: {schedule_data['schedule_id']}")
         
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Insert schedule
@@ -178,7 +178,7 @@ def save_schedule_to_database(schedule_data):
 async def create_auto_schedule(request: AutoScheduleRequest):
     """Create automatic schedule based on priority queue"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get pending orders and calculate priority scores
@@ -366,7 +366,7 @@ async def create_auto_schedule(request: AutoScheduleRequest):
 async def get_auto_schedule_status():
     """Get status of auto-scheduling system"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get statistics

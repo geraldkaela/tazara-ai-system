@@ -6,7 +6,7 @@ Basic endpoints for priority queue management
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict, Optional
-import psycopg2
+import psycopg2\nfrom api.db_utils import get_db_connection
 from psycopg2.extras import RealDictCursor
 import json
 from datetime import datetime, timedelta
@@ -166,7 +166,7 @@ class HealthResponse(BaseModel):
 async def get_priority_queue_status():
     """Get current priority queue status from customer orders"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get pending orders and calculate priority scores
@@ -271,7 +271,7 @@ async def get_priority_health():
         
         # Test database connection
         try:
-            conn = psycopg2.connect(**DB_CONFIG)
+            conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT 1")
             cursor.fetchone()
@@ -280,7 +280,7 @@ async def get_priority_health():
             health_status["database_connected"] = True
             
             # Get queue size
-            cursor = conn = psycopg2.connect(**DB_CONFIG)
+            cursor = conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT COUNT(*) FROM priority_queue WHERE status IN ('pending', 'queued')")
             queue_size = cursor.fetchone()[0]
@@ -311,7 +311,7 @@ async def get_priority_queue_list():
     """Get list of orders from customer orders with priority scores"""
     print("DEBUG: Priority queue list endpoint called")
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get customer orders and calculate priority scores
@@ -374,7 +374,7 @@ async def get_priority_queue_list():
 async def get_queue_statistics():
     """Get detailed queue statistics"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get statistics by urgency level
@@ -426,7 +426,7 @@ async def get_queue_statistics():
 async def clear_priority_queue():
     """Clear priority queue (admin only)"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Clear all orders from priority queue
