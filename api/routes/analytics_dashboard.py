@@ -31,7 +31,7 @@ import json
 
 router = APIRouter()
 
-DB_PATH = Path("database/tazara.db")
+# DB_PATH removed - using central DB config
 
 
 class DashboardData:
@@ -40,7 +40,9 @@ class DashboardData:
     @staticmethod
     def connect():
         """Get database connection."""
-        return sqlite3.connect(DB_PATH)
+        from api.db_utils import get_db_connection
+        return get_db_connection()
+        """Get database connection."""
     
     @staticmethod
     def get_risk_trends(days: int = 90) -> Dict[str, Any]:
@@ -331,14 +333,9 @@ async def dashboard_health(
     """Check dashboard data availability and DB connection (PostgreSQL)."""
     try:
         # Use direct PostgreSQL connection to avoid import issues
-        import psycopg2
+        import psycopg2\nfrom api.db_utils import get_db_connection
         
-        conn = psycopg2.connect(
-            host="localhost",
-            database="tazara_multi_route",
-            user="tazara",
-            password="tazara123"
-        )
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         # Get user-relevant operational metrics
