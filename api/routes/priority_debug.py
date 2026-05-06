@@ -6,7 +6,8 @@ Shows detailed priority score calculations for debugging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict, Optional
-import psycopg2\nfrom api.db_utils import get_db_connection
+import psycopg2
+from api.db_utils import get_db_connection
 from psycopg2.extras import RealDictCursor
 import json
 from datetime import datetime, timedelta

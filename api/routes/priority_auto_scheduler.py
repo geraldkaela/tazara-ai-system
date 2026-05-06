@@ -8,7 +8,8 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict
 from datetime import datetime, timedelta
 
-import psycopg2\nfrom api.db_utils import get_db_connection
+import psycopg2
+from api.db_utils import get_db_connection
 from psycopg2.extras import RealDictCursor
 
 from api.config import DB_CONFIG

@@ -22,7 +22,8 @@ import numpy as np
 # RBAC imports
 from api.auth.rbac import Permission, require_permission
 from api.auth.auth import get_current_user, UserInDB
-import psycopg2\nfrom api.db_utils import get_db_connection
+import psycopg2
+from api.db_utils import get_db_connection
 
 logger = logging.getLogger(__name__)
 
