@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -296,7 +296,7 @@
                     <!--
                     <div class="card" style="border:1px solid var(--danger);">
                         <div class="card-header" style="background:rgba(229,62,62,0.1)">
-                            <div class="card-title">🚨 Disruption Simulation (Phase 3)</div>
+                            <div class="card-title">ðŸš¨ Disruption Simulation (Phase 3)</div>
                         </div>
                         <div style="padding:15px;" id="disruptionUI">
                             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">
@@ -320,7 +320,7 @@
                                 </div>
                             </div>
                             <button class="btn btn-danger" style="width:100%; justify-content:center;" onclick="simulateDisruption()">
-                                💥 Simulate Disruption
+                                ðŸ’¥ Simulate Disruption
                             </button>
                             <div id="disruptionResult" style="margin-top:15px;"></div>
                         </div>
@@ -464,10 +464,10 @@
                                     <div class="card-title" style="font-size: 0.9rem;"> Zambia Local Routes</div>
                                 </div>
                                 <div style="padding: 10px;">
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KASAMA–MPIKA</strong><br>Kasama to Mpika</div>
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>MPIKA–SERENJE</strong><br>Mpika to Serenje</div>
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>SERENJE–KAPIRI</strong><br>Serenje to Kapiri Mposhi</div>
-                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KAPIRI–NDOLA</strong><br>Kapiri Mposhi to Ndola</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KASAMAâ€“MPIKA</strong><br>Kasama to Mpika</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>MPIKAâ€“SERENJE</strong><br>Mpika to Serenje</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>SERENJEâ€“KAPIRI</strong><br>Serenje to Kapiri Mposhi</div>
+                                    <div style="font-size: 0.8rem; margin-bottom: 8px;"><strong>KAPIRIâ€“NDOLA</strong><br>Kapiri Mposhi to Ndola</div>
                                     <div style="font-size: 0.8rem; margin-bottom: 8px;"> <strong>KAPIRI DISTRIBUTION</strong><br>Central Province Hubs</div>
                                 </div>
                             </div>
@@ -496,7 +496,7 @@
                     <!-- Schedule Approval -->
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">✅ Schedule Approvals</div>
+                            <div class="card-title">âœ… Schedule Approvals</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Select Schedule</label>
@@ -507,9 +507,9 @@
                         <div class="form-group">
                             <label class="form-label">Approval Action</label>
                             <select class="form-input" id="approvalAction">
-                                <option value="approved">✅ Approve</option>
-                                <option value="rejected">❌ Reject</option>
-                                <option value="needs_revision">📝 Needs Revision</option>
+                                <option value="approved">âœ… Approve</option>
+                                <option value="rejected">âŒ Reject</option>
+                                <option value="needs_revision">ðŸ“ Needs Revision</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -521,14 +521,14 @@
                             <textarea class="form-input" id="approvalReason" rows="3" placeholder="Enter reason for rejection or revision notes"></textarea>
                         </div>
                         <button class="btn btn-primary" onclick="submitApproval()" style="width:100%;">
-                            🔄 Submit Approval
+                            ðŸ”„ Submit Approval
                         </button>
                     </div>
 
                     <!-- Schedule Modifications -->
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">✏️ Schedule Modifications</div>
+                            <div class="card-title">âœï¸ Schedule Modifications</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Select Schedule</label>
@@ -539,10 +539,10 @@
                         <div class="form-group">
                             <label class="form-label">Modification Type</label>
                             <select class="form-input" id="modificationType">
-                                <option value="train_add">➕ Add Train</option>
-                                <option value="train_remove">➖ Remove Train</option>
-                                <option value="time_adjust">⏰ Adjust Time</option>
-                                <option value="priority_change">🎯 Change Priority</option>
+                                <option value="train_add">âž• Add Train</option>
+                                <option value="train_remove">âž– Remove Train</option>
+                                <option value="time_adjust">â° Adjust Time</option>
+                                <option value="priority_change">ðŸŽ¯ Change Priority</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -550,7 +550,7 @@
                             <textarea class="form-input" id="modificationDetails" rows="3" placeholder="Enter modification details"></textarea>
                         </div>
                         <button class="btn btn-secondary" onclick="submitModification()" style="width:100%;">
-                            📝 Submit Modification
+                            ðŸ“ Submit Modification
                         </button>
                     </div>
                 </div>
@@ -558,7 +558,7 @@
                 <!-- Modification History -->
                 <div class="card" style="margin-top:20px;">
                     <div class="card-header">
-                        <div class="card-title">📜 Recent Modifications</div>
+                        <div class="card-title">ðŸ“œ Recent Modifications</div>
                     </div>
                     <div id="modificationHistory" style="max-height:300px; overflow-y:auto;">
                         <div class="alert alert-info">Loading modification history...</div>
@@ -648,39 +648,7 @@
                     </div>
                 </div>
 
-                <!-- Order Assignment -->
-                <div class="card" style="margin-top:20px;">
-                    <div class="card-header">
-                        <div class="card-title"> Order Assignment</div>
-                    </div>
-                    <div class="grid-2" style="gap:20px;">
-                        <div>
-                            <div class="form-group">
-                                <label class="form-label">Select Order</label>
-                                <select class="form-input" id="assignOrderSelect">
-                                    <option value="">Loading orders...</option>
-                                </select>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Assign to Schedule</label>
-                                <select class="form-input" id="assignScheduleSelect">
-                                    <option value="">Loading schedules...</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Train ID</label>
-                                <input type="number" class="form-input" id="assignTrainId" placeholder="Enter train ID" min="1">
-                            </div>
-                            <button class="btn btn-success" onclick="assignOrder()" style="width:100%;">
-                                 Assign Order
-                            </button>
-                        </div>
-                        <div id="assignmentResult">
-                            <div class="alert alert-info">Select an order to view assignment options</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
 </div>
@@ -809,7 +777,7 @@
                     const fuelCost = Math.round(loadAmount * fuelRate);
                     
                     console.log(`? Loading ${loadAmount} tons onto Train ${train.id} (${trainCapacity} ton capacity, ${trainType} type)`);
-                    console.log(`   Fuel cost: ${loadAmount} tons � ${fuelRate} ZMW/ton = ${fuelCost} ZMW`);
+                    console.log(`   Fuel cost: ${loadAmount} tons × ${fuelRate} ZMW/ton = ${fuelCost} ZMW`);
                     
                     allocations.push({
                         day: dayOffset + 1, // Days start from 1
@@ -850,7 +818,7 @@
         return routeNames[route] || route;
     }
 
-    // ── Load Overview Data ──
+    // â”€â”€ Load Overview Data â”€â”€
     async function loadOverview() {
         try {
             // Get system status
@@ -971,7 +939,7 @@
         detailsDiv.innerHTML = `
             <div class="metrics-grid" style="margin-bottom:16px;">
                 <div class="metric-card" style="--metric-accent:var(--primary);">
-                    <div class="metric-value">${data.schedule?.schedule_id || '—'}</div>
+                    <div class="metric-value">${data.schedule?.schedule_id || 'â€”'}</div>
                     <div class="metric-label">Schedule ID</div>
                     <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
                         ${data.schedule?.created_at ? formatDate(data.schedule.created_at) : 'No date'}
@@ -1084,7 +1052,7 @@
                 <div class="card" style="margin:0; border:1px solid var(--warning);">
                     <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Overall Efficiency</div></div>
                     <div style="padding:15px;">
-                        <div style="font-size:1.5rem; font-weight:bold; color:var(--warning);">${data.schedule ? ((data.schedule.efficiency_score || 0) * 100).toFixed(1) + '%' : '—'}</div>
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--warning);">${data.schedule ? ((data.schedule.efficiency_score || 0) * 100).toFixed(1) + '%' : 'â€”'}</div>
                         <div style="font-size:0.8rem; color:var(--text-muted);">Efficiency Score</div>
                     </div>
                 </div>
@@ -1092,7 +1060,7 @@
                 <div class="card" style="margin:0; border:1px solid var(--primary);">
                     <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Order Fulfillment</div></div>
                     <div style="padding:15px;">
-                        <div style="font-size:1.5rem; font-weight:bold; color:var(--primary);">${data.summary ? data.summary.total_orders : '—'}</div>
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--primary);">${data.summary ? data.summary.total_orders : 'â€”'}</div>
                         <div style="font-size:0.8rem; color:var(--text-muted);">Orders Fulfilled</div>
                     </div>
                 </div>
@@ -1112,7 +1080,7 @@
         currentScheduleId = data.schedule_id;
     }
 
-    // ── Create Schedule ──
+    // â”€â”€ Create Schedule â”€â”€
     async function createSchedule() {
         const btn = document.getElementById('createScheduleBtn');
         const resultDiv = document.getElementById('scheduleResult');
@@ -1304,9 +1272,9 @@
             
             const data = await postAPI('/multi-route/schedule', apiRequest);
 
-            let successMessage = `✅ <strong>Schedule Created Successfully!</strong>`;
+            let successMessage = `âœ… <strong>Schedule Created Successfully!</strong>`;
             if (selectedOrders.length > 0) {
-                successMessage += `<br><small style="color: var(--text-muted);">📦 Fulfilling ${selectedOrders.length} customer orders</small>`;
+                successMessage += `<br><small style="color: var(--text-muted);">ðŸ“¦ Fulfilling ${selectedOrders.length} customer orders</small>`;
             }
             
             resultDiv.innerHTML = `<div class="alert alert-success">${successMessage}</div>`;
@@ -1361,17 +1329,17 @@
             showToast('Failed to create schedule', 'danger');
         } finally {
             btn.disabled = false;
-            btn.innerHTML = '🚀 Create Schedule';
+            btn.innerHTML = 'ðŸš€ Create Schedule';
         }
     }
 
-    // ── Excel Upload ──
+    // â”€â”€ Excel Upload â”€â”€
     async function handleExcelUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
 
         const resultDiv = document.getElementById('uploadResult');
-        resultDiv.innerHTML = '<div class="alert alert-info">⏳ Uploading and processing...</div>';
+        resultDiv.innerHTML = '<div class="alert alert-info">â³ Uploading and processing...</div>';
 
         try {
             const numTrains = document.getElementById('numTrains').value;
@@ -1384,16 +1352,16 @@
 
             const data = await postAPI(`/multi-route/upload-and-schedule?num_trains=${numTrains}&max_days=${planDays}&use_deep_rl=${useDeepRL}`, formData, true);
             
-            resultDiv.innerHTML = `<div class="alert alert-success">✅ <strong>File Processed & Schedule Created!</strong></div>`;
+            resultDiv.innerHTML = `<div class="alert alert-success">âœ… <strong>File Processed & Schedule Created!</strong></div>`;
             displayScheduleDetails(data);
             showToast('Excel file processed!', 'success');
             loadOverview();
         } catch (err) {
-            resultDiv.innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
+            resultDiv.innerHTML = `<div class="alert alert-danger">âŒ ${err.message}</div>`;
         }
     }
 
-    // ── Live Performance Charts ──
+    // â”€â”€ Live Performance Charts â”€â”€
     async function loadPerformanceCharts() {
         try {
             // Get recent auto-schedules for performance data
@@ -1842,7 +1810,7 @@
         }
     }
 
-    // ── Gantt Chart Rendering (Redesigned) ──
+    // â”€â”€ Gantt Chart Rendering (Redesigned) â”€â”€
     function renderGanttChart(data) {
         const container = document.getElementById('ganttContainer');
         const assignments = data.train_assignments || [];
@@ -1876,7 +1844,7 @@
             // Train Label
             const trainLabel = document.createElement('div');
             trainLabel.className = 'timeline-train-label';
-            trainLabel.innerHTML = `<span style="margin-right:8px">🚂</span> T-${t + 1}`;
+            trainLabel.innerHTML = `<span style="margin-right:8px">ðŸš‚</span> T-${t + 1}`;
             grid.appendChild(trainLabel);
             
             for (let d = 0; d < totalDays; d++) {
@@ -1890,10 +1858,10 @@
                     pill.classList.add(route === 'IDLE' ? 'idle' : `route-${routeClass}`);
                     
                     const routeLabels = {
-                        'DAR_KAPIRI': 'Dar ➡ Kapiri',
-                        'DAR_MBEYA': 'Dar ➡ Mbeya',
-                        'KAPIRI_NDOLA': 'Kapiri ➡ Ndola',
-                        'IDLE': '⚡ IDLE'
+                        'DAR_KAPIRI': 'Dar âž¡ Kapiri',
+                        'DAR_MBEYA': 'Dar âž¡ Mbeya',
+                        'KAPIRI_NDOLA': 'Kapiri âž¡ Ndola',
+                        'IDLE': 'âš¡ IDLE'
                     };
                     const displayLabel = routeLabels[route] || route;
                     
@@ -1905,7 +1873,7 @@
                     pill.onclick = () => showRationale(assignment.rationale, t + 1, d + 1, route);
                 } else {
                     pill.classList.add('idle');
-                    pill.innerHTML = '<div class="action-route-name">—</div>';
+                    pill.innerHTML = '<div class="action-route-name">â€”</div>';
                 }
                 grid.appendChild(pill);
             }
@@ -1923,7 +1891,7 @@
         content.innerHTML = `
             <div style="margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">
                 <strong style="color:var(--primary-light)">Train ${train}</strong> 
-                <span style="color:var(--text-muted)">— Day ${day} Assignment:</span> 
+                <span style="color:var(--text-muted)">â€” Day ${day} Assignment:</span> 
                 <span class="badge ${route === 'IDLE' ? 'badge-low' : 'badge-info'}" style="margin-left:8px">${route}</span>
             </div>
             <div style="line-height:1.6; color:var(--text-primary)">
@@ -1934,14 +1902,14 @@
     }
 
     async function analyzeRisk(data) {
-        console.log('🔍 analyzeRisk function called with data:', data);
+        console.log('ðŸ” analyzeRisk function called with data:', data);
         
         const grid = document.getElementById('bottleneckGrid');
         const recs = document.getElementById('riskRecommendations');
         const scoreVal = document.getElementById('riskScoreValue');
         const levelBadge = document.getElementById('riskLevelBadge');
         
-        console.log('🔍 Found elements:', {
+        console.log('ðŸ” Found elements:', {
             grid: !!grid,
             recs: !!recs,
             scoreVal: !!scoreVal,
@@ -1949,7 +1917,7 @@
         });
         
         try {
-            console.log('🔍 Making API call to /api/risk/analyze...');
+            console.log('ðŸ” Making API call to /api/risk/analyze...');
             const risk = await postAPI('/api/risk/analyze', {
                 schedule_id: data ? data.schedule_id : "SIM_LATEST",
                 route: "DAR_KAPIRI",
@@ -1957,7 +1925,7 @@
                 historical_issues: []
             });
             
-            console.log('🔍 API response received:', risk);
+            console.log('ðŸ” API response received:', risk);
             
             // Update Score & Badge
             const score = Math.round(risk.risk_score * 100);
@@ -1965,7 +1933,7 @@
             levelBadge.textContent = risk.risk_level.toUpperCase();
             levelBadge.className = `badge badge-${risk.risk_level === 'high' ? 'critical' : risk.risk_level === 'medium' ? 'medium' : 'low'}`;
             
-            console.log('🔍 Updated score and badge:', score, risk.risk_level);
+            console.log('ðŸ” Updated score and badge:', score, risk.risk_level);
             
             // Force visibility
             scoreVal.style.display = 'block';
@@ -1994,10 +1962,10 @@
                 </div>
             `).join('');
             
-            console.log('🔍 Risk analysis completed successfully');
+            console.log('ðŸ” Risk analysis completed successfully');
             
         } catch (err) {
-            console.error('❌ Risk analysis failed:', err);
+            console.error('âŒ Risk analysis failed:', err);
             grid.innerHTML = `<div class="alert alert-danger">Risk analysis failed: ${err.message}</div>`;
         }
     }
@@ -2134,13 +2102,13 @@
         }
     }
 
-    // ── Phase 3: Disruption Simulation ──
+    // â”€â”€ Phase 3: Disruption Simulation â”€â”€
     async function simulateDisruption() {
         const trainId = document.getElementById('disrupt-train').value;
         const delay = document.getElementById('disrupt-delay').value;
         const resultDiv = document.getElementById('disruptionResult');
         
-        resultDiv.innerHTML = '<div class="alert alert-warning">⚡ AI calculating cascade effects...</div>';
+        resultDiv.innerHTML = '<div class="alert alert-warning">âš¡ AI calculating cascade effects...</div>';
         
         try {
             const data = await postAPI('/multi-route/simulate-disruption', {
@@ -2156,25 +2124,25 @@
             
             resultDiv.innerHTML = `
                 <div class="card" style="background:rgba(229,62,62,0.05); border:1px solid var(--danger);">
-                    <div style="font-weight:bold; color:var(--danger); margin-bottom:8px;">💥 Cascade Impact Analysis</div>
+                    <div style="font-weight:bold; color:var(--danger); margin-bottom:8px;">ðŸ’¥ Cascade Impact Analysis</div>
                     <ul style="font-size:0.8rem; padding-left:15px; margin-bottom:12px;">
                         <li><strong>Ripple Effect:</strong> ${cascade.disruption_summary.total_ripple_days} days</li>
                         <li><strong>Severity Score:</strong> ${cascade.severity_score}</li>
                         <li><strong>Affected Drivers:</strong> ${cascade.disruption_summary.affected_drivers_count}</li>
                     </ul>
-                    <div style="font-weight:bold; color:var(--success); margin-bottom:8px;">✅ AI Resolution Plan</div>
+                    <div style="font-weight:bold; color:var(--success); margin-bottom:8px;">âœ… AI Resolution Plan</div>
                     <div style="font-size:0.8rem;">
-                        ${res.resolution_plan.map(p => `<div>• <strong>${p.action}</strong>: ${p.target}</div>`).join('')}
+                        ${res.resolution_plan.map(p => `<div>â€¢ <strong>${p.action}</strong>: ${p.target}</div>`).join('')}
                     </div>
                 </div>
             `;
             showToast('Disruption analyzed!', 'warning');
         } catch (err) {
-            resultDiv.innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
+            resultDiv.innerHTML = `<div class="alert alert-danger">âŒ ${err.message}</div>`;
         }
     }
 
-    // ── What-If Manual Simulation ──
+    // â”€â”€ What-If Manual Simulation â”€â”€
     async function runSimulation() {
         if (!currentScheduleId) {
             showToast('Please create or load a schedule first', 'warning');
@@ -2232,7 +2200,7 @@
         }
     }
 
-    // ── Configuration Management ──
+    // â”€â”€ Configuration Management â”€â”€
     async function loadConfig() {
         try {
             const config = await fetchAPI('/api/config/');
@@ -2268,7 +2236,7 @@
         }
     }
 
-    // ── WORKFLOW FUNCTIONS ──
+    // â”€â”€ WORKFLOW FUNCTIONS â”€â”€
     
     // Load schedules for workflow dropdowns
     async function loadWorkflowSchedules() {
@@ -3138,7 +3106,7 @@
             return 'DAR_KAPIRI'; // Default fallback
         }
         
-        console.log('DEBUG: No route found for', origin, '→', destination);
+        console.log('DEBUG: No route found for', origin, 'â†’', destination);
         return null;
     }
     
@@ -3258,7 +3226,7 @@
         return response.json();
     }
 
-    // ── Status Polling ──
+    // â”€â”€ Status Polling â”€â”€
     function startStatusPolling() {
         setInterval(async () => {
             const isOnline = await checkSystemHealth();
@@ -3320,7 +3288,7 @@
                     // Add debugging - check if tab is actually visible
                     setTimeout(() => {
                         const riskPanel = document.getElementById('tabRisk');
-                        console.log('🔍 Risk panel visibility check:', {
+                        console.log('ðŸ” Risk panel visibility check:', {
                             panel: !!riskPanel,
                             isVisible: riskPanel ? riskPanel.offsetParent !== null : false,
                             display: riskPanel ? window.getComputedStyle(riskPanel).display : 'not found',
@@ -3330,7 +3298,7 @@
                         // Check if elements are actually in the DOM and visible
                         const scoreElement = document.getElementById('riskScoreValue');
                         const badgeElement = document.getElementById('riskLevelBadge');
-                        console.log('🔍 Element checks:', {
+                        console.log('ðŸ” Element checks:', {
                             scoreElement: !!scoreElement,
                             scoreText: scoreElement ? scoreElement.textContent : 'not found',
                             badgeElement: !!badgeElement,
