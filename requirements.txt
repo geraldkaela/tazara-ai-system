@@ -54,6 +54,7 @@ sqlalchemy==2.0.23
 starlette==0.50.0
 streamlit==1.53.1
 threadpoolctl==3.6.0
+tensorflow-cpu==2.19.0
 torch
 torchvision
 typing_extensions==4.15.0
