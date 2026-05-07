@@ -1,0 +1,54 @@
+﻿# Web Framework
+fastapi==0.128.0
+uvicorn==0.40.0
+starlette==0.50.0
+python-multipart==0.0.22
+python-jose==3.5.0
+passlib==1.7.4
+bcrypt==5.0.0
+python-dotenv==1.0.0
+
+# Data Processing
+numpy==2.4.1
+pandas==2.3.3
+scipy==1.17.0
+
+# ML/AI (CPU-only)
+scikit-learn==1.8.0
+joblib==1.5.3
+threadpoolctl==3.6.0
+
+# Database
+psycopg2-binary==2.9.11
+sqlalchemy==2.0.23
+
+# Dashboard & Visualization
+plotly==6.5.2
+matplotlib==3.10.8
+seaborn==0.13.2
+streamlit==1.53.1
+
+# HTTP & Auth
+requests==2.32.5
+idna==3.11
+certifi==2026.1.4
+charset-normalizer==3.4.4
+urllib3==2.6.3
+pyasn1==0.6.3
+rsa==4.9.1
+ecdsa==0.19.2
+
+# Utils
+click==8.3.1
+PyYAML==6.0.3
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
+typing_extensions==4.15.0
+packaging==25.0
+attrs==25.4.0
+
+# File handling
+openpyxl==3.1.5
+xlrd==2.0.2
+xlsxwriter==3.2.9

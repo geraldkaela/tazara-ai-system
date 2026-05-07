@@ -1,0 +1,28 @@
+﻿# Reinforcement Learning
+gymnasium==1.2.3
+gym-notices==0.1.0
+Farama-Notifications==0.0.4
+
+# Deep Learning (CPU only)
+torch==2.9.1
+torchvision==0.24.0
+
+# Data processing (already have most, adding any missing)
+joblib==1.5.3
+sqlite3  # built-in, no need
+
+# Visualization (already have matplotlib, plotly)
+seaborn==0.13.2
+
+# System and utilities
+psutil==7.2.2
+pyarrow==23.0.0
+pydeck==0.9.1
+altair==6.0.0
+streamlit==1.53.1
+
+# ML models
+scikit-learn==1.8.0
+pandas==2.3.3
+numpy==2.4.1
+scipy==1.17.0
