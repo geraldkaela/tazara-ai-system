@@ -22,8 +22,7 @@
                 <a href="index.html" class="nav-link"><span class="icon"></span> Overview</a>
                 <a href="multi_route.html" class="nav-link"><span class="icon"></span> Multi-Route Ops</a>
                 <a href="alerts.html" class="nav-link"><span class="icon"></span> Alerts <span id="alertBadge" class="badge badge-danger" style="display:none; font-size:0.7rem; padding:2px 6px;">0</span></a>
-                <a href="comparison.html" class="nav-link"><span class="icon"></span> Comparison</a>
-               <!-- <a href="rl.html" class="nav-link"><span class="icon"></span> RL Dashboard</a>-->
+                               <!-- <a href="rl.html" class="nav-link"><span class="icon"></span> RL Dashboard</a>-->
             </div>
         </nav>
         <div class="sidebar-status">
@@ -163,21 +162,7 @@
                         <div class="alert alert-info">Loading existing schedules...</div>
                     </div>
 
-                    <!-- Excel Upload -->
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title"> Upload Excel File</div>
-                        </div>
-                        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:16px;">Upload an Excel file with columns: Route, Cargo_Tons, Trains, Days</p>
-                        <div class="file-upload" id="dropZone" onclick="document.getElementById('excelFile').click()">
-                            <div class="icon"></div>
-                            <p><strong>Click to upload</strong> or drag & drop</p>
-                            <p style="font-size:0.75rem;margin-top:4px;">.xlsx, .xls files</p>
-                        </div>
-                        <input type="file" id="excelFile" accept=".xlsx,.xls" style="display:none" onchange="handleExcelUpload(event)">
-                        <div id="uploadResult" style="margin-top:16px;"></div>
-                    </div>
-                </div>
+                                    </div>
 
                 <!-- Schedule Results -->
                 <div class="card" style="margin-top:20px;display:none;" id="scheduleDetailsCard">
@@ -380,15 +365,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" style="margin-top:20px;">
-                    <div class="card-header">
-                        <div class="card-title"> Route Efficiency Comparison</div>
-                    </div>
-                    <div class="chart-container tall">
-                        <canvas id="routeChart"></canvas>
-                    </div>
-                </div>
-            </div>
+                            </div>
 
             <!-- Tab: Configuration -->
             <div class="tab-panel" id="tabConfig">
@@ -660,12 +637,12 @@
 
     // Train Capacity Configuration
     const TRAIN_CAPACITIES = {
-        1: { capacity: 500, type: 'heavy', name: 'Heavy Freight Train' },
-        2: { capacity: 350, type: 'medium', name: 'Medium Freight Train' },
-        3: { capacity: 350, type: 'medium', name: 'Medium Freight Train' },
-        4: { capacity: 250, type: 'light', name: 'Light Freight Train' },
-        5: { capacity: 250, type: 'light', name: 'Light Freight Train' },
-        6: { capacity: 600, type: 'super_heavy', name: 'Super Heavy Train' }
+        1: { capacity: 1000, type: 'heavy', name: 'Heavy Freight Train' },
+        2: { capacity: 800, type: 'medium', name: 'Medium Freight Train' },
+        3: { capacity: 800, type: 'medium', name: 'Medium Freight Train' },
+        4: { capacity: 600, type: 'light', name: 'Light Freight Train' },
+        5: { capacity: 600, type: 'light', name: 'Light Freight Train' },
+        6: { capacity: 1000, type: 'super_heavy', name: 'Super Heavy Train' }
     };
 
     // Orders Storage
@@ -767,10 +744,10 @@
                 if (loadAmount > 0) {
                     // Calculate realistic fuel cost based on train type and cargo
                     const fuelRates = {
-                        'heavy': 75,      // ZMW per ton for heavy freight
-                        'medium': 60,     // ZMW per ton for medium freight
-                        'light': 45,      // ZMW per ton for light freight
-                        'super_heavy': 85 // ZMW per ton for super heavy trains
+                        'heavy': 60,      // ZMW per ton for heavy freight (more efficient at larger scale)
+                        'medium': 65,     // ZMW per ton for medium freight
+                        'light': 70,      // ZMW per ton for light freight
+                        'super_heavy': 55 // ZMW per ton for super heavy trains (most efficient)
                     };
                     const trainType = train.type;
                     const fuelRate = fuelRates[trainType] || 60;
@@ -1330,34 +1307,6 @@
         } finally {
             btn.disabled = false;
             btn.innerHTML = 'ðŸš€ Create Schedule';
-        }
-    }
-
-    // â”€â”€ Excel Upload â”€â”€
-    async function handleExcelUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const resultDiv = document.getElementById('uploadResult');
-        resultDiv.innerHTML = '<div class="alert alert-info">â³ Uploading and processing...</div>';
-
-        try {
-            const numTrains = document.getElementById('numTrains').value;
-            const planDays = document.getElementById('planDays').value;
-            const strategy = document.getElementById('aiStrategy').value;
-            const useDeepRL = (strategy === 'deep_rl');
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            const data = await postAPI(`/multi-route/upload-and-schedule?num_trains=${numTrains}&max_days=${planDays}&use_deep_rl=${useDeepRL}`, formData, true);
-            
-            resultDiv.innerHTML = `<div class="alert alert-success">âœ… <strong>File Processed & Schedule Created!</strong></div>`;
-            displayScheduleDetails(data);
-            showToast('Excel file processed!', 'success');
-            loadOverview();
-        } catch (err) {
-            resultDiv.innerHTML = `<div class="alert alert-danger">âŒ ${err.message}</div>`;
         }
     }
 
