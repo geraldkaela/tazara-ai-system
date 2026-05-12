@@ -334,7 +334,30 @@ async def create_auto_schedule(
         
         # Phase 3: Limited same-direction multi-train assignment
         train_index = 0
+        
+        # Sort routes by earliest departure date to ensure proper temporal ordering
+        routes_with_dates = []
         for route_key, route_orders in route_groups.items():
+            # Find earliest departure date for this route
+            earliest_departure = None
+            for order in route_orders:
+                if order.get('requested_departure_date'):
+                    order_departure = order['requested_departure_date']
+                    if not earliest_departure or order_departure < earliest_departure:
+                        earliest_departure = order_departure
+            
+            routes_with_dates.append({
+                'route_key': route_key,
+                'route_orders': route_orders,
+                'earliest_departure': earliest_departure
+            })
+        
+        # Sort by earliest departure date (earliest first)
+        routes_with_dates.sort(key=lambda x: x['earliest_departure'] or datetime.max)
+        
+        for route_data in routes_with_dates:
+            route_key = route_data['route_key']
+            route_orders = route_data['route_orders']
             if route_orders and day < request.max_days:
                 # Calculate route statistics
                 route_cargo = sum(order['cargo_weight'] for order in route_orders)
@@ -442,7 +465,8 @@ async def create_auto_schedule(
             'cost_breakdown': {
                 'fuel_cost': float(total_cargo_delivered * 50),
                 'crew_cost': float(actual_trains_used * actual_days_used * 1000),
-                'maintenance_cost': float(total_cargo_delivered * 20)
+                'maintenance_cost': float(total_cargo_delivered * 20),
+                'net_profit_zmw': float(total_cargo_delivered * avg_cargo_rate)
             },
             'efficiency_analysis': {
                 'cargo_per_train_per_day': float(total_cargo_delivered / (actual_trains_used * actual_days_used)) if actual_trains_used > 0 and actual_days_used > 0 else 0,
@@ -627,7 +651,15 @@ async def list_schedules():
         """
         
         cursor.execute(schedules_query)
-        schedules = [dict(row) for row in cursor.fetchall()]
+        schedules = []
+        for row in cursor.fetchall():
+            schedule = dict(row)
+            # Add net_profit_zmw to each schedule for frontend display
+            if schedule.get('total_reward'):
+                schedule['net_profit_zmw'] = float(schedule['total_reward'])
+            else:
+                schedule['net_profit_zmw'] = 0
+            schedules.append(schedule)
         
         cursor.close()
         conn.close()
@@ -682,7 +714,14 @@ async def get_schedule_details(
         cursor.execute(assignments_query, (schedule_id,))
         assignments = [dict(row) for row in cursor.fetchall()]
         
-        # Get scheduled orders
+        # Parse schedule data first to get order information
+        schedule_data = json.loads(schedule['schedule_data']) if schedule['schedule_data'] else {}
+        metadata = json.loads(schedule['metadata']) if schedule['metadata'] else {}
+        
+        # Get order count from metadata (stored during schedule creation)
+        scheduled_order_count = metadata.get('orders_count', 0)
+        
+        # Get sample scheduled orders for display (limit to 50)
         orders_query = """
         SELECT order_id, customer_name, cargo_type, cargo_weight,
                origin_station, destination_station, priority_level,
@@ -690,21 +729,12 @@ async def get_schedule_details(
                status, created_at, updated_at
         FROM customer_orders
         WHERE status = 'scheduled'
-        AND updated_at >= (
-            SELECT created_at FROM schedules WHERE schedule_id = %s
-        )
-        AND updated_at <= (
-            SELECT created_at + INTERVAL '5 minutes' FROM schedules WHERE schedule_id = %s
-        )
         ORDER BY priority_level ASC, created_at DESC
+        LIMIT 50
         """
         
-        cursor.execute(orders_query, (schedule_id, schedule_id))
+        cursor.execute(orders_query)
         orders = [dict(row) for row in cursor.fetchall()]
-        
-        # Parse schedule data
-        schedule_data = json.loads(schedule['schedule_data']) if schedule['schedule_data'] else {}
-        metadata = json.loads(schedule['metadata']) if schedule['metadata'] else {}
         
         cursor.close()
         conn.close()
@@ -720,7 +750,10 @@ async def get_schedule_details(
                 "efficiency_score": float(schedule['efficiency_score']),
                 "total_reward": float(schedule['total_reward']),
                 "performance_metrics": schedule_data.get('performance_metrics', {}),
-                "cost_breakdown": schedule_data.get('cost_breakdown', {}),
+                "cost_breakdown": {
+                    **schedule_data.get('cost_breakdown', {}),
+                    'net_profit_zmw': float(schedule['total_reward']) if schedule.get('total_reward') else 0
+                },
                 "efficiency_analysis": schedule_data.get('efficiency_analysis', {}),
                 "priority_metadata": metadata
             },
@@ -728,7 +761,7 @@ async def get_schedule_details(
             "scheduled_orders": orders,
             "summary": {
                 "total_assignments": len(assignments),
-                "total_orders": len(orders),
+                "total_orders": scheduled_order_count,
                 "total_cargo_scheduled": float(sum(order['cargo_weight'] for order in orders)),
                 "unique_routes": list(set(assignment['route'] for assignment in assignments)),
                 "days_with_assignments": list(set(assignment['day'] for assignment in assignments))

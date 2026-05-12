@@ -38,9 +38,12 @@ router = APIRouter(prefix="/api/forecast", tags=["forecasting"])
 # DATABASE CONFIGURATION
 # =========================
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://user:pass@localhost/dbname"
+from api.config import DB_CONFIG
+
+# Build DATABASE_URL from DB_CONFIG
+DATABASE_URL = (
+    f"postgresql://{DB_CONFIG['user']}:{DB_CONFIG['password']}"
+    f"@{DB_CONFIG['host']}:{DB_CONFIG.get('port', 5432)}/{DB_CONFIG['database']}"
 )
 
 # Create SQLAlchemy engine once

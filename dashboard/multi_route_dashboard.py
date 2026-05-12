@@ -70,17 +70,50 @@ with tab1:
     # Key metrics row
     col1, col2, col3, col4 = st.columns(4)
     
+    # Get dynamic metrics from database
+    try:
+        import psycopg2
+        from psycopg2.extras import RealDictCursor
+        from api.config import DB_CONFIG
+        
+        conn = psycopg2.connect(**DB_CONFIG)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Get total trains (count unique trains from recent assignments)
+        cursor.execute("""
+            SELECT COUNT(DISTINCT train_id) 
+            FROM daily_assignments 
+            WHERE created_at >= CURRENT_DATE - INTERVAL '7 days'
+        """)
+        total_trains = cursor.fetchone()[0] or 0
+        
+        # Get active routes (count distinct routes from today)
+        cursor.execute("""
+            SELECT COUNT(DISTINCT route) 
+            FROM daily_assignments 
+            WHERE DATE(created_at) = CURRENT_DATE
+        """)
+        active_routes = cursor.fetchone()[0] or 0
+        
+        cursor.close()
+        conn.close()
+        
+    except Exception as e:
+        print(f"Error getting metrics: {e}")
+        total_trains = 0
+        active_routes = 0
+    
     with col1:
         st.metric(
             label="🚂 Total Trains",
-            value="6",
+            value=str(total_trains),
             delta=None
         )
     
     with col2:
         st.metric(
             label="📦 Active Routes",
-            value="3",
+            value=str(active_routes),
             delta=None
         )
     
