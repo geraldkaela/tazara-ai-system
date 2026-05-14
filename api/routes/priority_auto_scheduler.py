@@ -3,7 +3,7 @@ Priority Auto-Scheduler API Routes
 AI-powered automatic scheduling based on priority queue
 """
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 from datetime import datetime, timedelta
@@ -634,46 +634,85 @@ def save_schedule_to_database(schedule_data, route_groups):
         return False
 
 @router.get("/auto-schedule/list")
-async def list_schedules():
-    """Get list of all created schedules"""
+async def list_schedules(limit: int = Query(50, ge=1, le=100)):
+    """List recent auto schedules. `limit` is applied (fixes duplicate route registration)."""
     try:
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
-        # Get all schedules
+
         schedules_query = """
-        SELECT schedule_id, created_at, num_trains, max_days, 
+        SELECT schedule_id, created_at, num_trains, max_days,
                total_cargo_delivered, efficiency_score, total_reward,
                schedule_data, metadata
         FROM schedules
         ORDER BY created_at DESC
-        LIMIT 50
+        LIMIT %s
         """
-        
-        cursor.execute(schedules_query)
+
+        cursor.execute(schedules_query, (limit,))
         schedules = []
         for row in cursor.fetchall():
             schedule = dict(row)
-            # Add net_profit_zmw to each schedule for frontend display
-            if schedule.get('total_reward'):
-                schedule['net_profit_zmw'] = float(schedule['total_reward'])
+            if schedule.get("total_reward"):
+                schedule["net_profit_zmw"] = float(schedule["total_reward"])
             else:
-                schedule['net_profit_zmw'] = 0
+                schedule["net_profit_zmw"] = 0
             schedules.append(schedule)
-        
+
         cursor.close()
         conn.close()
-        
+
         return {
             "success": True,
             "schedules": schedules,
-            "total_count": len(schedules)
+            "total_count": len(schedules),
         }
-        
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to list schedules: {str(e)}"
+            detail=f"Failed to list schedules: {str(e)}",
+        )
+
+@router.get("/auto-schedule/status")
+async def get_auto_schedule_status():
+    """Get status of auto-scheduling system (must be registered before `/auto-schedule/{schedule_id}`)."""
+    print("DEBUG: Auto-schedule status endpoint called")
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+        stats_query = """
+        SELECT
+            COUNT(*) as total_orders,
+            COUNT(CASE WHEN status = 'scheduled' THEN 1 END) as scheduled_orders,
+            COUNT(CASE WHEN status IN ('pending', 'confirmed') THEN 1 END) as pending_orders,
+            COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_orders,
+            SUM(CASE WHEN status = 'scheduled' THEN cargo_weight ELSE 0 END) as scheduled_cargo_tons
+        FROM customer_orders
+        WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
+        """
+
+        cursor.execute(stats_query)
+        stats = dict(cursor.fetchone())
+
+        cursor.close()
+        conn.close()
+
+        return {
+            "success": True,
+            "total_orders": stats.get("total_orders", 0),
+            "scheduled_orders": stats.get("scheduled_orders", 0),
+            "pending_orders": stats.get("pending_orders", 0),
+            "completed_orders": stats.get("completed_orders", 0),
+            "scheduled_cargo_tons": float(stats.get("scheduled_cargo_tons", 0)),
+            "auto_schedule_ready": stats.get("pending_orders", 0) > 0,
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to get auto-schedule status: {str(e)}",
         )
 
 @router.get("/auto-schedule/{schedule_id}")
@@ -773,81 +812,5 @@ async def get_schedule_details(
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to get schedule details: {str(e)}"
-        )
-
-@router.get("/auto-schedule/list")
-async def list_schedules(limit: int = 10):
-    """List recent schedules"""
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
-        # Get recent schedules
-        schedules_query = """
-        SELECT schedule_id, created_at, num_trains, max_days,
-               total_cargo_delivered, efficiency_score, total_reward
-        FROM schedules
-        ORDER BY created_at DESC
-        LIMIT %s
-        """
-        
-        cursor.execute(schedules_query, (limit,))
-        schedules = [dict(row) for row in cursor.fetchall()]
-        
-        cursor.close()
-        conn.close()
-        
-        return {
-            "success": True,
-            "schedules": schedules,
-            "total_count": len(schedules)
-        }
-        
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to list schedules: {str(e)}"
-        )
-
-@router.get("/auto-schedule/status")
-async def get_auto_schedule_status():
-    """Get status of auto-scheduling system"""
-    print("DEBUG: Auto-schedule status endpoint called")
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
-        # Get statistics
-        stats_query = """
-        SELECT 
-            COUNT(*) as total_orders,
-            COUNT(CASE WHEN status = 'scheduled' THEN 1 END) as scheduled_orders,
-            COUNT(CASE WHEN status IN ('pending', 'confirmed') THEN 1 END) as pending_orders,
-            COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_orders,
-            SUM(CASE WHEN status = 'scheduled' THEN cargo_weight ELSE 0 END) as scheduled_cargo_tons
-        FROM customer_orders
-        WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
-        """
-        
-        cursor.execute(stats_query)
-        stats = dict(cursor.fetchone())
-        
-        cursor.close()
-        conn.close()
-        
-        return {
-            "success": True,
-            "total_orders": stats.get('total_orders', 0),
-            "scheduled_orders": stats.get('scheduled_orders', 0),
-            "pending_orders": stats.get('pending_orders', 0),
-            "completed_orders": stats.get('completed_orders', 0),
-            "scheduled_cargo_tons": float(stats.get('scheduled_cargo_tons', 0)),
-            "auto_schedule_ready": stats.get('pending_orders', 0) > 0
-        }
-        
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to get auto-schedule status: {str(e)}"
+            detail=f"Failed to get schedule details: {str(e)}",
         )

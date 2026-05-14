@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAZARA AI — Alerts Dashboard</title>
+    <title>TAZARA AI — Schedule alerts</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 </head>
 <body>
 <div class="app-layout">
-
-    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-brand">
             <span class="logo"></span>
@@ -21,8 +18,8 @@
                 <div class="nav-section-title">Dashboards</div>
                 <a href="index.html" class="nav-link"><span class="icon"></span> Overview</a>
                 <a href="multi_route.html" class="nav-link"><span class="icon"></span> Multi-Route Ops</a>
-                <a href="alerts.html" class="nav-link"><span class="icon"></span> Alerts</a>
-                                <!-- <a href="rl.html" class="nav-link"><span class="icon"></span> RL Dashboard</a>-->
+                <a href="train_tracking.html" class="nav-link"><span class="icon"></span> Train tracking</a>
+                <a href="alerts.html" class="nav-link active"><span class="icon"></span> Alerts</a>
             </div>
         </nav>
         <div class="sidebar-status">
@@ -33,578 +30,220 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="page-header">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-                <div>
-                    <h2> Alerts & Monitoring</h2>
-                    <p>Real-time alert management and daily operations reporting</p>
+            <div class="header-content">
+                <div class="header-left">
+                    <h2>Schedule alerts</h2>
+                    <p>Latest auto-schedule plan, <strong>live trains en route</strong> (timer from tracking), and <strong>arrival reminders</strong> when legs are marked arrived on the server.</p>
                 </div>
-               <!-- <button class="btn btn-primary" onclick="generateSampleAlerts()">📊 Generate Sample Alerts</button> -->
+                <div class="header-right">
+                    <button type="button" class="btn btn-secondary btn-sm" id="btnRefresh">Refresh</button>
+                </div>
             </div>
         </div>
 
         <div class="page-body">
-            <!-- Alert Summary Cards -->
-            <div class="metrics-grid" id="alertMetrics">
-                <div class="metric-card" style="--metric-accent: var(--danger);">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="criticalCount">—</div>
-                    <div class="metric-label">Critical</div>
-                </div>
-                <div class="metric-card" style="--metric-accent: #ed8936;">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="highCount">—</div>
-                    <div class="metric-label">High</div>
-                </div>
-                <div class="metric-card" style="--metric-accent: var(--warning);">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="mediumCount">—</div>
-                    <div class="metric-label">Medium</div>
-                </div>
-                <div class="metric-card" style="--metric-accent: var(--success);">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="lowCount">—</div>
-                    <div class="metric-label">Low</div>
-                </div>
-            </div>
-
-            <div class="grid-2">
-                <!-- Active Alerts Table -->
-                <div class="card grid-full">
-                    <div class="card-header">
-                        <div class="card-title"> Active Alerts</div>
-                        <button class="btn btn-sm btn-secondary" onclick="loadAlerts()"> Refresh</button>
-                    </div>
-                    <div id="alertsTable">
-                        <div class="loading-overlay"><div class="spinner"></div><p>Loading alerts...</p></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Schedule Summary Cards -->
-            <div class="grid-4" style="margin-top:20px;">
-                <div class="metric-card" style="--metric-accent: var(--primary);">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="activeSchedules">—</div>
-                    <div class="metric-label">Active Schedules</div>
-                </div>
-                <div class="metric-card" style="--metric-accent: var(--success);">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="completedSchedules">—</div>
-                    <div class="metric-label">Completed</div>
-                </div>
-                <div class="metric-card" style="--metric-accent: var(--info);">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="rlSchedules">—</div>
-                    <div class="metric-label">RL Optimized</div>
-                </div>
-                <div class="metric-card" style="--metric-accent: var(--warning);">
-                    <div class="metric-icon">⏱</div>
-                    <div class="metric-value" id="avgOnTime">—</div>
-                    <div class="metric-label">Avg On-Time</div>
-                </div>
-                <div class="metric-card" style="--metric-accent: var(--info);">
-                    <div class="metric-icon"></div>
-                    <div class="metric-value" id="avgCompletion">—</div>
-                    <div class="metric-label">Avg Completion</div>
-                </div>
-            </div>
-
-            <!-- Schedules List -->
-            <div class="grid-2" style="margin-top:20px;">
-                <div class="card grid-full">
-                    <div class="card-header">
-                        <div class="card-title">📋 All Schedules</div>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <select id="scheduleFilter" class="form-input" style="width: auto; min-width: 150px;" onchange="loadSchedules()">
-                                <option value="all">All Schedules</option>
-                                <option value="executing">Executing Only</option>
-                                <option value="completed">Completed Only</option>
-                                <option value="rl_optimized">RL Optimized Only</option>
-                                <option value="today">Today Only</option>
-                                <option value="last_7_days">Last 7 Days</option>
-                            </select>
-                            <button class="btn btn-sm btn-secondary" onclick="generateSampleSchedules()">🎯 Generate Sample</button>
-                            <button class="btn btn-sm btn-secondary" onclick="loadSchedules()">🔄 Refresh</button>
-                        </div>
-                    </div>
-                    <div id="schedulesList">
-                        <div class="loading-overlay"><div class="spinner"></div><p>Loading schedules...</p></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-2" style="margin-top:20px;">
-                <!-- Performance Trend Chart -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title"> Daily Performance Trend</div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="perfTrendChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Alert Distribution -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title"> Alert Distribution</div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="alertDistChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Daily Reports -->
-            <div class="card" style="margin-top:20px;">
+            <section class="card" style="margin-bottom: 1.25rem;">
                 <div class="card-header">
-                    <div class="card-title"> Daily Operations Reports</div>
+                    <div class="card-title">Latest auto schedule</div>
                 </div>
-                <div id="dailyReports">
-                    <div class="loading-overlay"><div class="spinner"></div><p>Loading reports...</p></div>
+                <div id="latestScheduleMeta" class="text-muted" style="margin-bottom: 12px; font-size: 0.9rem;"></div>
+                <div id="latestScheduleTable">
+                    <div class="loading-overlay"><div class="spinner"></div><p>Loading…</p></div>
                 </div>
-            </div>
+            </section>
+
+            <section class="card" style="margin-bottom: 1.25rem;">
+                <div class="card-header">
+                    <div class="card-title">Trains en route</div>
+                </div>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 12px;">
+                    Live from <code>/api/tracking/trips/active</code> (refreshes every few seconds). Pause/resume on <a href="train_tracking.html">Train tracking</a>.
+                </p>
+                <div id="inTransitBlock">
+                    <div class="loading-overlay"><div class="spinner"></div><p>Loading…</p></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-title">Arrival reminders (all schedules)</div>
+                </div>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 12px;">
+                    Shown when train movement tracking has been activated and the server timer marks a leg as <strong>arrived</strong>. Open <a href="train_tracking.html">Train tracking</a> to start or refresh legs.
+                </p>
+                <div id="arrivalReminders">
+                    <div class="loading-overlay"><div class="spinner"></div><p>Loading…</p></div>
+                </div>
+            </section>
         </div>
     </main>
 </div>
 
 <script src="js/app.js"></script>
 <script>
-    let alertsData = [];
-    let summaryData = {};
+(function () {
+    const latestMeta = document.getElementById('latestScheduleMeta');
+    const latestTable = document.getElementById('latestScheduleTable');
+    const inTransitEl = document.getElementById('inTransitBlock');
+    const remindersEl = document.getElementById('arrivalReminders');
 
-    async function loadAlerts() {
-        const tableEl = document.getElementById('alertsTable');
+    function fmtDuration(sec) {
+        if (sec == null || sec <= 0) return '0s';
+        sec = Math.floor(sec);
+        const d = Math.floor(sec / 86400);
+        sec %= 86400;
+        const h = Math.floor(sec / 3600);
+        sec %= 3600;
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        const parts = [];
+        if (d) parts.push(d + 'd');
+        if (d || h) parts.push(h + 'h');
+        if (d || h || m) parts.push(m + 'm');
+        parts.push(s + 's');
+        return parts.join(' ');
+    }
+
+    function fmtLocal(iso) {
+        if (!iso) return '—';
         try {
-            const data = await fetchAPI('/alerts/');
-            alertsData = data.alerts || data || [];
+            const d = new Date(iso);
+            if (isNaN(d.getTime())) return String(iso);
+            return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+        } catch (_) { return iso; }
+    }
 
-            if (alertsData.length === 0) {
-                tableEl.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon"></div>
-                        <h3>No active alerts</h3>
-                        <p>All systems operating normally.</p>
-                    </div>`;
+    async function loadLatestSchedule() {
+        try {
+            const data = await fetchAPI('/api/tracking/auto-schedule/latest-summary');
+            if (!data.success || !data.schedule) {
+                latestMeta.textContent = data.message || 'No schedules in database yet.';
+                latestTable.innerHTML = '<p class="text-muted">Create an auto-schedule from Multi-Route Ops first.</p>';
                 return;
             }
+            const s = data.schedule;
+            latestMeta.innerHTML =
+                '<strong>' + escapeHtml(s.schedule_id) + '</strong> · created ' + fmtLocal(s.created_at) +
+                ' · plan cargo (assignments) <strong>' + (s.assignments_cargo_tons != null ? s.assignments_cargo_tons : '—') + '</strong> t' +
+                ' · reported delivered ' + (s.total_cargo_delivered != null ? Number(s.total_cargo_delivered).toFixed(1) : '—') + ' t';
 
-            tableEl.innerHTML = `
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Severity</th>
-                                <th>Time</th>
-                                <th>Category</th>
-                                <th>Schedule</th>
-                                <th>Message</th>
-                                <th>ZMW Impact</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${alertsData.map(a => `
-                                <tr>
-                                    <td><span class="badge badge-${(a.severity || 'low').toLowerCase()}">${a.severity || 'Low'}</span></td>
-                                    <td>${a.timestamp ? new Date(a.timestamp).toLocaleString() : '—'}</td>
-                                    <td>${a.category || '—'}</td>
-                                    <td>${a.schedule_id ? `<a href="#" onclick="viewSchedule('${a.schedule_id}')" class="schedule-link">${a.schedule_id}</a>` : '—'}</td>
-                                    <td>${a.message || '—'}</td>
-                                    <td>${a.zmw_impact ? formatCurrency(a.zmw_impact) : '—'}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-secondary" onclick="acknowledgeAlert('${a.id}')">✓ Ack</button>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>`;
-        } catch (err) {
-            showError(tableEl, err);
-        }
-    }
-
-    async function loadSummary() {
-        try {
-            summaryData = await fetchAPI('/alerts/summary');
-            
-            // Update alert counts
-            const alerts = summaryData.alerts || {};
-            document.getElementById('criticalCount').textContent = alerts.critical_alerts || 0;
-            document.getElementById('highCount').textContent = alerts.warning_alerts || 0;
-            document.getElementById('mediumCount').textContent = alerts.info_alerts || 0;
-            document.getElementById('lowCount').textContent = alerts.low_alerts || 0;
-            
-            // Update schedule counts
-            const schedules = summaryData.schedules || {};
-            document.getElementById('activeSchedules').textContent = schedules.active_schedules || 0;
-            document.getElementById('completedSchedules').textContent = schedules.completed_schedules || 0;
-            document.getElementById('rlSchedules').textContent = schedules.rl_optimized_schedules || 0;
-            
-            // Update performance metrics
-            const performance = summaryData.performance || {};
-            document.getElementById('avgOnTime').textContent = performance.avg_on_time_performance ? performance.avg_on_time_performance + '%' : '—';
-            document.getElementById('avgCompletion').textContent = performance.avg_completion_percentage ? performance.avg_completion_percentage + '%' : '—';
-            
-        } catch {
-            // Default values if API fails
-            document.getElementById('criticalCount').textContent = '0';
-            document.getElementById('highCount').textContent = '0';
-            document.getElementById('mediumCount').textContent = '0';
-            document.getElementById('lowCount').textContent = '0';
-            document.getElementById('activeSchedules').textContent = '0';
-            document.getElementById('completedSchedules').textContent = '0';
-            document.getElementById('rlSchedules').textContent = '0';
-            document.getElementById('avgOnTime').textContent = '—';
-            document.getElementById('avgCompletion').textContent = '—';
-        }
-    }
-
-    async function loadSchedules() {
-        const el = document.getElementById('schedulesList');
-        const filter = document.getElementById('scheduleFilter').value;
-        
-        try {
-            // Get all schedules first
-            const data = await fetchAPI('/alerts/schedules');
-            let schedules = data || [];
-            
-            // Apply filters
-            if (filter !== 'all') {
-                schedules = schedules.filter(s => {
-                    switch(filter) {
-                        case 'executing':
-                            return s.status === 'executing';
-                        case 'completed':
-                            return s.status === 'completed';
-                        case 'rl_optimized':
-                            return s.schedule_type === 'rl_optimized';
-                        case 'today':
-                            return s.timestamp && s.timestamp.startsWith(new Date().toISOString().split('T')[0]);
-                        case 'last_7_days':
-                            const scheduleDate = new Date(s.timestamp);
-                            const weekAgo = new Date();
-                            weekAgo.setDate(weekAgo.getDate() - 7);
-                            return scheduleDate >= weekAgo;
-                        default:
-                            return true;
-                    }
-                });
-            }
-            
-            if (schedules.length === 0) {
-                el.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon"></div>
-                        <h3>No schedules found</h3>
-                        <p>No schedules match the selected filter: <strong>${filter}</strong></p>
-                        <button class="btn btn-secondary" onclick="document.getElementById('scheduleFilter').value='all'; loadSchedules();">Show All Schedules</button>
-                    </div>`;
+            const rows = data.assignments || [];
+            if (!rows.length) {
+                latestTable.innerHTML = '<p class="text-muted">No non-idle assignments for this schedule.</p>';
                 return;
             }
-            
-            el.innerHTML = schedules.map(s => `
-                <div class="schedule-card ${s.status}">
-                    <div class="schedule-header">
-                        <h4>${s.id}</h4>
-                        <span class="badge badge-${s.status}">${s.status}</span>
-                        <span class="badge badge-${s.schedule_type}">${s.schedule_type}</span>
-                    </div>
-                    <div class="schedule-details">
-                        <div class="detail-row">
-                            <span class="label">Routes:</span>
-                            <span>${s.routes.join(', ')}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Trains:</span>
-                            <span>${s.trains_used}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Cargo:</span>
-                            <span>${s.total_cargo} tons (${s.cargo_types.join(', ')})</span>
-                        </div>
-                        ${s.status === 'executing' ? `
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${s.completion_percentage}%"></div>
-                            <span class="progress-text">${s.completion_percentage}% complete</span>
-                        </div>
-                        <div class="performance-metrics">
-                            <span>On-time: ${s.on_time_performance}%</span>
-                        </div>
-                        ` : ''}
-                        ${s.financial_metrics ? `
-                        <div class="financial-metrics">
-                            <span>Revenue: ${formatCurrency(s.financial_metrics.revenue_zmw)}</span>
-                            <span>Profit: ${formatCurrency(s.financial_metrics.net_profit_zmw)}</span>
-                        </div>
-                        ` : ''}
-                    </div>
-                    <div class="schedule-actions">
-                        <button class="btn btn-sm btn-primary" onclick="viewSchedule('${s.id}')">View Details</button>
-                        ${s.status === 'active' ? `<button class="btn btn-sm btn-success" onclick="startSchedule('${s.id}')">Start</button>` : ''}
-                        ${s.status === 'executing' ? `<button class="btn btn-sm btn-warning" onclick="updateProgress('${s.id}')">Update Progress</button>` : ''}
-                    </div>
-                </div>
-            `).join('');
-            
-        } catch (err) {
-            showError(el, err);
+            let html = '<div class="table-wrap"><table class="data-table"><thead><tr>';
+            html += '<th>Train</th><th>Route</th><th>Cargo (t)</th><th>Departure</th><th>Est. arrival</th><th>≈ km</th><th>Transit (h)</th>';
+            html += '</tr></thead><tbody>';
+            rows.forEach(function (a) {
+                html += '<tr>';
+                html += '<td>' + escapeHtml(a.train_id) + '</td>';
+                html += '<td>' + escapeHtml(a.route) + '</td>';
+                html += '<td>' + (a.cargo_tons != null ? Number(a.cargo_tons).toFixed(1) : '—') + '</td>';
+                html += '<td>' + fmtLocal(a.departure_at) + '</td>';
+                html += '<td>' + fmtLocal(a.estimated_arrival_at) + '</td>';
+                html += '<td>' + (a.estimated_route_km != null ? a.estimated_route_km : '—') + '</td>';
+                html += '<td>' + (a.modelled_transit_hours != null ? a.modelled_transit_hours : '—') + '</td>';
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            latestTable.innerHTML = html;
+        } catch (e) {
+            latestMeta.textContent = '';
+            latestTable.innerHTML = '<p class="text-danger">' + escapeHtml(e.message) + '</p>';
         }
     }
 
-    async function viewSchedule(scheduleId) {
+    function escapeHtml(s) {
+        if (s == null) return '';
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    async function loadInTransit() {
         try {
-            const schedules = await fetchAPI('/alerts/schedules');
-            const schedule = schedules.find(s => s.id === scheduleId);
-            if (schedule) {
-                alert(`Schedule Details:\n\nID: ${schedule.id}\nType: ${schedule.schedule_type}\nStatus: ${schedule.status}\nRoutes: ${schedule.routes.join(', ')}\nTrains: ${schedule.trains_used}\nCargo: ${schedule.total_cargo} tons\n${schedule.financial_metrics ? `Revenue: ZMW ${schedule.financial_metrics.revenue_zmw.toLocaleString()}\nProfit: ZMW ${schedule.financial_metrics.net_profit_zmw.toLocaleString()}` : ''}`);
-            }
-        } catch (err) {
-            console.error('Error viewing schedule:', err);
-        }
-    }
-
-    async function startSchedule(scheduleId) {
-        try {
-            await fetchAPI(`/alerts/schedules/${scheduleId}/status`, 'PUT', { new_status: 'executing' });
-            showToast('Schedule started successfully', 'success');
-            loadAlerts();
-            loadSchedules();
-            loadSummary();
-        } catch (err) {
-            console.error('Error starting schedule:', err);
-            showToast('Error starting schedule', 'error');
-        }
-    }
-
-    async function updateProgress(scheduleId) {
-        const completion = prompt('Enter completion percentage (0-100):');
-        const onTime = prompt('Enter on-time performance (0-100):');
-        
-        if (completion && onTime) {
-            try {
-                await fetchAPI(`/alerts/schedules/${scheduleId}/progress`, 'PUT', {
-                    completion_percentage: parseFloat(completion),
-                    on_time_performance: parseFloat(onTime)
-                });
-                showToast('Progress updated successfully', 'success');
-                loadAlerts();
-                loadSchedules();
-                loadSummary();
-            } catch (err) {
-                console.error('Error updating progress:', err);
-                showToast('Error updating progress', 'error');
-            }
-        }
-    }
-
-    async function loadDailyReports() {
-        const el = document.getElementById('dailyReports');
-        try {
-            const data = await fetchAPI('/alerts/daily-reports');
-            const reports = data.reports || data || [];
-
-            if (reports.length === 0) {
-                el.innerHTML = '<div class="empty-state"><div class="icon"></div><h3>No daily reports available</h3></div>';
+            const data = await fetchAPI('/api/tracking/trips/active?limit_arrived=20');
+            const rows = data.in_transit || [];
+            if (!rows.length) {
+                inTransitEl.innerHTML = '<p class="text-muted">No trains in transit. Activate tracking on a schedule to see countdowns here.</p>';
                 return;
             }
-
-            el.innerHTML = `
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>Date</th><th>Net Profit (ZMW)</th><th>Efficiency</th><th>Cargo (tons)</th><th>Trains</th></tr></thead>
-                        <tbody>${reports.map(r => `
-                            <tr>
-                                <td>${r.date || '—'}</td>
-                                <td>${r.net_profit_zmw ? formatCurrency(r.net_profit_zmw) : '—'}</td>
-                                <td>${r.efficiency_score ? formatPercent(r.efficiency_score) : '—'}</td>
-                                <td>${formatNumber(r.total_cargo_delivered)}</td>
-                                <td>${r.total_trains_used || '—'}</td>
-                            </tr>
-                        `).join('')}</tbody>
-                    </table>
-                </div>`;
-        } catch (err) {
-            showError(el, err);
+            let html = '<div class="table-wrap"><table class="data-table"><thead><tr>';
+            html += '<th>Schedule</th><th>Train</th><th>Route</th><th>Destination</th><th>Time to arrival</th><th>ETA</th><th>State</th>';
+            html += '</tr></thead><tbody>';
+            rows.forEach(function (r) {
+                const state = r.is_paused
+                    ? '<span class="badge" style="background:#b45309;color:#fff;">Paused</span>'
+                    : '<span class="badge" style="background:var(--primary);color:#fff;">Running</span>';
+                html += '<tr>';
+                html += '<td>' + escapeHtml(r.schedule_id) + '</td>';
+                html += '<td>' + escapeHtml(r.train_id) + '</td>';
+                html += '<td>' + escapeHtml(r.route_display) + '</td>';
+                html += '<td>' + escapeHtml(r.destination_station || '—') + '</td>';
+                html += '<td><strong>' + fmtDuration(r.seconds_remaining) + '</strong></td>';
+                html += '<td>' + fmtLocal(r.expected_arrival_at) + '</td>';
+                html += '<td>' + state + '</td>';
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            inTransitEl.innerHTML = html;
+        } catch (e) {
+            inTransitEl.innerHTML = '<p class="text-danger">' + escapeHtml(e.message) + '</p>';
         }
     }
 
-    async function generateSampleAlerts() {
+    async function loadReminders() {
         try {
-            await postAPI('/alerts/generate-sample', {});
-            showToast('Sample alerts generated!', 'success');
-            loadAlerts();
-            loadSummary();
-        } catch (err) {
-            showToast('Failed to generate alerts: ' + err.message, 'danger');
-        }
-    }
-
-    async function generateSampleSchedules() {
-        try {
-            await postAPI('/alerts/generate-sample-schedules', {});
-            showToast('Sample schedules generated!', 'success');
-            loadAlerts();
-            loadSchedules();
-            loadSummary();
-        } catch (err) {
-            showToast('Failed to generate schedules: ' + err.message, 'danger');
-        }
-    }
-
-    function acknowledgeAlert(id) {
-        showToast(`Alert ${id} acknowledged`, 'success');
-    }
-
-    async function loadCharts() {
-        console.log('Starting to load charts...');
-        
-        // Load Alert Distribution Chart with real data
-        const distCtx = document.getElementById('alertDistChart');
-        console.log('Alert distribution canvas found:', !!distCtx);
-        
-        if (distCtx) {
-            const criticalCount = parseInt(document.getElementById('criticalCount').textContent) || 0;
-            const highCount = parseInt(document.getElementById('highCount').textContent) || 0;
-            const mediumCount = parseInt(document.getElementById('mediumCount').textContent) || 0;
-            const lowCount = parseInt(document.getElementById('lowCount').textContent) || 0;
-            
-            console.log('Alert counts - Critical:', criticalCount, 'High:', highCount, 'Medium:', mediumCount, 'Low:', lowCount);
-            
-            // Only show chart if there are REAL alerts
-            if (criticalCount + highCount + mediumCount + lowCount > 0) {
-                console.log('Creating alert distribution chart with REAL data...');
-                new Chart(distCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Critical', 'High', 'Medium', 'Low'],
-                        datasets: [{
-                            data: [criticalCount, highCount, mediumCount, lowCount],
-                            backgroundColor: ['#f56565', '#ed8936', '#ecc94b', '#48bb78'],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, cutout: '65%' }
-                });
-            } else {
-                console.log('No real alerts found - showing empty state');
-                // Show empty state message (no mock data)
-                distCtx.style.display = 'none';
-                distCtx.parentElement.innerHTML = '<div style="text-align: center; padding: 40px; color: #999; font-size: 0.9rem;">📊 No alerts to display<br><small>Alerts will appear here when operational issues are detected</small></div>';
+            const data = await fetchAPI('/api/tracking/arrivals/reminders?limit=100');
+            const list = data.reminders || [];
+            if (data.hint && !list.length) {
+                remindersEl.innerHTML = '<p class="text-muted">' + escapeHtml(data.hint) + '</p>';
+                return;
             }
-        }
-
-        // Load Daily Performance Trend Chart with real data from daily reports
-        const perfCtx = document.getElementById('perfTrendChart');
-        console.log('Performance trend canvas found:', !!perfCtx);
-        
-        if (perfCtx) {
-            try {
-                console.log('Fetching daily reports for chart...');
-                // Get real daily reports data
-                const reports = await fetchAPI('/alerts/daily-reports');
-                const reportsArray = reports || [];
-                
-                console.log('Reports fetched:', reportsArray.length);
-                
-                if (reportsArray.length > 0) {
-                    console.log('Creating performance chart with real data...');
-                    
-                    // Sort by date and get last 7 days
-                    const sortedReports = reportsArray
-                        .sort((a, b) => new Date(a.date) - new Date(b.date))
-                        .slice(-7);
-                    
-                    const labels = sortedReports.map(r => {
-                        const d = new Date(r.date);
-                        return d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
-                    });
-                    
-                    const efficiencyData = sortedReports.map(r => r.efficiency_score || 0);
-                    const profitData = sortedReports.map(r => r.net_profit_zmw || 0);
-                    
-                    console.log('Chart data prepared - Labels:', labels, 'Efficiency:', efficiencyData, 'Profit:', profitData);
-                    
-                    new Chart(perfCtx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [
-                                {
-                                    label: 'Efficiency %',
-                                    data: efficiencyData,
-                                    borderColor: '#667eea',
-                                    backgroundColor: 'rgba(102,126,234,0.1)',
-                                    tension: 0.4, 
-                                    fill: true, 
-                                    pointRadius: 4,
-                                    yAxisID: 'y'
-                                },
-                                {
-                                    label: 'Profit (ZMW)',
-                                    data: profitData,
-                                    borderColor: '#48bb78',
-                                    backgroundColor: 'rgba(72,187,120,0.1)',
-                                    tension: 0.4,
-                                    fill: false,
-                                    pointRadius: 4,
-                                    yAxisID: 'y1'
-                                }
-                            ]
-                        },
-                        options: { 
-                            responsive: true, 
-                            maintainAspectRatio: false, 
-                            scales: { 
-                                y: { 
-                                    position: 'left',
-                                    max: 100, 
-                                    min: 0,
-                                    title: {
-                                        display: true,
-                                        text: 'Efficiency %'
-                                    }
-                                },
-                                y1: {
-                                    position: 'right',
-                                    title: {
-                                        display: true,
-                                        text: 'Profit (ZMW)'
-                                    },
-                                    grid: {
-                                        drawOnChartArea: false
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    console.log('Performance chart created successfully');
-                } else {
-                    console.log('No reports data found, showing empty state');
-                    // Show no data message
-                    perfCtx.parentElement.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">📈 No performance data to display</div>';
-                }
-            } catch (error) {
-                console.error('Error loading performance chart:', error);
-                // Fallback to empty state
-                perfCtx.parentElement.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">📈 Error loading performance data</div>';
+            if (!list.length) {
+                remindersEl.innerHTML = '<p class="text-muted">No arrivals recorded yet. When tracking is active and ETAs pass, reminders appear here.</p>';
+                return;
             }
+            let html = '<div style="display:flex;flex-direction:column;gap:10px;">';
+            list.forEach(function (r) {
+                html += '<div class="card" style="padding:12px 14px;border-left:4px solid var(--success);margin:0;">';
+                html += '<div style="font-weight:600;color:var(--success);">' + escapeHtml(r.reminder_title || 'Train arrived') + '</div>';
+                html += '<div style="margin-top:6px;font-size:0.95rem;">' + escapeHtml(r.reminder_text || '') + '</div>';
+                html += '<div class="text-muted" style="margin-top:6px;font-size:0.8rem;">' + fmtLocal(r.arrived_at) + ' · schedule ' + escapeHtml(r.schedule_id) + '</div>';
+                html += '</div>';
+            });
+            html += '</div>';
+            remindersEl.innerHTML = html;
+        } catch (e) {
+            remindersEl.innerHTML = '<p class="text-danger">' + escapeHtml(e.message) + '</p>';
         }
-        
-        console.log('Chart loading completed');
     }
 
-    document.addEventListener('DOMContentLoaded', async () => {
-        // Load all data first, then charts
-        await Promise.all([loadAlerts(), loadSummary(), loadSchedules(), loadDailyReports()]);
-        console.log('Data loaded, now loading charts...');
-        await loadCharts();
-        console.log('Charts loaded successfully');
-    });
+    async function refreshAll() {
+        await Promise.all([loadLatestSchedule(), loadInTransit(), loadReminders()]);
+    }
+
+    document.getElementById('btnRefresh').addEventListener('click', refreshAll);
+
+    function boot() {
+        refreshAll();
+        if (typeof checkSystemHealth === 'function') checkSystemHealth();
+        setInterval(loadInTransit, 5000);
+        setInterval(function () {
+            Promise.all([loadLatestSchedule(), loadReminders()]);
+        }, 20000);
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+    } else {
+        boot();
+    }
+})();
 </script>
 </body>
 </html>

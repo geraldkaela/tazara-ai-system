@@ -22,6 +22,7 @@ from api.auth.auth import router as auth_router
 from api.routes.priority_simple import router as priority_queue_router
 from api.routes.priority_debug import router as priority_debug_router
 from api.routes.priority_auto_scheduler import router as priority_auto_scheduler_router
+from api.routes.train_tracking import router as train_tracking_router
 
 # -------------------------------------------------
 # APP INITIALIZATION
@@ -77,6 +78,7 @@ app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(priority_queue_router, prefix="/priority", tags=["Priority Queue"])
 app.include_router(priority_debug_router, prefix="/priority", tags=["Priority Debug"])
 app.include_router(priority_auto_scheduler_router, prefix="/priority", tags=["Priority Auto-Scheduler"])
+app.include_router(train_tracking_router, tags=["Train tracking"])
 
 # -------------------------------------------------
 # AUTHENTICATION MIDDLEWARE

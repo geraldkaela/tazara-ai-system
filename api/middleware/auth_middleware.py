@@ -38,6 +38,7 @@ PUBLIC_PATHS = {
     "/dashboard/priority_impact_test.html",
     "/dashboard/test_risk_api.html",
     "/dashboard/debug_auth.html",
+    "/dashboard/train_tracking.html",
     "/favicon.ico",
     "/favicon",
     "/robots.txt",

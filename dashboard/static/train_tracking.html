@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train tracking — TAZARA AI</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo"></span>
+            <h1>TAZARA AI<span>Railway Operations</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Dashboards</div>
+                <a href="index.html" class="nav-link"><span class="icon"></span> Overview</a>
+                <a href="multi_route.html" class="nav-link"><span class="icon"></span> Multi-Route Ops</a>
+                <a href="train_tracking.html" class="nav-link active"><span class="icon"></span> Train tracking</a>
+                <a href="alerts.html" class="nav-link"><span class="icon"></span> Alerts</a>
+            </div>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h2>Train movement tracking</h2>
+                    <p>Destinations, ETAs, and arrivals. Transit time is modeled from <strong>route distance (km)</strong> and average freight speed (~38 km/h). Use <strong>Pause</strong> for an emergency stop—the countdown freezes and ETA extends when you <strong>Resume</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="card" style="margin-bottom: 1rem;">
+            <h3>Activate tracking from a schedule</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end;">
+                <div>
+                    <label for="scheduleSelect">Recent schedule</label><br>
+                    <select id="scheduleSelect" style="min-width: 220px; padding: 8px;"></select>
+                </div>
+                <button type="button" class="btn btn-primary" id="btnActivate">Start tracking</button>
+                <button type="button" class="btn btn-outline" id="btnRefresh">Refresh now</button>
+            </div>
+            <div id="activateMsg" style="margin-top: 12px;"></div>
+        </section>
+
+        <section class="card">
+            <h3>In transit</h3>
+            <div id="inTransitTable"></div>
+        </section>
+
+        <section class="card" style="margin-top: 1rem;">
+            <h3>Recently arrived</h3>
+            <div id="arrivedTable"></div>
+        </section>
+    </main>
+</div>
+<script src="js/app.js"></script>
+<script>
+(function () {
+    const sel = document.getElementById('scheduleSelect');
+    const msg = document.getElementById('activateMsg');
+    const inTransitEl = document.getElementById('inTransitTable');
+    const arrivedEl = document.getElementById('arrivedTable');
+
+    function fmtDuration(sec) {
+        if (sec <= 0) return '0s';
+        const d = Math.floor(sec / 86400);
+        sec %= 86400;
+        const h = Math.floor(sec / 3600);
+        sec %= 3600;
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        const parts = [];
+        if (d) parts.push(d + 'd');
+        if (d || h) parts.push(h + 'h');
+        if (d || h || m) parts.push(m + 'm');
+        parts.push(s + 's');
+        return parts.join(' ');
+    }
+
+    function renderTable(rows, cols) {
+        if (!rows.length) return '<p class="text-muted">No rows.</p>';
+        let h = '<table class="data-table"><thead><tr>';
+        cols.forEach(c => { h += '<th>' + c.label + '</th>'; });
+        h += '</tr></thead><tbody>';
+        rows.forEach(r => {
+            h += '<tr>';
+            cols.forEach(c => { h += '<td>' + (c.render ? c.render(r) : r[c.key]) + '</td>'; });
+            h += '</tr>';
+        });
+        h += '</tbody></table>';
+        return h;
+    }
+
+    async function loadSchedules() {
+        try {
+            const data = await fetchAPI('/priority/auto-schedule/list?limit=20');
+            sel.innerHTML = '';
+            const list = (data.schedules || []).filter(s => s.schedule_id);
+            if (!list.length) {
+                sel.innerHTML = '<option value="">No schedules found</option>';
+                return;
+            }
+            list.forEach(s => {
+                const o = document.createElement('option');
+                o.value = s.schedule_id;
+                o.textContent = s.schedule_id + ' — ' + (s.created_at || '').toString().slice(0, 19);
+                sel.appendChild(o);
+            });
+        } catch (e) {
+            sel.innerHTML = '<option value="">Could not load schedules</option>';
+            console.error(e);
+        }
+    }
+
+    async function refreshTrips() {
+        try {
+            const data = await fetchAPI('/api/tracking/trips/active');
+            const active = data.in_transit || [];
+            const arrived = data.recently_arrived || [];
+
+            inTransitEl.innerHTML = renderTable(active, [
+                { key: 'train_id', label: 'Train' },
+                { key: 'route_display', label: 'Route' },
+                { key: 'destination_station', label: 'Destination' },
+                { key: 'estimated_route_km', label: '≈ km' },
+                { key: 'seconds_remaining', label: 'Time to arrival', render: r => '<strong>' + fmtDuration(r.seconds_remaining) + '</strong>' + (r.is_paused ? ' <span class="badge" style="background:#b45309;color:#fff;">Paused</span>' : '') },
+                { key: 'expected_arrival_at', label: 'ETA (UTC)', render: r => (r.expected_arrival_at || '').toString().replace('T', ' ').slice(0, 19) },
+                { key: 'actions', label: 'Hold', render: r => {
+                    let html = '';
+                    if (!r.is_paused) {
+                        html += '<button type="button" class="btn btn-sm btn-outline" data-pause="' + r.id + '">Pause</button>';
+                    } else {
+                        html += '<button type="button" class="btn btn-sm btn-primary" data-resume="' + r.id + '">Resume</button>';
+                    }
+                    return html || '—';
+                }},
+            ]);
+            inTransitEl.querySelectorAll('[data-pause]').forEach(btn => {
+                btn.onclick = async () => {
+                    try {
+                        await postAPI('/api/tracking/legs/' + btn.getAttribute('data-pause') + '/pause', {});
+                        await refreshTrips();
+                    } catch (e) { alert(e.message); }
+                };
+            });
+            inTransitEl.querySelectorAll('[data-resume]').forEach(btn => {
+                btn.onclick = async () => {
+                    try {
+                        await postAPI('/api/tracking/legs/' + btn.getAttribute('data-resume') + '/resume', {});
+                        await refreshTrips();
+                    } catch (e) { alert(e.message); }
+                };
+            });
+
+            arrivedEl.innerHTML = renderTable(arrived, [
+                { key: 'train_id', label: 'Train' },
+                { key: 'destination_station', label: 'Destination' },
+                { key: 'arrived_at', label: 'Arrived (UTC)', render: r => (r.arrived_at || '').toString().replace('T', ' ').slice(0, 19) },
+            ]);
+        } catch (e) {
+            inTransitEl.innerHTML = '<p class="text-danger">' + e.message + '</p>';
+            arrivedEl.innerHTML = '';
+        }
+    }
+
+    document.getElementById('btnActivate').onclick = async () => {
+        const scheduleId = sel.value;
+        if (!scheduleId) return;
+        msg.innerHTML = '<span class="text-muted">Starting…</span>';
+        try {
+            await postAPI('/api/tracking/schedules/' + encodeURIComponent(scheduleId) + '/activate', {
+                use_demo_timers: false,
+                demo_leg_seconds: 90,
+                stagger_seconds: 2,
+                average_speed_kph: null
+            });
+            msg.innerHTML = '<span class="text-success">Tracking started. Trips appear below.</span>';
+            await refreshTrips();
+        } catch (e) {
+            msg.innerHTML = '<span class="text-danger">' + e.message + '</span>';
+        }
+    };
+
+    document.getElementById('btnRefresh').onclick = refreshTrips;
+
+    loadSchedules();
+    refreshTrips();
+    setInterval(refreshTrips, 2000);
+})();
+</script>
+</body>
+</html>

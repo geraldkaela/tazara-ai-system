@@ -3,8 +3,8 @@ Create Schedule Tables
 Creates necessary database tables for auto-scheduling
 """
 
+import os
 import psycopg2
-from psycopg2.extras import RealDictCursor
 
 # Database configuration
 DB_CONFIG = {
@@ -58,6 +58,14 @@ def create_schedule_tables():
         """
         cursor.execute(daily_assignments_query)
         print("   ✅ Daily assignments table created")
+
+        # Train movement tracking (trip legs + optional daily_assignments column)
+        schema_path = os.path.join(os.path.dirname(__file__), "database", "train_tracking_schema.sql")
+        if os.path.isfile(schema_path):
+            print("📊 Applying train_tracking_schema.sql...")
+            with open(schema_path, "r", encoding="utf-8") as sf:
+                cursor.execute(sf.read())
+            print("   ✅ Train trip tracking tables ready")
         
         conn.commit()
         cursor.close()
