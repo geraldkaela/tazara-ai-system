@@ -12,7 +12,7 @@ os.makedirs("config", exist_ok=True)
 class ConfigUpdate(BaseModel):
     learning_rate: float = 0.1
     exploration_rate: float = 0.1
-    max_trains: int = 6
+    max_trains: int = 20
     planning_horizon: int = 14
     coordination_bonus: bool = True
     # New priority settings
@@ -28,7 +28,7 @@ def load_config():
     return {
         "learning_rate": 0.1,
         "exploration_rate": 0.1,
-        "max_trains": 6,
+        "max_trains": 20,
         "planning_horizon": 14,
         "coordination_bonus": True,
         "priority_speed_weight": 0.33,

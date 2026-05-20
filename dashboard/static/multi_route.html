@@ -75,14 +75,15 @@
     <main class="main-content">
 
       <!-- Sidebar Toggle Button -->
-
+<!--
 <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">?</button>
+-->
 
         <!-- Mobile Backdrop -->
 
         <div class="mobile-backdrop" onclick="toggleSidebar()"></div>
 
-        
+
 
         <div class="page-header">
 
@@ -349,7 +350,7 @@
 
             </div>
 
-          <!-- Tab: Tactical View 
+          <!-- Tab: Tactical View
 
             <div class="tab-panel" id="tabTactical">
 
@@ -387,7 +388,7 @@
 
 -->
 
-                                      
+
 
             <!-- Tab: Risk & Resilience -->
 
@@ -395,9 +396,9 @@
 
                 <!-- DEBUG: Visual test -->
 
-                
 
-                
+
+
 
                 <div class="grid-2">
 
@@ -801,7 +802,7 @@
 
                 </div> -->
 
-                                
+
 
                 <div class="card" style="margin-top:20px;">
 
@@ -825,7 +826,7 @@
 
                 </div>
 
-                
+
 
                 <div class="card" style="margin-top:20px;">
 
@@ -863,7 +864,7 @@
 
                             </div>
 
-                            
+
 
                             <!-- Tanzania Local Routes -->
 
@@ -889,7 +890,7 @@
 
                             </div>
 
-                            
+
 
                             <!-- Zambia Local Routes -->
 
@@ -917,7 +918,7 @@
 
                             </div>
 
-                            
+
 
                             <!-- Network Statistics -->
 
@@ -1293,21 +1294,17 @@
 
     // Train Capacity Configuration
 
-    const TRAIN_CAPACITIES = {
+    const TRAIN_CAPACITIES = Object.fromEntries(
 
-        1: { capacity: 1000, type: 'heavy', name: 'Heavy Freight Train' },
+        Array.from({ length: 20 }, (_, index) => {
 
-        2: { capacity: 800, type: 'medium', name: 'Medium Freight Train' },
+            const trainId = index + 1;
 
-        3: { capacity: 800, type: 'medium', name: 'Medium Freight Train' },
+            return [trainId, { capacity: 1300, type: 'standard_freight', name: `Freight Train ${trainId}` }];
 
-        4: { capacity: 600, type: 'light', name: 'Light Freight Train' },
+        })
 
-        5: { capacity: 600, type: 'light', name: 'Light Freight Train' },
-
-        6: { capacity: 1000, type: 'super_heavy', name: 'Super Heavy Train' }
-
-    };
+    );
 
 
 
@@ -1333,7 +1330,7 @@
 
         console.log('?? Testing Train Capacity Access:');
 
-        for (let i = 1; i <= 6; i++) {
+        for (let i = 1; i <= 20; i++) {
 
             const train = TRAIN_CAPACITIES[i];
 
@@ -1341,7 +1338,7 @@
 
         }
 
-        
+
 
         // Test capacity calculation
 
@@ -1349,7 +1346,7 @@
 
         console.log(` Total Fleet Capacity: ${totalCapacity} tons`);
 
-        
+
 
         return totalCapacity;
 
@@ -1363,35 +1360,35 @@
 
         const cargoByRoute = {};
 
-        
+
 
         // Valid TAZARA routes that the backend recognizes
 
         const VALID_TAZARA_ROUTES = [
 
-            'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA', 
+            'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA',
 
             'KAPIRI_NDOLA', 'DAR_KIDATU', 'KIDATU_TRANS_SHIPMENT'
 
         ];
 
-        
+
 
         selectedOrders.forEach(order => {
 
             console.log(' Processing order:', order);
 
-            
+
 
             let route = order.route;
 
             let cargoAmount = order.cargo_tons;
 
-            
+
 
             console.log(`Order details - Route: ${route}, Cargo: ${cargoAmount}, Type: ${typeof cargoAmount}`);
 
-            
+
 
             // Validate route
 
@@ -1403,7 +1400,7 @@
 
             }
 
-            
+
 
             // Validate cargo amount
 
@@ -1415,7 +1412,7 @@
 
             }
 
-            
+
 
             // Map route to valid TAZARA route if needed
 
@@ -1427,7 +1424,7 @@
 
             }
 
-            
+
 
             if (!cargoByRoute[route]) {
 
@@ -1439,7 +1436,7 @@
 
         });
 
-        
+
 
         console.log(' Cargo Requirements from Orders (mapped to TAZARA routes):', cargoByRoute);
 
@@ -1453,7 +1450,7 @@
 
         const allocations = [];
 
-        
+
 
         // Sort routes by total cargo (highest first)
 
@@ -1461,11 +1458,11 @@
 
             .sort(([, a], [, b]) => b - a);
 
-        
+
 
         console.log('?? Sorted Routes by Cargo:', sortedRoutes);
 
-        
+
 
         sortedRoutes.forEach(([route, totalCargo], routeIndex) => {
 
@@ -1473,7 +1470,7 @@
 
             let dayOffset = routeIndex; // Different routes on different days
 
-            
+
 
             // Sort trains by capacity (largest first) for optimal efficiency
 
@@ -1483,25 +1480,25 @@
 
                 .map(([id, train]) => ({ id: parseInt(id), ...train }));
 
-            
+
 
             console.log(`?? Optimized train allocation for ${totalCargo} tons of ${route} cargo`);
 
             console.log(` Available trains (sorted by capacity):`, sortedTrains.map(t => `Train ${t.id}: ${t.capacity} tons (${t.type})`));
 
-            
+
 
             for (const train of sortedTrains) {
 
                 if (remainingCargo <= 0) break; // Stop when cargo is fully allocated
 
-                
+
 
                 const trainCapacity = train.capacity;
 
                 const loadAmount = Math.min(remainingCargo, trainCapacity);
 
-                
+
 
                 if (loadAmount > 0) {
 
@@ -1525,13 +1522,13 @@
 
                     const fuelCost = Math.round(loadAmount * fuelRate);
 
-                    
+
 
                     console.log(`? Loading ${loadAmount} tons onto Train ${train.id} (${trainCapacity} ton capacity, ${trainType} type)`);
 
                     console.log(`   Fuel cost: ${loadAmount} tons × ${fuelRate} ZMW/ton = ${fuelCost} ZMW`);
 
-                    
+
 
                     allocations.push({
 
@@ -1557,7 +1554,7 @@
 
                     });
 
-                    
+
 
                     remainingCargo -= loadAmount;
 
@@ -1567,7 +1564,7 @@
 
             }
 
-            
+
 
             if (remainingCargo > 0) {
 
@@ -1577,7 +1574,7 @@
 
         });
 
-        
+
 
         console.log('?? Final Train Allocations:', allocations);
 
@@ -1593,7 +1590,7 @@
 
             'DAR_KAPIRI': 'Dar ? Kapiri',
 
-            'DAR_MBEYA': 'Dar ? Mbeya', 
+            'DAR_MBEYA': 'Dar ? Mbeya',
 
             'MBEYA_KASAMA': 'Mbeya ? Kasama',
 
@@ -1627,7 +1624,7 @@
 
             document.getElementById('ovCapabilities').textContent = (status.capabilities || []).length || '6';
 
-            
+
 
             // Get recent auto-schedules for overview metrics
 
@@ -1635,13 +1632,13 @@
 
             const schedules = schedulesResponse.schedules || [];
 
-            
+
 
             console.log('?? DEBUG: Overview - schedules loaded:', schedules.length);
 
             console.log('?? DEBUG: Overview - sample schedules:', schedules.slice(0, 3));
 
-            
+
 
             if (schedules.length > 0) {
 
@@ -1655,7 +1652,7 @@
 
                 const totalTrains = Math.max(...schedules.map(s => s.num_trains || 0));
 
-                
+
 
                 console.log('?? DEBUG: Overview calculated metrics:', {
 
@@ -1671,7 +1668,7 @@
 
                 });
 
-                
+
 
                 // Update metrics - check element existence
 
@@ -1681,7 +1678,7 @@
 
                 const ovProfitEl = document.getElementById('ovProfit');
 
-                
+
 
                 console.log('?? DEBUG: Overview elements found:', {
 
@@ -1693,7 +1690,7 @@
 
                 });
 
-                
+
 
                 if (ovCargoEl) {
 
@@ -1707,7 +1704,7 @@
 
                 }
 
-                
+
 
                 if (ovEfficiencyEl) {
 
@@ -1721,7 +1718,7 @@
 
                 }
 
-                
+
 
                 if (ovProfitEl) {
 
@@ -1765,7 +1762,7 @@
 
             const activeTrains = firstDay.train_assignments ? firstDay.train_assignments.length : 0;
 
-            
+
 
             // Update metrics if elements exist
 
@@ -1777,7 +1774,7 @@
 
             const ovProfitEl = document.getElementById('ovProfit');
 
-            
+
 
             if (ovTrainsEl) ovTrainsEl.textContent = activeTrains;
 
@@ -1967,13 +1964,13 @@
 
                                 console.log('DEBUG: departure_date field:', a.departure_date);
 
-                                
+
 
                                 // Use departure_date from API (from order's requested_departure_date)
 
                                 const departureDate = a.departure_date ? new Date(a.departure_date) : null;
 
-                                
+
 
                                 return `
 
@@ -2071,7 +2068,7 @@
 
                 </div>
 
-                
+
 
                 <div class="card" style="margin:0; border:1px solid var(--warning);">
 
@@ -2087,7 +2084,7 @@
 
                 </div>
 
-                
+
 
                 <div class="card" style="margin:0; border:1px solid var(--primary);">
 
@@ -2103,7 +2100,7 @@
 
                 </div>
 
-                
+
 
                 <div class="card" style="margin:0; border:1px solid var(--secondary);">
 
@@ -2155,7 +2152,7 @@
 
             const strategy = 'traditional'; // Fixed to traditional since we removed the selector
 
-            
+
 
             // Check if orders were loaded
 
@@ -2163,7 +2160,7 @@
 
             const selectedOrders = Array.from(ordersSelect.selectedOptions);
 
-            
+
 
             console.log('?? DEBUGGING 422 ERROR:');
 
@@ -2175,13 +2172,13 @@
 
             console.log('4. Global Cargo Requirements:', window.loadedCargoRequirements);
 
-            
+
 
             // Force a test cargo requirement if nothing else works
 
             let cargoRequirements = {};
 
-            
+
 
             if (selectedOrders.length > 0) {
 
@@ -2205,7 +2202,7 @@
 
                         });
 
-                        
+
 
                         const orderData = JSON.parse(opt.dataset.order || '{}');
 
@@ -2223,11 +2220,11 @@
 
                 }).filter(order => order !== null);
 
-                
+
 
                 console.log('6. Parsed Orders:', parsedOrders);
 
-                
+
 
                 if (parsedOrders.length > 0) {
 
@@ -2241,7 +2238,7 @@
 
             }
 
-            
+
 
             // If no parsed orders, try to use globally stored cargo from loadSelectedOrders
 
@@ -2249,7 +2246,7 @@
 
                 console.log('?? Using globally stored cargo requirements:', window.loadedCargoRequirements);
 
-                
+
 
                 // Map global cargo to valid TAZARA routes
 
@@ -2257,13 +2254,13 @@
 
                 const VALID_TAZARA_ROUTES = [
 
-                    'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA', 
+                    'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA',
 
                     'KAPIRI_NDOLA', 'DAR_KIDATU', 'KIDATU_TRANS_SHIPMENT'
 
                 ];
 
-                
+
 
                 Object.entries(window.loadedCargoRequirements).forEach(([route, cargo]) => {
 
@@ -2281,7 +2278,7 @@
 
                 });
 
-                
+
 
                 cargoRequirements = mappedCargoRequirements;
 
@@ -2303,15 +2300,15 @@
 
             }
 
-            
+
 
             const trainAllocations = allocateTrainsSequentially(cargoRequirements);
 
-            
+
 
             console.log('?? Using Sequential Train Allocation:', trainAllocations);
 
-            
+
 
             // Create daily assignments from train allocations
 
@@ -2319,7 +2316,7 @@
 
             const maxDays = Math.max(...trainAllocations.map(a => a.day + 1));
 
-            
+
 
             for (let day = 1; day <= maxDays; day++) {
 
@@ -2335,7 +2332,7 @@
 
             }
 
-            
+
 
             // Add order information to schedule metadata
 
@@ -2351,7 +2348,7 @@
 
             };
 
-            
+
 
             console.log('?? API Request Data:', {
 
@@ -2377,7 +2374,7 @@
 
             const actualDaysUsed = Math.max(...dailyAssignments.map(assignment => assignment.day || 1));
 
-            
+
 
             console.log(`?? Actual train usage calculation:`);
 
@@ -2387,7 +2384,7 @@
 
             console.log(`   Total assignments: ${dailyAssignments.length}`);
 
-            
+
 
             // Send ONLY the routes that have cargo (no need to send all 6 routes)
 
@@ -2407,7 +2404,7 @@
 
             };
 
-            
+
 
             console.log('?? FINAL API REQUEST DEBUG:');
 
@@ -2423,7 +2420,7 @@
 
             console.log('6. Metadata:', JSON.stringify(scheduleMetadata));
 
-            
+
 
             // Debug: Show what we're actually sending for train assignments
 
@@ -2435,7 +2432,7 @@
 
             });
 
-            
+
 
             // Debug: Check if cargo exceeds train capacities
 
@@ -2455,13 +2452,13 @@
 
             console.log('7. Daily Assignments (Sequential Loading):', dailyAssignments);
 
-            console.log('8. Train Allocations Detail:', trainAllocations.map(t => 
+            console.log('8. Train Allocations Detail:', trainAllocations.map(t =>
 
                 `Train ${t.train_id + 1}: ${t.cargo_carried} tons (${t.route}) - Capacity: ${TRAIN_CAPACITIES[t.train_id + 1].capacity} tons`
 
             ));
 
-            
+
 
             // Validate before sending
 
@@ -2473,7 +2470,7 @@
 
             }
 
-            
+
 
             // Check for invalid values
 
@@ -2491,7 +2488,7 @@
 
             });
 
-            
+
 
             // Final validation
 
@@ -2505,15 +2502,15 @@
 
             }
 
-            
+
 
             console.log('? All cargo values validated successfully!');
 
-            
+
 
             console.log('8. About to send API request...');
 
-            
+
 
             const data = await postAPI('/multi-route/schedule', apiRequest);
 
@@ -2527,7 +2524,7 @@
 
             }
 
-            
+
 
             resultDiv.innerHTML = `<div class="alert alert-success">${successMessage}</div>`;
 
@@ -2535,7 +2532,7 @@
 
             showToast('Schedule created successfully!', 'success');
 
-            
+
 
             // Refresh performance charts to include new schedule
 
@@ -2561,7 +2558,7 @@
 
             console.error('4. Error Stringified:', JSON.stringify(err, null, 2));
 
-            
+
 
             // Try to get the raw error response
 
@@ -2583,19 +2580,19 @@
 
                 });
 
-                
+
 
                 console.log('6. Raw Response Status:', rawResponse.status);
 
                 console.log('7. Raw Response Headers:', [...rawResponse.headers.entries()]);
 
-                
+
 
                 const errorText = await rawResponse.text();
 
                 console.log('8. Raw Error Response Body:', errorText);
 
-                
+
 
                 // Try to parse as JSON
 
@@ -2611,7 +2608,7 @@
 
                 }
 
-                
+
 
             } catch (rawErr) {
 
@@ -2619,7 +2616,7 @@
 
             }
 
-            
+
 
             // Display the actual error message
 
@@ -2653,13 +2650,13 @@
 
             const schedules = schedulesResponse.schedules || [];
 
-            
+
 
             console.log('?? DEBUG: Chart data - schedules loaded:', schedules.length);
 
             console.log('?? DEBUG: Raw schedules:', schedules);
 
-            
+
 
             if (schedules.length === 0) {
 
@@ -2671,13 +2668,13 @@
 
             }
 
-            
+
 
             // Aggregate data by date to avoid multiple values per date
 
             const dailyData = {};
 
-            
+
 
             console.log('?? DEBUG: Processing all schedules for date aggregation...');
 
@@ -2691,11 +2688,11 @@
 
                 const profit = schedule.total_reward || 0;
 
-                
+
 
                 console.log(`?? DEBUG: Schedule ${index + 1}: ${schedule.schedule_id} - ${dateKey} - ${cargo} tons`);
 
-                
+
 
                 if (!dailyData[dateKey]) {
 
@@ -2715,7 +2712,7 @@
 
                 }
 
-                
+
 
                 dailyData[dateKey].totalCargo += cargo;
 
@@ -2727,13 +2724,13 @@
 
             });
 
-            
+
 
             // Convert to array and sort by date (oldest first for proper chronological order)
 
             const aggregatedData = Object.values(dailyData).sort((a, b) => a.date - b.date);
 
-            
+
 
             // Create trends from aggregated data
 
@@ -2743,7 +2740,7 @@
 
             const profitData = aggregatedData.map(d => d.totalProfit);
 
-            
+
 
             console.log('?? DEBUG: Total unique dates found:', Object.keys(dailyData).length);
 
@@ -2769,7 +2766,7 @@
 
             console.log('?? DEBUG: Final profit data:', profitData);
 
-            
+
 
             console.log('?? DEBUG: Chart labels:', labels);
 
@@ -2795,7 +2792,7 @@
 
                 }
 
-                
+
 
                 console.log('?? DEBUG: Creating cargo chart with data:', {
 
@@ -2809,7 +2806,7 @@
 
                 });
 
-                
+
 
                 new Chart(cargoCtx, {
 
@@ -2837,9 +2834,9 @@
 
                     },
 
-                    options: { 
+                    options: {
 
-                        responsive: true, 
+                        responsive: true,
 
                         maintainAspectRatio: false,
 
@@ -2893,7 +2890,7 @@
 
                 });
 
-                
+
 
                 console.log('? DEBUG: Cargo chart created/updated successfully');
 
@@ -2923,7 +2920,7 @@
 
                 }
 
-                
+
 
                 console.log('?? DEBUG: Creating profit chart with data:', {
 
@@ -2937,7 +2934,7 @@
 
                 });
 
-                
+
 
                 new Chart(profitCtx, {
 
@@ -2965,9 +2962,9 @@
 
                     },
 
-                    options: { 
+                    options: {
 
-                        responsive: true, 
+                        responsive: true,
 
                         maintainAspectRatio: false,
 
@@ -3021,7 +3018,7 @@
 
                 });
 
-                
+
 
                 console.log('? DEBUG: Profit chart created/updated successfully');
 
@@ -3051,11 +3048,11 @@
 
             const schedules = schedulesResponse.schedules || [];
 
-            
+
 
             console.log('?? DEBUG: Route chart - schedules loaded:', schedules.length);
 
-            
+
 
             // Calculate route performance from schedules
 
@@ -3063,7 +3060,7 @@
 
             const assignmentDetails = []; // Track all assignments for verification
 
-            
+
 
             // Fetch detailed data for each schedule to get assignments
 
@@ -3071,7 +3068,7 @@
 
                 console.log('?? DEBUG: Processing schedule:', schedule.schedule_id);
 
-                
+
 
                 try {
 
@@ -3079,7 +3076,7 @@
 
                     const detailResponse = await fetchAPI(`/priority/auto-schedule/${schedule.schedule_id}`);
 
-                    
+
 
                     if (detailResponse.success && detailResponse.daily_assignments) {
 
@@ -3087,7 +3084,7 @@
 
                         console.log('?? DEBUG: Schedule assignments count:', assignments.length);
 
-                        
+
 
                         if (assignments && assignments.length > 0) {
 
@@ -3097,11 +3094,11 @@
 
                                 const cargo = assignment.cargo_tons || assignment.cargo_carried || 0;
 
-                                
+
 
                                 console.log(`?? DEBUG: Assignment ${index + 1}: Route="${routeName}", Cargo=${cargo} tons, Action=${assignment.action || 'N/A'}`);
 
-                                
+
 
                                 if (routeName) {
 
@@ -3139,7 +3136,7 @@
 
                                     });
 
-                                    
+
 
                                     // Track for verification
 
@@ -3173,7 +3170,7 @@
 
             }
 
-            
+
 
             const routes = Object.values(routePerformance);
 
@@ -3195,7 +3192,7 @@
 
             })));
 
-            
+
 
             if (routes.length === 0) {
 
@@ -3213,7 +3210,7 @@
 
             console.log('?? DEBUG: Route chart canvas element:', routeCtx);
 
-            
+
 
             if (routeCtx) {
 
@@ -3225,13 +3222,13 @@
 
                         datasets: [
 
-                            { 
+                            {
 
-                                label: 'Total Cargo (tons)', 
+                                label: 'Total Cargo (tons)',
 
-                                data: routes.map(r => r.total_cargo), 
+                                data: routes.map(r => r.total_cargo),
 
-                                backgroundColor: 'rgba(72,187,120,0.6)', 
+                                backgroundColor: 'rgba(72,187,120,0.6)',
 
                                 borderRadius: 4,
 
@@ -3239,13 +3236,13 @@
 
                             },
 
-                            { 
+                            {
 
-                                label: 'Total Trips', 
+                                label: 'Total Trips',
 
-                                data: routes.map(r => r.total_trips), 
+                                data: routes.map(r => r.total_trips),
 
-                                backgroundColor: 'rgba(102,126,234,0.6)', 
+                                backgroundColor: 'rgba(102,126,234,0.6)',
 
                                 borderRadius: 4,
 
@@ -3257,11 +3254,11 @@
 
                     };
 
-                    
+
 
                     console.log('?? DEBUG: Route chart data:', chartData);
 
-                    
+
 
                     new Chart(routeCtx, {
 
@@ -3333,7 +3330,7 @@
 
                     });
 
-                    
+
 
                     console.log('? DEBUG: Route chart created successfully');
 
@@ -3411,7 +3408,7 @@
 
         }
 
-        
+
 
         // Also render mock route chart
 
@@ -3437,13 +3434,13 @@
 
                     datasets: [
 
-                        { 
+                        {
 
-                            label: 'Total Cargo (tons)', 
+                            label: 'Total Cargo (tons)',
 
-                            data: [2500, 1800, 1200], 
+                            data: [2500, 1800, 1200],
 
-                            backgroundColor: 'rgba(72,187,120,0.6)', 
+                            backgroundColor: 'rgba(72,187,120,0.6)',
 
                             borderRadius: 4,
 
@@ -3451,13 +3448,13 @@
 
                         },
 
-                        { 
+                        {
 
-                            label: 'Total Trips', 
+                            label: 'Total Trips',
 
-                            data: [15, 12, 8], 
+                            data: [15, 12, 8],
 
-                            backgroundColor: 'rgba(102,126,234,0.6)', 
+                            backgroundColor: 'rgba(102,126,234,0.6)',
 
                             borderRadius: 4,
 
@@ -3551,17 +3548,17 @@
 
         const totalDays = data.total_days || 0;
 
-        
+
 
         if (assignments.length === 0) return;
 
-        
+
 
         container.innerHTML = '';
 
         container.classList.add('timeline-container');
 
-        
+
 
         const grid = document.createElement('div');
 
@@ -3569,7 +3566,7 @@
 
         grid.style.setProperty('--total-days', totalDays);
 
-        
+
 
         // Header
 
@@ -3581,7 +3578,7 @@
 
         grid.appendChild(corner);
 
-        
+
 
         for (let d = 0; d < totalDays; d++) {
 
@@ -3595,7 +3592,7 @@
 
         }
 
-        
+
 
         // Body
 
@@ -3611,7 +3608,7 @@
 
             grid.appendChild(trainLabel);
 
-            
+
 
             for (let d = 0; d < totalDays; d++) {
 
@@ -3621,7 +3618,7 @@
 
                 pill.className = 'action-pill';
 
-                
+
 
                 if (assignment) {
 
@@ -3631,7 +3628,7 @@
 
                     pill.classList.add(route === 'IDLE' ? 'idle' : `route-${routeClass}`);
 
-                    
+
 
                     const routeLabels = {
 
@@ -3647,7 +3644,7 @@
 
                     const displayLabel = routeLabels[route] || route;
 
-                    
+
 
                     pill.innerHTML = `
 
@@ -3657,7 +3654,7 @@
 
                     `;
 
-                    
+
 
                     pill.onclick = () => showRationale(assignment.rationale, t + 1, d + 1, route);
 
@@ -3675,7 +3672,7 @@
 
         }
 
-        
+
 
         container.appendChild(grid);
 
@@ -3691,7 +3688,7 @@
 
         if (!box || !content) return;
 
-        
+
 
         box.style.display = 'block';
 
@@ -3699,9 +3696,9 @@
 
             <div style="margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">
 
-                <strong style="color:var(--primary-light)">Train ${train}</strong> 
+                <strong style="color:var(--primary-light)">Train ${train}</strong>
 
-                <span style="color:var(--text-muted)">â€” Day ${day} Assignment:</span> 
+                <span style="color:var(--text-muted)">â€” Day ${day} Assignment:</span>
 
                 <span class="badge ${route === 'IDLE' ? 'badge-low' : 'badge-info'}" style="margin-left:8px">${route}</span>
 
@@ -3725,7 +3722,7 @@
 
         console.log('ðŸ” analyzeRisk function called with data:', data);
 
-        
+
 
         const grid = document.getElementById('bottleneckGrid');
 
@@ -3735,7 +3732,7 @@
 
         const levelBadge = document.getElementById('riskLevelBadge');
 
-        
+
 
         console.log('ðŸ” Found elements:', {
 
@@ -3749,7 +3746,7 @@
 
         });
 
-        
+
 
         try {
 
@@ -3767,11 +3764,11 @@
 
             });
 
-            
+
 
             console.log('ðŸ” API response received:', risk);
 
-            
+
 
             // Update Score & Badge
 
@@ -3783,11 +3780,11 @@
 
             levelBadge.className = `badge badge-${risk.risk_level === 'high' ? 'critical' : risk.risk_level === 'medium' ? 'medium' : 'low'}`;
 
-            
+
 
             console.log('ðŸ” Updated score and badge:', score, risk.risk_level);
 
-            
+
 
             // Force visibility
 
@@ -3799,7 +3796,7 @@
 
             recs.style.display = 'grid';
 
-            
+
 
             renderRiskGauge(risk.risk_score);
 
@@ -3817,7 +3814,7 @@
 
             `).join('');
 
-            
+
 
             recs.innerHTML = risk.recommendations.map(r => `
 
@@ -3841,11 +3838,11 @@
 
             `).join('');
 
-            
+
 
             console.log('ðŸ” Risk analysis completed successfully');
 
-            
+
 
         } catch (err) {
 
@@ -3929,11 +3926,11 @@
 
         const days = parseInt(document.getElementById('forecastDays').value);
 
-        
+
 
         try {
 
-            const data = await postAPI('/api/forecast/', { 
+            const data = await postAPI('/api/forecast/', {
 
                 days_ahead: days,
 
@@ -3957,7 +3954,7 @@
 
             const lower = data.forecasts.map(f => f.lower_bound);
 
-            
+
 
             forecastChartInstance = new Chart(ctx, {
 
@@ -4029,9 +4026,9 @@
 
                 },
 
-                options: { 
+                options: {
 
-                    responsive: true, 
+                    responsive: true,
 
                     maintainAspectRatio: false,
 
@@ -4053,7 +4050,7 @@
 
             });
 
-            
+
 
             const summary = document.getElementById('forecastSummary');
 
@@ -4093,7 +4090,7 @@
 
             `;
 
-            
+
 
             // Display Rationale
 
@@ -4133,11 +4130,11 @@
 
         const resultDiv = document.getElementById('disruptionResult');
 
-        
+
 
         resultDiv.innerHTML = '<div class="alert alert-warning">âš¡ AI calculating cascade effects...</div>';
 
-        
+
 
         try {
 
@@ -4155,13 +4152,13 @@
 
             });
 
-            
+
 
             const cascade = data.cascade_analysis;
 
             const res = data.resolution_plan;
 
-            
+
 
             resultDiv.innerHTML = `
 
@@ -4225,17 +4222,17 @@
 
         const reason = document.getElementById('simReason').value || 'Manual adjustment';
 
-        
+
 
         const resultCard = document.getElementById('simResultCard');
 
         const detailsDiv = document.getElementById('simResultDetails');
 
-        
+
 
         showToast('Running simulation...', 'info');
 
-        
+
 
         try {
 
@@ -4257,7 +4254,7 @@
 
             });
 
-            
+
 
             resultCard.style.display = 'block';
 
@@ -4265,7 +4262,7 @@
 
             const costs = data.updated_costs;
 
-            
+
 
             detailsDiv.innerHTML = `
 
@@ -4305,7 +4302,7 @@
 
             `;
 
-            
+
 
             showToast('Simulation complete!', 'success');
 
@@ -4393,7 +4390,7 @@
 
     // â”€â”€ WORKFLOW FUNCTIONS â”€â”€
 
-    
+
 
     // Load schedules for workflow dropdowns
 
@@ -4405,7 +4402,7 @@
 
             const schedules = response.schedules || [];
 
-            
+
 
             const selects = ['approvalScheduleSelect', 'modifyScheduleSelect', 'assignScheduleSelect'];
 
@@ -4441,7 +4438,7 @@
 
     }
 
-    
+
 
     // Submit approval
 
@@ -4455,7 +4452,7 @@
 
         const reason = document.getElementById('approvalReason').value;
 
-        
+
 
         if (!scheduleId || !approverName) {
 
@@ -4465,7 +4462,7 @@
 
         }
 
-        
+
 
         try {
 
@@ -4485,7 +4482,7 @@
 
             });
 
-            
+
 
             console.log('Approval response:', response); // Debug log
 
@@ -4503,7 +4500,7 @@
 
     }
 
-    
+
 
     // Submit modification
 
@@ -4515,7 +4512,7 @@
 
         const details = document.getElementById('modificationDetails').value;
 
-        
+
 
         if (!scheduleId || !details) {
 
@@ -4525,7 +4522,7 @@
 
         }
 
-        
+
 
         try {
 
@@ -4541,7 +4538,7 @@
 
             });
 
-            
+
 
             showToast('Modification submitted successfully!', 'success');
 
@@ -4557,7 +4554,7 @@
 
     }
 
-    
+
 
     // Load modification history
 
@@ -4565,7 +4562,7 @@
 
         if (!scheduleId) return;
 
-        
+
 
         try {
 
@@ -4573,7 +4570,7 @@
 
             const historyDiv = document.getElementById('modificationHistory');
 
-            
+
 
             if (response.length === 0) {
 
@@ -4583,7 +4580,7 @@
 
             }
 
-            
+
 
             let html = '';
 
@@ -4607,13 +4604,13 @@
 
             });
 
-            
+
 
             historyDiv.innerHTML = html;
 
         } catch (err) {
 
-            document.getElementById('modificationHistory').innerHTML = 
+            document.getElementById('modificationHistory').innerHTML =
 
                 '<div class="alert alert-danger">Failed to load modification history</div>';
 
@@ -4621,7 +4618,7 @@
 
     }
 
-    
+
 
     // Create customer order
 
@@ -4647,7 +4644,7 @@
 
         };
 
-        
+
 
         // Validation
 
@@ -4659,7 +4656,7 @@
 
         }
 
-        
+
 
         try {
 
@@ -4667,11 +4664,11 @@
 
             const response = await postAPI('/api/workflow/orders', orderData);
 
-            
+
 
             showToast(`Order ${response.order_id} created successfully!`, 'success');
 
-            
+
 
             // Clear form
 
@@ -4681,7 +4678,7 @@
 
             document.getElementById('requestedDate').value = '';
 
-            
+
 
             // Reload orders list
 
@@ -4697,7 +4694,7 @@
 
     }
 
-    
+
 
     // Load orders
 
@@ -4713,7 +4710,7 @@
 
             const ordersDiv = document.getElementById('ordersList');
 
-            
+
 
             if (response.length === 0) {
 
@@ -4723,7 +4720,7 @@
 
             }
 
-            
+
 
             // Orders select no longer needed - removed from Create Schedule tab
 
@@ -4731,7 +4728,7 @@
 
             // ordersSelect.innerHTML = '<option value="">Select orders to fulfill...</option>';
 
-            
+
 
             let ordersHtml = '';
 
@@ -4771,7 +4768,7 @@
 
                     `;
 
-                    
+
 
                     // Orders select removed - no longer needed for auto-scheduling
 
@@ -4779,7 +4776,7 @@
 
             });
 
-            
+
 
             ordersDiv.innerHTML = ordersHtml;
 
@@ -4793,7 +4790,7 @@
 
     }
 
-    
+
 
     // Show detailed schedule information
 
@@ -4805,7 +4802,7 @@
 
             const response = await getAPI(`/priority/auto-schedule/${scheduleId}`);
 
-            
+
 
             if (response.success) {
 
@@ -4817,7 +4814,7 @@
 
                 const summary = response.summary;
 
-                
+
 
                 // Create schedule details HTML
 
@@ -4879,7 +4876,7 @@
 
                 `;
 
-                
+
 
                 // Add daily assignments
 
@@ -4923,7 +4920,7 @@
 
                     `;
 
-                    
+
 
                     assignments.forEach(assignment => {
 
@@ -4947,7 +4944,7 @@
 
                     });
 
-                    
+
 
                     detailsHTML += `
 
@@ -4965,7 +4962,7 @@
 
                 }
 
-                
+
 
                 // Add scheduled orders
 
@@ -5011,7 +5008,7 @@
 
                     `;
 
-                    
+
 
                     orders.forEach(order => {
 
@@ -5039,7 +5036,7 @@
 
                     });
 
-                    
+
 
                     detailsHTML += `
 
@@ -5057,7 +5054,7 @@
 
                 }
 
-                
+
 
                 // Add summary
 
@@ -5109,7 +5106,7 @@
 
                 `;
 
-                
+
 
                 // Add to result div
 
@@ -5117,7 +5114,7 @@
 
                 resultDiv.innerHTML += detailsHTML;
 
-                
+
 
             } else {
 
@@ -5133,7 +5130,7 @@
 
     }
 
-    
+
 
     // Load priority queue status
 
@@ -5149,7 +5146,7 @@
 
             const statusDiv = document.getElementById('priorityQueueStatus');
 
-            
+
 
             if (!response || response.total_orders === 0) {
 
@@ -5169,7 +5166,7 @@
 
             }
 
-            
+
 
             // Get queue list for more details
 
@@ -5179,7 +5176,7 @@
 
             console.log('?? DEBUG: Number of orders returned:', queueResponse?.orders?.length || 0);
 
-            
+
 
             let ordersHtml = '';
 
@@ -5257,7 +5254,7 @@
 
             }
 
-            
+
 
             statusDiv.innerHTML = `
 
@@ -5329,7 +5326,7 @@
 
             `;
 
-            
+
 
         } catch (err) {
 
@@ -5355,7 +5352,7 @@
 
     }
 
-    
+
 
     // Refresh priority queue
 
@@ -5367,7 +5364,7 @@
 
     }
 
-    
+
 
     // Load existing schedules
 
@@ -5381,7 +5378,7 @@
 
             console.log('?? DEBUG: Existing schedules response:', response);
 
-            
+
 
             const schedulesList = document.getElementById('schedulesList');
 
@@ -5393,7 +5390,7 @@
 
             }
 
-            
+
 
             if (!response || !response.success || !response.schedules || response.schedules.length === 0) {
 
@@ -5413,7 +5410,7 @@
 
             }
 
-            
+
 
             let schedulesHTML = `
 
@@ -5433,7 +5430,7 @@
 
             `;
 
-            
+
 
             response.schedules.forEach((schedule, index) => {
 
@@ -5443,19 +5440,19 @@
 
                 const cargo = (schedule.total_cargo_delivered || 0).toFixed(1);
 
-                
+
 
                 schedulesHTML += `
 
                     <div class="schedule-item" style="
 
-                        margin: 8px 0; 
+                        margin: 8px 0;
 
-                        padding: 12px; 
+                        padding: 12px;
 
-                        border: 1px solid var(--border); 
+                        border: 1px solid var(--border);
 
-                        border-radius: 4px; 
+                        border-radius: 4px;
 
                         cursor: pointer;
 
@@ -5471,9 +5468,11 @@
 
                             <div>
 
-                                <strong style="color: var(--primary);">${schedule.schedule_id}</strong>
+                                <strong style="color: var(--primary);">${schedule.display_name || schedule.schedule_id}</strong>
 
                                 <span style="margin-left: 10px; color: var(--text-muted); font-size: 0.9rem;">${createdDate}</span>
+
+                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Schedule ID: ${schedule.schedule_id}</div>
 
                             </div>
 
@@ -5505,7 +5504,7 @@
 
             });
 
-            
+
 
             schedulesHTML += `
 
@@ -5527,13 +5526,13 @@
 
             `;
 
-            
+
 
             schedulesList.innerHTML = schedulesHTML;
 
             console.log('?? DEBUG: Existing schedules loaded successfully');
 
-            
+
 
         } catch (err) {
 
@@ -5561,7 +5560,7 @@
 
     }
 
-    
+
 
     // Debug priority queue - manual debugging function
 
@@ -5571,7 +5570,7 @@
 
         console.log('?? DEBUG: Testing API endpoints...');
 
-        
+
 
         try {
 
@@ -5583,7 +5582,7 @@
 
             console.log('?? DEBUG: Status response:', statusResponse);
 
-            
+
 
             // Test list endpoint
 
@@ -5593,7 +5592,7 @@
 
             console.log('?? DEBUG: List response:', listResponse);
 
-            
+
 
             // Test direct API call
 
@@ -5605,13 +5604,13 @@
 
             console.log('?? DEBUG: Direct response:', directData);
 
-            
+
 
             console.log('?? DEBUG: Debugging complete! Check the console output above.');
 
             alert('Debugging complete! Check browser console (F12) for detailed output.');
 
-            
+
 
         } catch (error) {
 
@@ -5623,7 +5622,7 @@
 
     }
 
-    
+
 
     // Get urgency color for priority display
 
@@ -5643,7 +5642,7 @@
 
     }
 
-    
+
 
     // Create auto-schedule based on priority queue
 
@@ -5653,29 +5652,29 @@
 
         const resultDiv = document.getElementById('autoScheduleResult');
 
-        
+
 
         // Get configuration
 
         const numTrainsElement = document.getElementById('numTrains');
 
-        const numTrains = numTrainsElement ? parseInt(numTrainsElement.value) || 5 : 5;
+        const numTrains = numTrainsElement ? parseInt(numTrainsElement.value) || 20 : 20;
 
-        
+
 
         const maxDaysElement = document.getElementById('planDays');
 
         const maxDays = maxDaysElement ? parseInt(maxDaysElement.value) || 7 : 7;
 
-        
+
 
         const maxOrdersElement = document.getElementById('maxOrders');
 
-        const maxOrders = maxOrdersElement ? 
+        const maxOrders = maxOrdersElement ?
 
             parseInt(maxOrdersElement.value) : null;
 
-        
+
 
         // Validate input
 
@@ -5687,7 +5686,7 @@
 
         }
 
-        
+
 
         // Disable button and show loading
 
@@ -5697,7 +5696,7 @@
 
         resultDiv.innerHTML = '<div class="alert alert-info">?? AI is analyzing priority queue and creating optimal schedule...</div>';
 
-        
+
 
         try {
 
@@ -5713,7 +5712,7 @@
 
             });
 
-            
+
 
             if (response.success) {
 
@@ -5735,19 +5734,19 @@
 
                 `;
 
-                
+
 
                 // Show schedule details
 
                 showScheduleDetails(response.schedule_id, response.schedule_details);
 
-                
+
 
                 // Refresh priority queue status
 
                 loadPriorityQueueStatus();
 
-                
+
 
                 showToast(`Auto-schedule ${response.schedule_id} created successfully!`, 'success');
 
@@ -5769,7 +5768,7 @@
 
             }
 
-            
+
 
         } catch (err) {
 
@@ -5801,7 +5800,7 @@
 
     }
 
-    
+
 
     // Check auto-schedule status
 
@@ -5809,17 +5808,17 @@
 
         const resultDiv = document.getElementById('autoScheduleResult');
 
-        
+
 
         try {
 
             resultDiv.innerHTML = '<div class="alert alert-info">?? Checking auto-schedule status...</div>';
 
-            
+
 
             const response = await fetchAPI('/priority/auto-schedule/status');
 
-            
+
 
             if (response.success) {
 
@@ -5861,7 +5860,7 @@
 
             }
 
-            
+
 
         } catch (err) {
 
@@ -5883,7 +5882,7 @@
 
     }
 
-    
+
 
     // Track last loaded schedule to prevent repeated API calls
 
@@ -5905,7 +5904,7 @@
 
         }
 
-        
+
 
         try {
 
@@ -5915,7 +5914,7 @@
 
             console.log('?? DEBUG: Schedule details response:', response);
 
-            
+
 
             if (response && response.success) {
 
@@ -5981,15 +5980,15 @@
 
 
 
-        
+
 
     // loadSelectedOrders function removed - no longer needed for auto-scheduling
 
-    
+
 
     // testOrderParsing function removed - no longer needed for auto-scheduling
 
-    
+
 
     // Map station pairs to TAZARA routes
 
@@ -5997,19 +5996,19 @@
 
         console.log('DEBUG: mapStationsToRoute called with:', origin, destination); // Debug line
 
-        
+
 
         // Valid TAZARA routes that the backend recognizes
 
         const VALID_TAZARA_ROUTES = [
 
-            'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA', 
+            'DAR_KAPIRI', 'DAR_MBEYA', 'MBEYA_KASAMA',
 
             'KAPIRI_NDOLA', 'DAR_KIDATU', 'KIDATU_TRANS_SHIPMENT'
 
         ];
 
-        
+
 
         const routeMap = {
 
@@ -6041,11 +6040,11 @@
 
         };
 
-        
+
 
         console.log('DEBUG: Available routes:', Object.keys(routeMap)); // Debug line
 
-        
+
 
         // Normalize station names for better matching
 
@@ -6055,13 +6054,13 @@
 
         };
 
-        
+
 
         const originNorm = normalizeStation(origin);
 
         const destNorm = normalizeStation(destination);
 
-        
+
 
         // Check for exact matches first
 
@@ -6069,13 +6068,13 @@
 
         const key2 = `${destination}-${origin}`;
 
-        
+
 
         if (routeMap[key1]) return routeMap[key1];
 
         if (routeMap[key2]) return routeMap[key2];
 
-        
+
 
         // Check for normalized matches
 
@@ -6087,7 +6086,7 @@
 
         if (originNorm === 'dar es salaam' && destNorm === 'kidatu') return 'DAR_KIDATU';
 
-        
+
 
         if (originNorm === 'kapiri mposhi' && destNorm === 'dar es salaam') return 'DAR_KAPIRI';
 
@@ -6101,7 +6100,7 @@
 
         if (originNorm === 'kapiri mposhi' && destNorm === 'ndola') return 'KAPIRI_NDOLA';
 
-        
+
 
         if (originNorm === 'mbeya' && destNorm === 'dar es salaam') return 'DAR_MBEYA';
 
@@ -6109,13 +6108,13 @@
 
         if (originNorm === 'mbeya' && destNorm === 'kasama') return 'MBEYA_KASAMA';
 
-        
+
 
         if (originNorm === 'ndola' && destNorm === 'kapiri mposhi') return 'KAPIRI_NDOLA';
 
         if (originNorm === 'ndola' && destNorm === 'mbeya') return 'MBEYA_KASAMA'; // Via Kapiri
 
-        
+
 
         // Special case: same origin and destination (local transport)
 
@@ -6129,7 +6128,7 @@
 
         }
 
-        
+
 
         console.log('DEBUG: No route found for', origin, 'â†’', destination);
 
@@ -6137,7 +6136,7 @@
 
     }
 
-    
+
 
     // Helper functions for priority display
 
@@ -6149,7 +6148,7 @@
 
     }
 
-    
+
 
     function getPriorityText(priority) {
 
@@ -6159,7 +6158,7 @@
 
     }
 
-    
+
 
     function formatDate(dateString) {
 
@@ -6171,7 +6170,7 @@
 
     }
 
-    
+
 
     // Load orders for assignment dropdown
 
@@ -6183,7 +6182,7 @@
 
             const select = document.getElementById('assignOrderSelect');
 
-            
+
 
             select.innerHTML = '<option value="">Select an order...</option>';
 
@@ -6207,7 +6206,7 @@
 
     }
 
-    
+
 
     // Assign order to schedule
 
@@ -6219,7 +6218,7 @@
 
         const trainId = document.getElementById('assignTrainId').value;
 
-        
+
 
         if (!orderId || !scheduleId || !trainId) {
 
@@ -6229,7 +6228,7 @@
 
         }
 
-        
+
 
         try {
 
@@ -6243,15 +6242,15 @@
 
             });
 
-            
+
 
             showToast('Order assigned successfully!', 'success');
 
-            document.getElementById('assignmentResult').innerHTML = 
+            document.getElementById('assignmentResult').innerHTML =
 
                 '<div class="alert alert-success">Order assigned successfully!</div>';
 
-            
+
 
             // Reload orders
 
@@ -6267,7 +6266,7 @@
 
     }
 
-    
+
 
     // Helper function for GET requests
 
@@ -6283,7 +6282,7 @@
 
         }
 
-        
+
 
         const response = await fetch(`${endpoint}`, {
 
@@ -6293,7 +6292,7 @@
 
         });
 
-        
+
 
         if (!response.ok) {
 
@@ -6319,13 +6318,13 @@
 
         }
 
-        
+
 
         return response.json();
 
     }
 
-    
+
 
     // Helper function for PUT requests
 
@@ -6341,7 +6340,7 @@
 
         }
 
-        
+
 
         const response = await fetch(`${endpoint}`, {
 
@@ -6353,7 +6352,7 @@
 
         });
 
-        
+
 
         if (!response.ok) {
 
@@ -6363,7 +6362,7 @@
 
         }
 
-        
+
 
         return response.json();
 
@@ -6413,7 +6412,7 @@
 
         const tabPanels = document.querySelectorAll('.tab-panel');
 
-        
+
 
         tabButtons.forEach(button => {
 
@@ -6421,7 +6420,7 @@
 
                 const targetTab = button.getAttribute('data-tab');
 
-                
+
 
                 // Remove active class from all buttons and panels
 
@@ -6429,7 +6428,7 @@
 
                 tabPanels.forEach(panel => panel.classList.remove('active'));
 
-                
+
 
                 // Add active class to clicked button and corresponding panel
 
@@ -6441,7 +6440,7 @@
 
                     targetPanel.classList.add('active');
 
-                    
+
 
                     // FORCE VISIBILITY: Hide all panels, show only active one
 
@@ -6461,7 +6460,7 @@
 
                 }
 
-                
+
 
                 // Load data for specific tabs when activated
 
@@ -6487,7 +6486,7 @@
 
                     analyzeRisk(null);
 
-                    
+
 
                     // Add debugging - check if tab is actually visible
 
@@ -6507,7 +6506,7 @@
 
                         });
 
-                        
+
 
                         // Check if elements are actually in the DOM and visible
 
@@ -6535,7 +6534,7 @@
 
         });
 
-        
+
 
         // Handle URL hash for direct tab navigation
 
@@ -6557,7 +6556,7 @@
 
     }
 
-    
+
 
     // Mobile sidebar toggle
 
@@ -6569,7 +6568,7 @@
 
         const isHidden = sidebar.style.transform === 'translateX(-100%)';
 
-        
+
 
         if (isHidden) {
 
@@ -6591,7 +6590,7 @@
 
     }
 
-    
+
 
     // Authentication functions
 
@@ -6641,25 +6640,25 @@
 
             const user = await response.json();
 
-            
+
 
             document.getElementById('userName').textContent = user.username;
 
             document.getElementById('userRole').textContent = user.role;
 
-            
+
 
             const roleElement = document.getElementById('userRole');
 
             roleElement.className = `user-role ${user.role}`;
 
-            
+
 
             // Apply role-based UI restrictions
 
             applyRoleBasedUI(user.role, user.permissions || {});
 
-            
+
 
         } catch (error) {
 
@@ -6699,7 +6698,7 @@
 
         }
 
-        
+
 
         // Hide create schedule button from viewer role
 
@@ -6715,7 +6714,7 @@
 
         }
 
-        
+
 
         // Additional role-based restrictions can be added here
 
@@ -6733,7 +6732,7 @@
 
         localStorage.removeItem('expires_in');
 
-        
+
 
         // Redirect to login
 
@@ -6751,7 +6750,7 @@
 
         testTrainCapacities();
 
-        
+
 
         loadUserInfo();
 
@@ -6774,4 +6773,3 @@
 </body>
 
 </html>
-
