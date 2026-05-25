@@ -251,41 +251,41 @@
 
                         <div style="padding: 15px;">
 
-                            <div class="card" style="border: 1px solid var(--info);">
+                           <!-- <div class="card" style="border: 1px solid var(--info);">
 
-                            </div>
+                            </div> -->
 
-                            <div style="margin-bottom: 15px;">
+                            <!-- <div style="margin-bottom: 15px;">
 
-                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Schedule Duration (days):</label>
+    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Schedule Duration (days):</label>
 
-                                <input type="number" id="planDays" value="7" min="1" max="30" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;">
+    <input type="number" id="planDays" value="7" min="1" max="30" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;">
 
-                            </div>
+</div> -->
 
-                            <div style="margin-bottom: 15px;">
+                            <!-- <div style="margin-bottom: 15px;">
 
-                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Maximum Orders to Schedule:</label>
+    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Maximum Orders to Schedule:</label>
 
-                                <input type="number" id="maxOrders" value="10" min="1" max="50" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;">
+    <input type="number" id="maxOrders" value="10" min="1" max="50" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px;">
 
-                                <small style="color: var(--text-muted);">Leave empty to schedule all pending orders</small>
+    <small style="color: var(--text-muted);">Leave empty to schedule all pending orders</small>
 
-                            </div>
+</div> -->
 
                             <div style="display: flex; gap: 10px;">
 
                                 <button class="btn btn-sm btn-success" onclick="createAutoSchedule()" style="flex: 1;">
 
-                                    ?? Auto-Schedule by Priority
+                                     Auto-Schedule by Priority
 
                                 </button>
 
-                                <button class="btn btn-sm btn-outline-info" onclick="checkAutoScheduleStatus()" style="flex: 1;">
+                               <!-- <button class="btn btn-sm btn-outline-info" onclick="checkAutoScheduleStatus()" style="flex: 1;">
 
                                     ?? Check Status
 
-                                </button>
+</button> -->
 
                             </div>
 
@@ -2102,11 +2102,11 @@
 
 
 
-                <div class="card" style="margin:0; border:1px solid var(--secondary);">
+                <!--<div class="card" style="margin:0; border:1px solid var(--secondary);">
 
                     <div class="card-header"><div class="card-title" style="font-size:0.9rem;">Performance Impact</div></div>
 
-                    <div style="padding:15px;">
+                    <div style="padding:15px;"> -->
 
                         <div style="font-size:1.5rem; font-weight:bold; color:var(--secondary);">${data.metadata && data.metadata.based_on_orders ? 'HIGH' : 'STANDARD'}</div>
 
@@ -5316,11 +5316,11 @@
 
                     </button>
 
-                    <button class="btn btn-sm btn-outline-warning" onclick="debugPriorityQueue()">
+                   <!-- <button class="btn btn-sm btn-outline-warning" onclick="debugPriorityQueue()">
 
                         ?? Debug Console
 
-                    </button>
+</button> -->
 
                 </div>
 
@@ -5418,7 +5418,7 @@
 
                     <div class="card-header">
 
-                        <div class="card-title">?? Existing Schedules</div>
+                        <div class="card-title"> Existing Schedules</div>
 
                         <small style="color: var(--text-muted);">Click to view details</small>
 
